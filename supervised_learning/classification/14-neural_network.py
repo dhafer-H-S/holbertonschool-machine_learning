@@ -128,8 +128,11 @@ class NeuralNetwork:
         """ update the paramters """
         self.__W2 = self.__W2 - (alpha * dW2)
         self.__W1 = self.__W1 - (alpha * dW1)
-        self.__A2 = self.__A2 - (alpha * dA2)
+        self.__b1 = self.__b1 - (alpha * db1)
+        self.__b2 = self.__b2 - (alpha * db2)
         self.__A1 = self.__A1 - (alpha * dA1)
+        self.__A2 = self.__A2 - (alpha * dA2)
+        
 
     """ train function methode """
 
@@ -153,5 +156,4 @@ class NeuralNetwork:
             A1, A2 = self.forward_prop(X)
             self.gradient_descent(X, Y, A1, A2, alpha)
 
-        prediction, cost = self.evaluate(X, Y)
-        return prediction, cost
+        return self.evaluate(X, Y)
