@@ -126,14 +126,11 @@ class NeuralNetwork:
         db1 = np.sum(dA1, axis=1, keepdims=True)
 
         """ update the paramters """
+        """ weight and bias should be updated """
         self.__W2 = self.__W2 - (alpha * dW2)
         self.__W1 = self.__W1 - (alpha * dW1)
         self.__b1 = self.__b1 - (alpha * db1)
         self.__b2 = self.__b2 - (alpha * db2)
-        self.__A1 = self.__A1 - (alpha * dA1)
-        self.__A2 = self.__A2 - (alpha * dA2)
-        
-
     """ train function methode """
 
     def train(self, X, Y, iterations=5000, alpha=0.05):
