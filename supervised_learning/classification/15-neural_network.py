@@ -139,11 +139,20 @@ class NeuralNetwork:
     """ train function methode """
 
     def train(self, X, Y, iterations=5000, alpha=0.05, verbose=True, graph=True, step=100):
-        """ X contain the input data """
-        """ Y contain the correct labels for the inpute data """
-        """ alpha is the training rate  """
-        """ iteration is the number of iteration to train the model over """
-        """ verbose is the idea of printing or not the training information """
+        """Trains the neural network.
+
+        Args:
+            X (numpy.ndarray): Input data with shape (nx, m).
+            Y (numpy.ndarray): Correct labels for the input data with shape (1, m).
+            iterations (int, optional): Number of iterations to train over. Defaults to 5000.
+            alpha (float, optional): Learning rate. Defaults to 0.05.
+            verbose (bool, optional): Whether or not to print training information. Defaults to True.
+            graph (bool, optional): Whether or not to graph information about the training. Defaults to True.
+            step (int, optional): Frequency of printing and graphing during training. Defaults to 100.
+
+        Returns:
+            float: Evaluation of the training data after iterations of training have occurred.
+        """
         m = Y.shape[1]
         if not isinstance(iterations, int):
             raise TypeError("iterations must be an integer")
@@ -154,25 +163,32 @@ class NeuralNetwork:
             raise TypeError("alpha must be a float")
         if alpha <= 0:
             raise ValueError("alpha must be positive")
+
         if not isinstance(step, int):
             raise TypeError("step must be an integer")
-        if step < 0 or step > iterations:
+        if step <= 0 or step > iterations:
             raise ValueError("step must be positive and <= iterations")
+
         costs = []
         iter = []
-        for i in range(iterations):
+
+        for i in range(iterations + 1):
             A1, A2 = self.forward_prop(X)
-            self.gradient_descent(X, Y, A1, A2, alpha)
             cost = self.cost(Y, self.A2)
-            costs.append(cost)
-            iter.append(i)
-            if verbose:
+
+            if verbose and (i % step) == 0:
                 print("Cost after", i, " iterations: ", cost)
-            if graph and i != 0 and (i % step) == 0:
-                plt.plot(iter, costs, 'b')
-                plt.title("Training Cost")
-                plt.xlabel("iteration")
-                plt.ylabel("cost")
-                plt.show()
+                costs.append(cost)
+                iter.append(i)
+
+            self.gradient_descent(X, Y, A1, A2, alpha)
+
+        if graph:
+            plt.plot(iter, costs, 'b')
+            plt.title("Training Cost")
+            plt.xlabel("iteration")
+            plt.ylabel("cost")
+            plt.show()
 
         return self.evaluate(X, Y)
+
