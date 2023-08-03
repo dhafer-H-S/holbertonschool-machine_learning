@@ -19,7 +19,7 @@ class DeepNeuralNetwork:
         if nx < 1:
             raise ValueError("nx must be a positive integer")
         
-        if not isinstance(layers, list) or len(layers) == 0 or not all(isinstance(l, int) and l > 0 for l in layers):
+        if not isinstance(layers, list) or len(layers) == 0 :
             raise TypeError("layers must be a list of positive integers")
 
         """ initialize weight and bias using he et al and bias intiated to 0 """
@@ -36,6 +36,8 @@ class DeepNeuralNetwork:
         """
 
         for l in range(1, self.L):
+            if not all(isinstance(l, int) and l > 0 for l in layers):
+                raise TypeError("layers must be a list of positive integers")
             # he et al weight initialization
             self.weights['w' + str(l)] = np.random.randn(layers[l - 1], layers[l]) * np.sqrt(2 / layers[l - 1])
 
