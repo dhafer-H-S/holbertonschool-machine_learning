@@ -42,11 +42,12 @@ class DeepNeuralNetwork:
 
         # Initialize weights and biases using He et al. method and zeros
         for l in range(1, self.L + 1):
-            if l == 1:
-                # Input layer, no He et al. method used
-                self.weights['W' + str(l)] = np.random.randn(nx, layers[l - 1]) * np.sqrt(2 / nx)
-            else:
-                # Hidden layers and output layer use He et al. method
-                self.weights['W' + str(l)] = np.random.randn(layers[l - 2], layers[l - 1]) * np.sqrt(2 / layers[l - 2])
+            # He et al. weight initialization
+            self.weights['W' + str(l)] = np.random.randn(layers[l - 1], nx) * np.sqrt(2 / nx)
+            
+            # Zero bias initialization
+            self.weights['b' + str(l)] = np.zeros((layers[l - 1], 1))
 
-            self.weights['b' + str(l)] = np.zeros((1, layers[l - 1]))
+        # # Initialize the last layer weights and biases
+        # self.weights['W' + str(self.L)] = np.random.randn(layers[self.L - 1], 1) * np.sqrt(2 / layers[self.L - 1])
+        # self.weights['b' + str(self.L)] = np.zeros((1, 1))
