@@ -16,34 +16,31 @@ class DeepNeuralNetwork:
         
         if not isinstance(layers, list) or not layers:
             raise TypeError("layers must be a list of positive integers")
+        # check if the elements in the layers are integers or not 
+        # and check if theyeare greater then 0 or not 
+        if not isinstance(layers[l], int) or layers[l] <= 0:
+            raise TypeError("layers must be a list of positive integers")
         # set public instance attributes
         self.L = len(layers)
         self.cache = {}
         self.weights = {}
+        layer_size = nx
         # loop to iterates through the range of numbers of layers 
-        for l in range(self.L):
-            # check if the elements in the layers are integers or not 
-            # and check if theyeare greater then 0 or not 
-            if not isinstance(layers[l], int) or layers[l] <= 0:
-                raise TypeError("layers must be a list of positive integers")
+        for l in range(1, self.L + 1):
+
             # initialise the weight if we are working on the first layer we 
             # gonna use He et al as intialize methode to generate weights with
             # a shape based on layers(l) and nx ( inputes features ) and then 
             # scale them usnig square root 2 / nx
-            if l == 0:
-                prev_nodes = nx
-            # if l == 0:
-            #     self.weights['W' + str(l + 1)] = np.random.randn(layers[l], nx) * np.sqrt(2 / nx)
-            else:
-                prev_nodes = layers[l - 1]
+            he_et_al = np.sqrt( 2/ layer_size)
             #for layers other than the first one it genrates random weigths
             # with a shape layers(l) - layers(l - 1) and scale them using
             # the square root of 2 / layers(l - 1)   
-            self.weights['W' + str(l + 1)] = np.random.randn(layers[l], prev_nodes) * np.sqrt(2 / prev_nodes)
+            self.weights['W' + str(l)] = np.random.randn(layers[l - 1], layer_size) * he_et_al
             # initialize the biases for the current layer with zeros and store
             # them in the weights
-            self.weights['b' + str(l + 1)] = np.zeros((layers[l], 1))
+            self.weights['b' + str(l)] = np.zeros((layers[l - 1], 1))
 
-                # self.weights['W' + str(l + 1)] = np.random.randn(layers[l], layers[l - 1]) * np.sqrt(2 / layers[l - 1])
+                
 
-            # self.weights['b' + str(l + 1)] = np.zeros((layers[l], 1))
+            layer_size = layers[l - 1]
