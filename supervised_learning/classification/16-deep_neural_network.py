@@ -32,7 +32,7 @@ class DeepNeuralNetwork:
             # gonna use He et al as intialize methode to generate weights with
             # a shape based on layers(l) and nx ( inputes features ) and then 
             # scale them usnig square root 2 / nx
-            he_et_al = np.sqrt( 2/ layer_size)
+            he_et_al = np.sqrt(2 / layer_size)
             #for layers other than the first one it genrates random weigths
             # with a shape layers(l) - layers(l - 1) and scale them using
             # the square root of 2 / layers(l - 1)   
@@ -40,7 +40,4 @@ class DeepNeuralNetwork:
             # initialize the biases for the current layer with zeros and store
             # them in the weights
             self.weights['b' + str(l)] = np.zeros((layers[l - 1], 1))
-
-                
-
             layer_size = layers[l - 1]
