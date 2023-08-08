@@ -30,6 +30,7 @@ class DeepNeuralNetwork:
             # gonna use He et al as intialize methode to generate weights with
             # a shape based on layers(l) and nx ( inputes features ) and then 
             # scale them usnig square root 2 / nx
+            
             if l == 0:
                 self.weights['W' + str(l + 1)] = np.random.randn(layers[l], nx) * np.sqrt(2 / nx)
             else:
