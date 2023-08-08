@@ -17,7 +17,7 @@ class DeepNeuralNetwork:
             raise TypeError("layers must be a list of positive integers")
         # check if the elements in the layers are integers or not 
         # and check if theyeare greater then 0 or not 
-        if not isinstance(layers[l], int) or layers[l] <= 0:
+        if not all(map(lambda x: x > 0 and isinstance(x, int), layers)):
             raise TypeError("layers must be a list of positive integers")
         # set public instance attributes
         self.L = len(layers)
