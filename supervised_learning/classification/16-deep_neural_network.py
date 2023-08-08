@@ -30,7 +30,7 @@ class DeepNeuralNetwork:
 
             he_et_al = np.sqrt(2 / layer_size)
 
-            self.weights['W' + str(l)] = np.random.randn(layers[l - 1], layer_size) * he_et_al
+            self.weights["W" + str(l)] = np.random.randn(layers[l - 1], layer_size) * he_et_al
 
-            self.weights['b' + str(l)] = np.zeros((layers[l - 1], 1))
+            self.weights["b" + str(l)] = np.zeros((layers[l - 1], 1))
             layer_size = layers[l - 1]
