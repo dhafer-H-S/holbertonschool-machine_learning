@@ -36,13 +36,14 @@ class DeepNeuralNetwork:
             #     self.weights['W' + str(l + 1)] = np.random.randn(layers[l], nx) * np.sqrt(2 / nx)
             else:
                 prev_nodes = layers[l - 1]
-                
+            #for layers other than the first one it genrates random weigths
+            # with a shape layers(l) - layers(l - 1) and scale them using
+            # the square root of 2 / layers(l - 1)   
             self.weights['W' + str(l + 1)] = np.random.randn(layers[l], prev_nodes) * np.sqrt(2 / prev_nodes)
-            self.weights['b' + str(l + 1)] = np.zeros((layers[l], 1))
-                #for layers other than the first one it genrates random weigths
-                # with a shape layers(l) - layers(l - 1) and scale them using
-                # the square root of 2 / layers(l - 1)
-                # self.weights['W' + str(l + 1)] = np.random.randn(layers[l], layers[l - 1]) * np.sqrt(2 / layers[l - 1])
             # initialize the biases for the current layer with zeros and store
             # them in the weights
+            self.weights['b' + str(l + 1)] = np.zeros((layers[l], 1))
+
+                # self.weights['W' + str(l + 1)] = np.random.randn(layers[l], layers[l - 1]) * np.sqrt(2 / layers[l - 1])
+
             # self.weights['b' + str(l + 1)] = np.zeros((layers[l], 1))
