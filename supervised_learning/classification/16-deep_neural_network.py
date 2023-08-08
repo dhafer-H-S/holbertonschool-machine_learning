@@ -4,6 +4,8 @@ import numpy as np
 
 """ DeepNeuralNetwork """
 """ class of a DeepNeuralNetwork """
+
+
 class DeepNeuralNetwork:
     # deff methode to initializa the deep neural network
     def __init__(self, nx, layers):
@@ -23,11 +25,11 @@ class DeepNeuralNetwork:
         self.cache = {}
         self.weights = {}
 
-        # loop to iterates through the range of numbers of layers 
+        # loop to iterates through the range of numbers of layers
         """
-            initialise the weight if we are working on the first layer we 
+            initialise the weight if we are working on the first layer we
             +gonna use He et al as intialize methode to generate weights with
-            a shape based on layers(l) and nx ( inputes features ) and then 
+            a shape based on layers(l) and nx ( inputes features ) and then
             scale them usnig square root 2 / nx
         """
 
@@ -39,8 +41,8 @@ class DeepNeuralNetwork:
 
             layer_size = nx
             he_et_al = np.sqrt(2 / layer_size)
-            self.weights["W" + str(l)] = np.random.randn(layers[l - 1], layer_size) * he_et_al
+            self.weights["W" + str(l)] = np.random.randn(layers[l - 1],
+                                                         layer_size) * he_et_al
 
             self.weights["b" + str(l)] = np.zeros((layers[l - 1], 1))
             layer_size = layers[l - 1]
-            
