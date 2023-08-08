@@ -6,48 +6,38 @@
 import numpy as np
 
 class DeepNeuralNetwork:
+    # deff methode to initializa the deep neural network
     def __init__(self, nx, layers):
-        """
-        Initializes a deep neural network performing binary classification.
-
-        Parameters:
-        nx (int): Number of input features.
-        layers (list): List representing the number of nodes in each layer of the network.
-
-        Raises:
-        TypeError: If nx is not an integer or layers is not a list.
-        ValueError: If nx is less than 1.
-        TypeError: If layers is an empty list or contains non-positive integers.
-
-        Attributes:
-        L (int): The number of layers in the neural network.
-        cache (dict): A dictionary to hold all intermediary values of the network.
-        weights (dict): A dictionary to hold all weights and biases of the network.
-        """
-        # Check if nx is an integer and positive
+        # check conditions 
         if not isinstance(nx, int):
             raise TypeError("nx must be an integer")
         if nx < 1:
             raise ValueError("nx must be a positive integer")
         
-        # Check if layers is a list and contains positive integers
-        if not isinstance(layers, list) or not layers :
+        if not isinstance(layers, list) or not layers:
             raise TypeError("layers must be a list of positive integers")
-        if not all(map(lambda x: x > 0 and isinstance(x, int), layers)):
-            raise TypeError("layers must be a list of positive integers")
-
-        self.L = len(layers) # number of layers in the neural network
-        self.cache = {} # dictionary to store intermediary values
-        self.weights = {} # dictionary to store weights and biases
-
-        # Initialize weights and biases using He et al. method and zeros
-        for l in range(1, self.L + 1):
-            # He et al. weight initialization
-            self.weights['W' + str(l)] = np.random.randn(layers[l - 1], nx) * np.sqrt(2 / nx)
-            
-            # Zero bias initialization
-            self.weights['b' + str(l)] = np.zeros((layers[l - 1], 1))
-
-        # # Initialize the last layer weights and biases
-        # self.weights['W' + str(self.L)] = np.random.randn(layers[self.L - 1], 1) * np.sqrt(2 / layers[self.L - 1])
-        # self.weights['b' + str(self.L)] = np.zeros((1, 1))
+        # set public instance attributes
+        self.L = len(layers)
+        self.cache = {}
+        self.weights = {}
+        
+        # loop to iterates through the range of numbers of layers 
+        for l in range(self.L):
+            # check if the elements in the layers are integers or not 
+            # and check if theyeare greater then 0 or not 
+            if not isinstance(layers[l], int) or layers[l] <= 0:
+                raise TypeError("layers must be a list of positive integers")
+            # initialise the weight if we are working on the first layer we 
+            # gonna use He et al as intialize methode to generate weights with
+            # a shape based on layers(l) and nx ( inputes features ) and then 
+            # scale them usnig square root 2 / nx
+            if l == 0:
+                self.weights['W' + str(l + 1)] = np.random.randn(layers[l], nx) * np.sqrt(2 / nx)
+            else:
+                #for layers other than the first one it genrates random weigths
+                # with a shape layers(l) - layers(l - 1) and scale them using
+                # the square root of 2 / layers(l - 1)
+                self.weights['W' + str(l + 1)] = np.random.randn(layers[l], layers[l - 1]) * np.sqrt(2 / layers[l - 1])
+            # initialize the biases for the current layer with zeros and store
+            # them in the weights
+            self.weights['b' + str(l + 1)] = np.zeros((layers[l], 1))
