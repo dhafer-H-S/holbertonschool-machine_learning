@@ -20,7 +20,6 @@ class DeepNeuralNetwork:
         self.L = len(layers)
         self.cache = {}
         self.weights = {}
-        
         # loop to iterates through the range of numbers of layers 
         for l in range(self.L):
             # check if the elements in the layers are integers or not 
