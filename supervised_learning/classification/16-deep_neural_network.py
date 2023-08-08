@@ -21,7 +21,7 @@ class DeepNeuralNetwork:
 
         """
         check if the elements in the layers are integers or not
-        and check if theye are greater then 0 or 
+        and check if theye are greater then 0 or not
         """
 
         """ set public instance attributes """
