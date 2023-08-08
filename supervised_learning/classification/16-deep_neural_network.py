@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
-
-""" DeepNeuralNetwork """
-
-""" class of a DeepNeuralNetwork """
 import numpy as np
 
+
+""" DeepNeuralNetwork """
+""" class of a DeepNeuralNetwork """
 class DeepNeuralNetwork:
     # deff methode to initializa the deep neural network
     def __init__(self, nx, layers):
