@@ -26,15 +26,20 @@ class DeepNeuralNetwork:
 
         # loop to iterates through the range of numbers of layers 
         for l in range(1, self.L + 1):
-            # initialise the weight if we are working on the first layer we 
-            # gonna use He et al as intialize methode to generate weights with
-            # a shape based on layers(l) and nx ( inputes features ) and then 
-            # scale them usnig square root 2 / nx
+            """
+            initialise the weight if we are working on the first layer we 
+            +gonna use He et al as intialize methode to generate weights with
+            a shape based on layers(l) and nx ( inputes features ) and then 
+            scale them usnig square root 2 / nx
+            """
             layer_size = nx
             he_et_al = np.sqrt(2 / layer_size)
             self.weights["W" + str(l)] = np.random.randn(layers[l - 1], layer_size) * he_et_al
-            # initialize the biases for the current layer with zeros and store
-            # them in the weights
+
+            """
+            initialize the biases for the current layer with zeros and store
+            them in the weights
+            """
             self.weights["b" + str(l)] = np.zeros((layers[l - 1], 1))
             layer_size = layers[l - 1]
             
