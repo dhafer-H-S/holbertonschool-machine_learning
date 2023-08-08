@@ -32,6 +32,7 @@ class DeepNeuralNetwork:
         self.L = len(layers)
         self.cache = {}
         self.weights = {}
+        layer_size = nx
 
         # loop to iterates through the range of numbers of layers
         """
@@ -46,7 +47,7 @@ class DeepNeuralNetwork:
             them in the weights
         """
         for l in range(1, self.L + 1):
-            layer_size = nx
+
             he_et_al = np.sqrt(2 / layer_size)
             self.weights["W" + str(l)] = np.random.randn(layers[l - 1],
                                                          layer_size) * he_et_al
