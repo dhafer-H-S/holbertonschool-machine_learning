@@ -32,8 +32,6 @@ class DeepNeuralNetwork:
             # scale them usnig square root 2 / nx
             layer_size = nx
             he_et_al = np.sqrt(2 / layer_size)
-
-
             self.weights["W" + str(l)] = np.random.randn(layers[l - 1], layer_size) * he_et_al
             # initialize the biases for the current layer with zeros and store
             # them in the weights
