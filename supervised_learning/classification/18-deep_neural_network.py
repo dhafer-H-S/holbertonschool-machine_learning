@@ -71,23 +71,12 @@ class DeepNeuralNetwork:
     """ def methode for froward propagation for the neural netwok"""
     def forward_prop(self, X):
         self.__cache['A0'] = X
-        for i in range(self.__L):
-            data = self.__cache['A' + str(i)]
-            w = self.__weights['W' + str(i + 1)]
-            bias = self.__weights['b' + str(i + 1)]
+        for l in range(self.__L):
+            data = self.__cache['A' + str(l)]
+            w = self.__weights['W' + str(l + 1)]
+            bias = self.__weights['b' + str(l + 1)]
 
             Z = np.dot(w, data) + bias
             A = 1 / (1 + np.exp(-Z))
-            self.__cache['A' + str(i + 1)] = A
-        
+            self.__cache['A' + str(l + 1)] = A
         return A, self.__cache
-    
-        # for i in range(self.__L):
-        #     z = np.dot(self.__weights['W' + str(i + 1)],
-        #                self.__cache['A'+str(i)]) +\
-        #         self.__weights['b'+str(i + 1)]
-        #     A = 1 / (1 + np.exp(-z))
-        #     ''''sigmoid activation function'''
-        #     self.__cache['A' + str(i + 1)] = A
-
-
