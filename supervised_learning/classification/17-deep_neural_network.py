@@ -49,8 +49,8 @@ class DeepNeuralNetwork:
         for l in range(1, self.__L + 1):
 
             he_et_al = np.sqrt(2 / layer_size)
-            self.__weights["W" + str(l)] = np.random.randn(layers[l - 1],
-                                                           layer_size) * he_et_al
+            self.__weights["W" + str(l)] = np.random.randn(
+                layers[l - 1], layer_size) * he_et_al
             self.__weights["b" + str(l)] = np.zeros((layers[l - 1], 1))
             layer_size = layers[l - 1]
 
