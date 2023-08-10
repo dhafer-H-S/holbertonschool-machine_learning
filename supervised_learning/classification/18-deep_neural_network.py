@@ -69,13 +69,20 @@ class DeepNeuralNetwork:
 
     """ def methode for froward propagation for the neural netwok"""
     def forward_prop(self, X):
+        """X should be saved to the cache dictionary using the key A0"""
         self.__cache['A0'] = X
+        """ loop for calculating through every layer in the neural network"""
         for l in range(self.__L):
+            """ set the methode to get data """
             data = self.__cache['A' + str(l)]
+            """ set methode to get the weight"""
             w = self.__weights['W' + str(l + 1)]
+            """set the methode to get the bias """
             bias = self.__weights['b' + str(l + 1)]
-
+            """ calculation the froword propagation """
             Z = np.dot(w, data) + bias
+            """ calcualte the activation function using sigmoid"""
             A = 1 / (1 + np.exp(-Z))
+            """ store data in cache"""
             self.__cache['A' + str(l + 1)] = A
         return A, self.__cache
