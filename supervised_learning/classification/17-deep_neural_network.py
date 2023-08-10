@@ -8,10 +8,11 @@ class DeepNeuralNetwork:
     """ class of a DeepNeuralNetwork """
 
     """ deff methode to initializa the deep neural network """
+
     def __init__(self, nx, layers):
         """nx is the inpute features in the neural network"""
         """ layers is the number of nodes in each layer of the network"""
-        
+
         """ check conditions """
         if not isinstance(nx, int):
             raise TypeError("nx must be an integer")
@@ -49,17 +50,18 @@ class DeepNeuralNetwork:
 
             he_et_al = np.sqrt(2 / layer_size)
             self.__weights["W" + str(l)] = np.random.randn(layers[l - 1],
-                                                         layer_size) * he_et_al
+                                                           layer_size) * he_et_al
             self.__weights["b" + str(l)] = np.zeros((layers[l - 1], 1))
             layer_size = layers[l - 1]
+
     @property
     def L(self):
         return self.__L
-    
+
     @property
     def cache(self):
         return self.__cache
-    
+
     @property
     def weights(self):
         return self.__weights
