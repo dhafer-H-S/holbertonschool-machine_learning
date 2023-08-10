@@ -9,6 +9,9 @@ class DeepNeuralNetwork:
 
     """ deff methode to initializa the deep neural network """
     def __init__(self, nx, layers):
+        """nx is the inpute features in the neural network"""
+        """ layers is the number of nodes in each layer of the network"""
+        
         """ check conditions """
         if not isinstance(nx, int):
             raise TypeError("nx must be an integer")
