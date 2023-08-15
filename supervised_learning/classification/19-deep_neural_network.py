@@ -93,6 +93,10 @@ class DeepNeuralNetwork:
         """ y contain the correct labels for the input data """
         """ A contain the acivated output for the neuron for eache example """
         m = Y.shape[1]
+        """ the way to calculate the cost function
+        To avoid division by zero errors, please use
+        (1.0000001 - A) instead of (1 - A)
+        """
         cost = - (1 / m) * np.sum(Y * np.log(A) +
                                   (1 - Y) * np.log(1.0000001 - A))
         return cost
