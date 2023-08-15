@@ -102,11 +102,12 @@ class DeepNeuralNetwork:
         return cost
 
     """ def methode to evalue the deep neural netowk and it's predictions """
-
     def evaluate(self, X, Y):
         m = X.shape[1]
+        """ forward propagation to calculate the A"""
         A, cache = self.forward_prop(X)
-
+        """ cost function to calculate the loss function"""
         cost = self.cost(Y, A)
+        """ make the value of the prediction 1 or 0 """
         prediction = np.where(A >= 0.5, 1, 0)
         return prediction, cost
