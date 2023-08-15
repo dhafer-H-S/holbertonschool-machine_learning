@@ -87,6 +87,7 @@ class DeepNeuralNetwork:
             """ store data in cache"""
             self.__cache['A' + str(l + 1)] = A
         return A, self.__cache
+
     """ def methode for cost function"""
 
     def cost(self, Y, A):
@@ -102,7 +103,17 @@ class DeepNeuralNetwork:
         return cost
 
     """ def methode to evalue the deep neural netowk and it's predictions """
+
     def evaluate(self, X, Y):
+        """
+        X contain the inpute data
+        Y contain the correct labels for the inpute data
+        """
+
+        """
+        m is in the number of examples in the shape from X that contain 
+        the correct inputes data
+        """
         m = X.shape[1]
         """ forward propagation to calculate the A"""
         A, cache = self.forward_prop(X)
