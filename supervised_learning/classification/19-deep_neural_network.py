@@ -68,6 +68,7 @@ class DeepNeuralNetwork:
         return self.__weights
 
     """ def methode for froward propagation for the neural netwok"""
+
     def forward_prop(self, X):
         """X should be saved to the cache dictionary using the key A0"""
         self.__cache['A0'] = X
@@ -87,9 +88,11 @@ class DeepNeuralNetwork:
             self.__cache['A' + str(l + 1)] = A
         return A, self.__cache
     """ def methode for cost function"""
+
     def cost(self, Y, A):
         """ y contain the correct labels for the input data """
         """ A contain the acivated output for the neuron for eache example """
         m = Y.shape[1]
-        cost = - ( 1 / m) * np.sum(Y * np.log(A) + (1 - Y) * np.log(1.0000001 - A))
+        cost = - (1 / m) * np.sum(Y * np.log(A) +
+                                  (1 - Y) * np.log(1.0000001 - A))
         return cost
