@@ -111,7 +111,7 @@ class DeepNeuralNetwork:
         """
 
         """
-        m is in the number of examples in the shape from X that contain 
+        m is in the number of examples in the shape from X that contain
         the correct inputes data
         """
         m = X.shape[1]
