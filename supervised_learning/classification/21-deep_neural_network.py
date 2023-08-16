@@ -11,7 +11,8 @@ class DeepNeuralNetwork:
 
     def __init__(self, nx, layers):
         """ nx is the number of input features in the neural network """
-        """ layers is the list of the number of nodes in each layer of the network """
+        """ layers is the list of the number of nodes in
+        each layer of the network """
 
         """ Check conditions """
         if not isinstance(nx, int):
