@@ -102,7 +102,7 @@ class DeepNeuralNetwork:
     def gradient_descent(self, Y, cache, alpha=0.05):
         """ Calculate gradients and update weights and biases """
         m = Y.shape[1]
-        """ calculate initiale derivation of cost with respect to activations """
+        """calculate initiale derivation of cost with respect to activations"""
         dA = - (np.divide(Y, cache['A' + str(self.__L)]) -
                 np.divide(1 - Y, 1 - cache['A' + str(self.__L)]))
 
@@ -138,4 +138,4 @@ class DeepNeuralNetwork:
         for l in range(iterations):
             A, cache = self.forward_prop(X)
             self.gradient_descent(Y, cache, alpha=0.05)
-            return self.evaluate(X, Y)
+        return self.evaluate(X, Y)
