@@ -97,28 +97,21 @@ class DeepNeuralNetwork:
         return prediction, cost
 
     """ Method for gradient descent to train the neural network """
-
     def gradient_descent(self, Y, cache, alpha=0.05):
-        m = Y.shape[1]  # Number of training examples
-        
+        """Number of training examples"""
+        m = Y.shape[1]
         """ Calculate the initial derivative of the cost with respect to activations """
         dz = cache['A' + str(self.__L)] - Y
         for i in range(self.__L, 0, -1):
             A_prev = cache['A' + str(i - 1)]
-            
             """ Calculate the gradients for weights and biases """
             dw = 1/m * np.dot(dz, A_prev.T)
             db = 1/m * np.sum(dz, axis=1, keepdims=True)
-            
             """ Calculate the derivative of the pre-activation Z """
             dz = np.dot(self.__weights['W' + str(i)].T, dz) * A_prev * (1 - A_prev)
-            
-
             """ Update weights and biases using the learning rate alpha """
             self.__weights['W' + str(i)] -= alpha * dw
             self.__weights['b' + str(i)] -= alpha * db
-
-
 
     """ def methode train to train the model """
     def train(self, X, Y, iterations=5000, alpha=0.05):
