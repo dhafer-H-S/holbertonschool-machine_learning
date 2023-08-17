@@ -127,15 +127,15 @@ class DeepNeuralNetwork:
         """ numberof iteration to train over the model """
         """ learning rate """
         m = Y.shape[1]
-        if not isinstance(iterations, int):
+        if type(iterations) != int:
             raise TypeError("iterations must be an integer")
         if iterations <= 0:
             raise ValueError("iterations must be a positive integer")
-        if not isinstance(alpha, float):
+        if type(alpha) != float:
             raise TypeError("alpha must be a float")
         if alpha <= 0:
             raise ValueError("alpha must be positive")
-        for l in range(iterations):
+        for i in range(iterations):
             self.forward_prop(X)
             self.gradient_descent(Y, self.cache, alpha)
         return self.evaluate(X, Y)
