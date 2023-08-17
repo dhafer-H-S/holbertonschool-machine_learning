@@ -57,7 +57,6 @@ class DeepNeuralNetwork:
     def forward_prop(self, X):
         """ X should be saved to the cache dictionary using the key A0 """
         self.__cache['A0'] = X
-        self.__cache['Z0'] = X
 
         """ Loop through every layer in the neural network """
         for l in range(1, self.__L + 1):
@@ -97,34 +96,38 @@ class DeepNeuralNetwork:
         return prediction, cost
 
     """ Method for gradient descent to train the neural network """
+
     def gradient_descent(self, Y, cache, alpha=0.05):
         """Number of training examples"""
         m = Y.shape[1]
-        """ Calculate the initial derivative of the cost with respect to activations """
+        """ Calculate the initial derivative of the cost with
+        respect to activations """
         dz = cache['A' + str(self.__L)] - Y
         for i in range(self.__L, 0, -1):
             A_prev = cache['A' + str(i - 1)]
             """ Calculate the gradients for weights and biases """
-            dw = 1/m * np.dot(dz, A_prev.T)
-            db = 1/m * np.sum(dz, axis=1, keepdims=True)
+            dw = 1 / m * np.dot(dz, A_prev.T)
+            db = 1 / m * np.sum(dz, axis=1, keepdims=True)
             """ Calculate the derivative of the pre-activation Z """
-            dz = np.dot(self.__weights['W' + str(i)].T, dz) * A_prev * (1 - A_prev)
+            dz = np.dot(self.__weights['W' + str(i)].T,
+                        dz) * A_prev * (1 - A_prev)
             """ Update weights and biases using the learning rate alpha """
             self.__weights['W' + str(i)] -= alpha * dw
             self.__weights['b' + str(i)] -= alpha * db
 
     """ def methode train to train the model """
+
     def train(self, X, Y, iterations=5000, alpha=0.05):
         """ X contain the inpute data """
         """ Y contain the correct labels for the inpute data """
         """ numberof iteration to train over the model """
         """ learning rate """
         m = Y.shape[1]
-        if type(iterations) != int:
+        if not isinstance(iterations, int):
             raise TypeError("iterations must be an integer")
         if iterations <= 0:
             raise ValueError("iterations must be a positive integer")
-        if type(alpha) != float:
+        if not isinstance(alpha, float):
             raise TypeError("alpha must be a float")
         if alpha <= 0:
             raise ValueError("alpha must be positive")
