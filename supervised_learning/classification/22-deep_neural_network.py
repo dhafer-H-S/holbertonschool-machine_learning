@@ -98,27 +98,31 @@ class DeepNeuralNetwork:
         return prediction, cost
 
     """ Method for gradient descent to train the neural network """
-
     def gradient_descent(self, Y, cache, alpha=0.05):
-        """ Calculate gradients and update weights and biases """
-        m = Y.shape[1]
-        """calculate initiale derivation of cost with respect to activations"""
-        dA = - (np.divide(Y, cache['A' + str(self.__L)]) -
-                np.divide(1 - Y, 1 - cache['A' + str(self.__L)]))
-
-        for l in range(self.__L, 0, -1):
-            Z = cache['Z' + str(l)]
-            A_prev = cache['A' + str(l - 1)]
-            W = self.__weights['W' + str(l)]
-            """ calculate gradient for weights and biases """
-            dZ = dA * cache['A' + str(l)] * (1 - cache['A' + str(l)])
-            dW = np.dot(dZ, A_prev.T) / m
-            db = np.sum(dZ, axis=1, keepdims=True) / m
-            """ propagate error to the previous layer """
-            dA = np.dot(W.T, dZ)
-            """ update weights and biases using the learning rate alpha """
-            self.__weights['W' + str(l)] -= alpha * dW
-            self.__weights['b' + str(l)] -= alpha * db
+        m = Y.shape[1]  # Number of training examples
+        
+        # Calculate the initial derivative of the cost with respect to activations
+        dA = - (np.divide(Y, cache['A' + str(self.__L)]) - np.divide(1 - Y, 1 - cache['A' + str(self.__L)]))
+        
+        # Loop through the layers in reverse order (from L to 1)
+        for i in range(self.__L, 0, -1):
+            Z = cache['Z' + str(i)]  # Linear pre-activation
+            A_prev = cache['A' + str(i - 1)]  # Activations from the previous layer
+            W = self.__weights['W' + str(i)]  # Weights for the current layer
+            
+            # Calculate the gradient of the pre-activation Z
+            dZ = dA * A_prev * (1 - A_prev)
+            
+            # Calculate the gradients for weights and biases
+            dw = 1/m * np.dot(dZ, A_prev.T)  # Weight gradient
+            db = 1/m * np.sum(dZ, axis=1, keepdims=True)  # Bias gradient
+            
+            # Propagate the error to the previous layer
+            dz = np.dot(W, dZ)
+            
+            # Update weights and biases using the learning rate alpha
+            self.__weights['W' + str(i)] -= alpha * dw
+            self.__weights['b' + str(i)] -= alpha * db
 
     """ def methode train to train the model """
     def train(self, X, Y, iterations=5000, alpha=0.05):
