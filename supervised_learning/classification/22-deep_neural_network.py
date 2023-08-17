@@ -98,38 +98,21 @@ class DeepNeuralNetwork:
         return prediction, cost
 
     """ Method for gradient descent to train the neural network """
+
     def gradient_descent(self, Y, cache, alpha=0.05):
-        m = Y.shape[1]  # Number of training examples
-        
-        """# Calculate the initial derivative of the cost with respect to activations"""
-        dA = - (np.divide(Y, cache['A' + str(self.__L)]) - np.divide(1 - Y, 1 - cache['A' + str(self.__L)]))
-        
-        """# Loop through the layers in reverse order (from L to 1)"""
+        """Calculates one pass of gradient descent on the neural network"""
+        m = Y.shape[1]
+
+        dz = self.__cache['A' + str(self.__L)] - Y
         for i in range(self.__L, 0, -1):
-            """# Linear pre-activation"""
-            Z = cache['Z' + str(i)]
-            """# Activations from the previous layer"""
-            A_prev = cache['A' + str(i - 1)]
-            """# Weights for the current layer"""
-            W = self.__weights['W' + str(i)]
-            
-            """# Calculate the gradient of the pre-activation Z"""
-            dZ = dA * A_prev * (1 - A_prev)
-            
-            """# Calculate the gradients for weights and biases"""
-            """# Weight gradient"""
-
-            dw = 1/m * np.dot(A_prev, dZ.T)
-            """# Bias gradient"""
-            db = 1/m * np.sum(dZ, axis=1, keepdims=True)
-
-            
-            """Propagate the error to the previous layer"""
-            dz = np.dot(W, dZ)
-            
-            """ Update weights and biases using the learning rate alpha"""
+            A_prev = self.__cache['A' + str(i - 1)]
+            dw = 1/m * np.dot(dz, A_prev.T)
+            db = 1/m * np.sum(dz, axis=1, keepdims=True)
+            dz = np.dot(self.__weights['W' + str(i)].T,
+                        dz) * A_prev * (1 - A_prev)
             self.__weights['W' + str(i)] -= alpha * dw
             self.__weights['b' + str(i)] -= alpha * db
+
 
     """ def methode train to train the model """
     def train(self, X, Y, iterations=5000, alpha=0.05):
