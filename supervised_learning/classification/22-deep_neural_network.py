@@ -114,8 +114,9 @@ class DeepNeuralNetwork:
             dZ = np.dot(self.__weights['W' + str(i)].T, dz) * A_prev * (1 - A_prev)
             
             """ Propagate the error to the previous layer """
+            dZ = dz
+            """ Propagate the error to the previous layer """
             dz = dZ
-            
             """ Update weights and biases using the learning rate alpha """
             self.__weights['W' + str(i)] -= alpha * dw
             self.__weights['b' + str(i)] -= alpha * db
