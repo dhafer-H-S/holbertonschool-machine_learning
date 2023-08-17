@@ -119,7 +119,7 @@ class DeepNeuralNetwork:
             """# Calculate the gradients for weights and biases"""
             """# Weight gradient"""
 
-            dw = 1/m * np.dot(dZ, A_prev.T)
+            dw = 1/m * np.dot(A_prev, dZ.T)
             """# Bias gradient"""
             db = 1/m * np.sum(dZ, axis=1, keepdims=True)
 
