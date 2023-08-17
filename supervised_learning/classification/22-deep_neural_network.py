@@ -1,39 +1,45 @@
 #!/usr/bin/env python3
-"""deep neural network performing binary classification"""
 
-
+""" DeepNeuralNetwork """
 import numpy as np
 
 
 class DeepNeuralNetwork:
-    """deep neural network performing binary classification"""
+    """ class of a DeepNeuralNetwork """
+
+    """ def method to initialize the deep neural network """
 
     def __init__(self, nx, layers):
-        if type(nx) != int:
+        """ nx is the number of input features in the neural network """
+        """ layers is the list of the number of nodes in
+        each layer of the network """
+
+        """ Check conditions """
+        if not isinstance(nx, int):
             raise TypeError("nx must be an integer")
         if nx < 1:
             raise ValueError("nx must be a positive integer")
-        if type(layers) != list or len(layers) == 0:
+        if not isinstance(layers, list) or not layers:
+            raise TypeError("layers must be a list of positive integers")
+        if not all(map(lambda x: x > 0 and isinstance(x, int), layers)):
             raise TypeError("layers must be a list of positive integers")
 
+        """ Set private instance attributes """
         self.__L = len(layers)
         self.__cache = {}
         self.__weights = {}
+        layer_size = nx
 
-        for al in range(len(layers)):
-            if type(layers[al]) != int or layers[al] <= 0:
-                raise TypeError("layers must be a list of positive integers")
+        """ Loop through the range of numbers of layers """
+        for l in range(1, self.__L + 1):
+            """ Initialize weights using He et al. initialization method """
+            he_et_al = np.sqrt(2 / layer_size)
+            self.__weights["W" + str(l)] = np.random.randn(
+                layers[l - 1], layer_size) * he_et_al
+            self.__weights["b" + str(l)] = np.zeros((layers[l - 1], 1))
+            layer_size = layers[l - 1]
 
-            if al == 0:
-                He = np.random.randn(layers[al], nx) * np.sqrt(2 / nx)
-                self.__weights['W' + str(al + 1)] = He
-            else:
-                He = np.random.randn(
-                    layers[al], layers[al - 1]) * np.sqrt(2 / layers[al - 1])
-                self.__weights['W' + str(al + 1)] = He
-
-            self.__weights['b' + str(al + 1)] = np.zeros((layers[al], 1))
-
+    """ Getters for private attributes """
     @property
     def L(self):
         return self.__L
@@ -46,57 +52,90 @@ class DeepNeuralNetwork:
     def weights(self):
         return self.__weights
 
+    """ Method for forward propagation of the neural network """
+
     def forward_prop(self, X):
-        '''Calculates the forward propagation of the neuron'''
-        self.__cache["A0"] = X
-        for i in range(self.__L):
-            z = np.dot(self.__weights['W' + str(i + 1)],
-                       self.__cache['A'+str(i)]) +\
-                self.__weights['b'+str(i + 1)]
-            A = 1 / (1 + np.exp(-z))
-            ''''sigmoid activation function'''
-            self.__cache['A' + str(i + 1)] = A
+        """ X should be saved to the cache dictionary using the key A0 """
+        self.__cache['A0'] = X
+        self.__cache['Z0'] = X
+
+        """ Loop through every layer in the neural network """
+        for l in range(1, self.__L + 1):
+            """ Get data, weight, and bias """
+            data = self.__cache['A' + str(l - 1)]
+            w = self.__weights['W' + str(l)]
+            bias = self.__weights['b' + str(l)]
+
+            """ Perform forward propagation """
+            Z = np.dot(w, data) + bias
+            A = 1 / (1 + np.exp(-Z))
+
+            """ Store data in cache """
+            self.__cache['Z' + str(l)] = Z
+            self.__cache['A' + str(l)] = A
+
         return A, self.__cache
 
+    """ Method for cost function """
+
     def cost(self, Y, A):
-        '''Calculates the cost of the model using logistic regression'''
+        """ Calculate the cost function """
         m = Y.shape[1]
-        cost = (-1/m) * np.sum(Y*np.log(A) + (1-Y)*np.log(1.0000001-A))
+        cost = (-1 / m) * np.sum(Y * np.log(A) +
+                                 (1 - Y) * np.log(1.0000001 - A))
         return cost
 
+    """ Method to evaluate the deep neural network and its predictions """
+
     def evaluate(self, X, Y):
-        '''Evaluates the deep neural network’s predictions'''
-        A, _ = self.forward_prop(X)
-        prediction = np.where(A >= 0.5, 1, 0)
+        """ Perform forward propagation to calculate predictions and cost """
+        m = X.shape[1]
+        A, cache = self.forward_prop(X)
         cost = self.cost(Y, A)
+
+        """ Make predictions """
+        prediction = np.where(A >= 0.5, 1, 0)
         return prediction, cost
 
+    """ Method for gradient descent to train the neural network """
+
     def gradient_descent(self, Y, cache, alpha=0.05):
-        """Calculates one pass of gradient descent on the neural network"""
+        """ Calculate gradients and update weights and biases """
         m = Y.shape[1]
+        """calculate initiale derivation of cost with respect to activations"""
+        dA = - (np.divide(Y, cache['A' + str(self.__L)]) -
+                np.divide(1 - Y, 1 - cache['A' + str(self.__L)]))
 
-        dz = self.__cache['A' + str(self.__L)] - Y
-        for i in range(self.__L, 0, -1):
-            A_prev = self.__cache['A' + str(i - 1)]
-            dw = 1/m * np.dot(dz, A_prev.T)
-            db = 1/m * np.sum(dz, axis=1, keepdims=True)
-            dz = np.dot(self.__weights['W' + str(i)].T,
-                        dz) * A_prev * (1 - A_prev)
-            self.__weights['W' + str(i)] -= alpha * dw
-            self.__weights['b' + str(i)] -= alpha * db
+        for l in range(self.__L, 0, -1):
+            Z = cache['Z' + str(l)]
+            A_prev = cache['A' + str(l - 1)]
+            W = self.__weights['W' + str(l)]
+            """ calculate gradient for weights and biases """
+            dZ = dA * cache['A' + str(l)] * (1 - cache['A' + str(l)])
+            dW = np.dot(dZ, A_prev.T) / m
+            db = np.sum(dZ, axis=1, keepdims=True) / m
+            """ propagate error to the previous layer """
+            dA = np.dot(W.T, dZ)
+            """ update weights and biases using the learning rate alpha """
+            self.__weights['W' + str(l)] -= alpha * dW
+            self.__weights['b' + str(l)] -= alpha * db
 
+    """ def methode train to train the model """
     def train(self, X, Y, iterations=5000, alpha=0.05):
-        '''Trains the neural network'''
-        if type(iterations) != int:
+        """ X contain the inpute data """
+        """ Y contain the correct labels for the inpute data """
+        """ numberof iteration to train over the model """
+        """ learning rate """
+        m = Y.shape[1]
+        if not isinstance(iterations, int):
             raise TypeError("iterations must be an integer")
         if iterations <= 0:
             raise ValueError("iterations must be a positive integer")
-        if type(alpha) != float:
+        if not isinstance(alpha, float):
             raise TypeError("alpha must be a float")
         if alpha <= 0:
             raise ValueError("alpha must be positive")
-
-        for i in range(iterations):
+        for l in range(iterations):
             self.forward_prop(X)
             self.gradient_descent(Y, self.cache, alpha)
         return self.evaluate(X, Y)
