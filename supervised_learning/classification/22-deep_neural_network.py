@@ -71,7 +71,6 @@ class DeepNeuralNetwork:
             A = 1 / (1 + np.exp(-Z))
 
             """ Store data in cache """
-            self.__cache['Z' + str(l)] = Z
             self.__cache['A' + str(l)] = A
 
         return A, self.__cache
