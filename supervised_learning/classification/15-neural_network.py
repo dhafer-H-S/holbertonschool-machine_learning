@@ -89,7 +89,7 @@ class NeuralNetwork:
 
         """ cost function using logistic regression """
         cost = -(1 / m) * np.sum(Y * np.log(A) +
-                                 (1 - Y) * np.log(1.0000001 - A))
+                                 (1 - Y) * np.log(1 - A))
         return cost
 
     """ evaluate the neural network """
@@ -134,8 +134,7 @@ class NeuralNetwork:
         self.__b1 = self.__b1 - (alpha * db1)
         self.__b2 = self.__b2 - (alpha * db2)
 
-        self.__A1 = self.__A1 - (alpha * dA1)
-        self.__A2 = self.__A2 - (alpha * dA2)
+
     """ train function methode """
 
     def train(self, X, Y, iterations=5000, alpha=0.05, verbose=True, graph=True, step=100):
@@ -174,14 +173,15 @@ class NeuralNetwork:
 
         for i in range(iterations + 1):
             A1, A2 = self.forward_prop(X)
+            self.gradient_descent(X, Y, A1, A2, alpha)
             cost = self.cost(Y, self.A2)
 
-            if verbose and (i % step) == 0:
+            if verbose and ((i % step) == 0 or i == iterations):
                 print("Cost after", i, " iterations: ", cost)
                 costs.append(cost)
                 iter.append(i)
 
-            self.gradient_descent(X, Y, A1, A2, alpha)
+            
 
         if graph:
             plt.plot(iter, costs, 'b')
