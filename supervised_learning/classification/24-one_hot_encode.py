@@ -11,10 +11,8 @@ def one_hot_encode(Y, classes):
         classes (int): Maximum number of classes
 
     Returns:
-        numpy.ndarray: One-hot encoding of Y with shape (classes, m),
-        or None on failure
+        numpy.ndarray: One-hot encoding of Y with shape (classes, m), or None on failure
     """
-    """ Y is a numpy.ndarray with shape (m,) containing numeric class labels """
     if not isinstance(Y, np.ndarray) or not isinstance(classes, int) or classes <= 0:
         return None
 
@@ -25,4 +23,8 @@ def one_hot_encode(Y, classes):
     one_hot_matrix = np.zeros((classes, m), dtype=int)
     one_hot_matrix[Y, np.arange(m)] = 1
 
+    """Print the encoded matrix with point separators"""
+    for row in one_hot_matrix:
+        formatted_row = " . ".join(map(str, row))
+        one_hot_matrix = formatted_row
     return one_hot_matrix
