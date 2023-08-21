@@ -179,7 +179,7 @@ class DeepNeuralNetwork:
                 print("Loaded object is not an instance of DeepNeuralNetwork.")
                 return None
         except FileExistsError:
-            print(f"File '{filename}' not found.")
+            print("File '{}' not found.".format(filename))
             return None
             
 
