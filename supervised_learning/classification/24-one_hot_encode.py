@@ -3,15 +3,17 @@
 import numpy as np
 
 
+""" a function to Convert a numeric label vector into a one-hot matrix """
 def one_hot_encode(Y, classes):
-    """ Convert a numeric label vector into a one-hot matrix """
+
+
     """ check if the Y (numpy.ndarray): Numeric class labels with shape (m,)
         classes (int): Maximum number of classes"""
     if not isinstance(Y, np.ndarray) or len(Y.shape) != 1:
         return None
     if not isinstance(classes, int) or classes < 2 or classes < Y.max():
         return None
-    m =Y.shape[0]
+    m = Y.shape[0]
     m = len(Y)
     if m == 0:
         return None
