@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-
+""" import numpy modul as np"""
 import numpy as np
 
 
