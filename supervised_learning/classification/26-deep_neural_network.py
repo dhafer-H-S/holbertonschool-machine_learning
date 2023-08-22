@@ -161,10 +161,10 @@ class DeepNeuralNetwork:
 
     """ def function methode to save the instance objects to a file """
     def save(self, filename):
-        if filename.endswith('.pkl'):
-            filename += '.pkl'
+        if not filename.endswith(".pkl"):
+            filename += ".pkl"
 
-        with open(filename, 'wb') as file:
+        with open(filename, "wb") as file:
             pickle.dump(self, file)
 
     """ def function methode to load data to file"""
@@ -173,13 +173,8 @@ class DeepNeuralNetwork:
         try:
             with open(filename, 'rb') as file:
                 loaded_object = pickle.load(file)
-            if isinstance(loaded_object, DeepNeuralNetwork):
-                return loaded_object
-            else:
-                print("Loaded object is not an instance of DeepNeuralNetwork.")
-                return None
+            return loaded_object
         except FileExistsError:
-            print("File '{}' not found.".format(filename))
             return None
             
 
