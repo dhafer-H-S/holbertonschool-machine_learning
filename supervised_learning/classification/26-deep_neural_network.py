@@ -176,6 +176,3 @@ class DeepNeuralNetwork:
             return loaded_object
         except FileExistsError:
             return None
-            
-
-
