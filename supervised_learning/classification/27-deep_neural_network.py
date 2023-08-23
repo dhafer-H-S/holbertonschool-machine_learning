@@ -129,7 +129,15 @@ class DeepNeuralNetwork:
 
     """ def methode train to train the model """
 
-    def train(self, X, Y, iterations=5000, alpha=0.05, verbose=True, graph=True, step=100):
+    def train(
+            self,
+            X,
+            Y,
+            iterations=5000,
+            alpha=0.05,
+            verbose=True,
+            graph=True,
+            step=100):
         """ X contain the inpute data """
         """ Y contain the correct labels for the inpute data """
         """ numberof iteration to train over the model """
@@ -158,8 +166,6 @@ class DeepNeuralNetwork:
                 costs.append(cost)
                 iter.append(i)
 
-            
-
         if graph:
             plt.plot(iter, costs, 'b')
             plt.title("Training Cost")
@@ -170,6 +176,7 @@ class DeepNeuralNetwork:
         return self.evaluate(X, Y)
 
     """ def function methode to save the instance objects to a file """
+
     def save(self, filename):
         """ add .pkl to the filename if it dosen't exist"""
         if not filename.endswith(".pkl"):
