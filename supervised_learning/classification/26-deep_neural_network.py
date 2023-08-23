@@ -143,8 +143,8 @@ class DeepNeuralNetwork:
             raise ValueError("alpha must be positive")
         if not isinstance(step, int):
             raise TypeError("step must be an integer")
-        if step < 0 or step > iterations:
-            raise ValueError("step must be positive and <= iterations")
+        if step < 1 or step > iterations:
+            step = iterations
         costs = []
         iter = []
         for i in range(iterations):
