@@ -82,30 +82,33 @@ class DeepNeuralNetwork:
 
         return A, self.__cache
 
-    """ Method for cost function """
+    """ Method for cost function to Calculate the cross-entropy cost """
 
     def cost(self, Y, A):
+        """ Y (numpy.ndarray): One-hot encoded target labels
+        of shape (classes, m)
+        """
+        """ A (numpy.ndarray): Predicted activations of shape (classes, m)"""
         """ Calculate the cost function """
         if not isinstance(Y, np.ndarray) or len(Y.shape) != 2:
             return None
-        m, classes = Y.shape
+        m = Y.shape[1]
         cost = -1 / m * np.sum(Y * np.log(A))
         return cost
 
     """ Method to evaluate the deep neural network and its predictions """
 
     def evaluate(self, X, Y):
-        """ Perform forward propagation to calculate predictions and cost """
+        """
+        X (numpy.ndarray): Input data of shape (input features, m).
+        Y (numpy.ndarray): One-hot encoded target labels of shape (classes, m).
+        """
         A, cache = self.forward_prop(X)
-        
-
-        """ Make predictions """
-        prediction = np.argmax(A, axis=0)
+        """  Convert softmax output to class predictions """
+        predictions = np.argmax(A, axis=0)
         true_labels = np.argmax(Y, axis=0)
-
-        accuracy = np.mean(prediction == true_labels)
+        accuracy = np.mean(predictions == true_labels)
         cost = self.cost(Y, A)
-
         return accuracy, cost
 
     """ Method for gradient descent to train the neural network """
