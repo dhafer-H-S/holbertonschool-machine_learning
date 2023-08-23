@@ -168,16 +168,19 @@ class DeepNeuralNetwork:
     """ def function methode to save the instance objects to a file """
 
     def save(self, filename):
+        """ add .pkl to the filename if it dosen't exist"""
         if not filename.endswith(".pkl"):
             filename += ".pkl"
-
+        """ open file and write in it"""
         with open(filename, "wb") as file:
+            """ save inside the file"""
             pickle.dump(self, file)
 
     """ def function methode to load data to file"""
     @staticmethod
     def load(filename):
         try:
+            """open file and read it's content"""
             with open(filename, 'rb') as file:
                 loaded_object = pickle.load(file)
             return loaded_object
