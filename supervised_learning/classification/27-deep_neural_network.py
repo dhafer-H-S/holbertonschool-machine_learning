@@ -90,8 +90,6 @@ class DeepNeuralNetwork:
         """
         """ A (numpy.ndarray): Predicted activations of shape (classes, m)"""
         """ Calculate the cost function """
-        if not isinstance(Y, np.ndarray) or len(Y.shape) != 2:
-            return None
         m = Y.shape[1]
         cost = -1 / m * np.sum(Y * np.log(A))
         return cost
@@ -105,11 +103,9 @@ class DeepNeuralNetwork:
         """
         A, cache = self.forward_prop(X)
         """  Convert softmax output to class predictions """
-        predictions = np.argmax(A, axis=0)
-        true_labels = np.argmax(Y, axis=0)
-        accuracy = np.mean(predictions == true_labels)
+        prediction = np.where(A == np.amax(A, axis=0), 1, 0)
         cost = self.cost(Y, A)
-        return accuracy, cost
+        return prediction, cost
 
     """ Method for gradient descent to train the neural network """
 
