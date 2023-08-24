@@ -61,24 +61,24 @@ class DeepNeuralNetwork:
         self.__cache['A0'] = X
 
         """ Loop through every layer in the neural network """
-        for l in range(1, self.__L + 1):
+        for L in range(1, self.__L + 1):
             """ Get data, weight, and bias """
-            data = self.__cache['A' + str(l - 1)]
-            w = self.__weights['W' + str(l)]
-            bias = self.__weights['b' + str(l)]
+            data = self.__cache['A' + str(L - 1)]
+            w = self.__weights['W' + str(L)]
+            bias = self.__weights['b' + str(L)]
 
             """ Perform forward propagation """
             Z = np.dot(w, data) + bias
             """ calculate activation function using softmax """
-            if l == self.L:
+            if L == self.L:
                 A = np.exp(Z) / np.sum(np.exp(Z), axis=0, keepdims=True)
-                self.__cache['A' + str(l)] = A
+                self.__cache['A' + str(L)] = A
             else:
                 """ calculat eusing sigmoid function"""
                 A = 1 / (1 + np.exp(-Z))
 
                 """ Store data in cache """
-                self.__cache['A' + str(l)] = A
+                self.__cache['A' + str(L)] = A
 
         return A, self.__cache
 
