@@ -36,7 +36,6 @@ class DeepNeuralNetwork:
         self.__L = len(layers)
         self.__cache = {}
         self.__weights = {}
-        
 
         layer_size = nx
         """ Loop through the range of numbers of layers """
@@ -60,13 +59,11 @@ class DeepNeuralNetwork:
     @property
     def weights(self):
         return self.__weights
+
     @property
     def activation(self):
         return self.__activation
-    
 
-
-        
     """ Method for forward propagation of the neural network """
 
     def forward_prop(self, X):
@@ -108,7 +105,7 @@ class DeepNeuralNetwork:
         """
         """ A (numpy.ndarray): Predicted activations of shape (classes, m)"""
         """ Calculate the cost function """
-        m = Y.shape[1] 
+        m = Y.shape[1]
         cost = -1 / m * np.sum(Y * np.log(A))
         return cost
 
@@ -139,9 +136,11 @@ class DeepNeuralNetwork:
             dw = 1 / m * np.dot(dz, A_prev.T)
             db = 1 / m * np.sum(dz, axis=1, keepdims=True)
             if self.activation == 'sig':
-                dz = np.matmul(self.__weights['W' + str(i)].T, dz) * A_prev * (1 - A_prev)
+                dz = np.matmul(
+                    self.__weights['W' + str(i)].T, dz) * A_prev * (1 - A_prev)
             else:
-                dz = np.matmul(self.__weights['W' + str(i)].T, dz) * (1 - A_prev ** 2)
+                dz = np.matmul(
+                    self.__weights['W' + str(i)].T, dz) * (1 - A_prev ** 2)
 
             self.__weights['W' + str(i)] -= alpha * dw
             self.__weights['b' + str(i)] -= alpha * db
@@ -195,6 +194,7 @@ class DeepNeuralNetwork:
         return self.evaluate(X, Y)
 
     """ def function methode to save the instance objects to a file """
+
     def save(self, filename):
         """ add .pkl to the filename if it dosen't exist"""
         if not filename.endswith(".pkl"):
@@ -214,4 +214,3 @@ class DeepNeuralNetwork:
             return loaded_object
         except FileNotFoundError:
             return None
-
