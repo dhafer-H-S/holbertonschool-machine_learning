@@ -109,7 +109,8 @@ class DeepNeuralNetwork:
         """ A (numpy.ndarray): Predicted activations of shape (classes, m)"""
         """ Calculate the cost function """
         m = Y.shape[1] 
-        return -1 / m * np.sum(Y * np.log(A))
+        cost = -1 / m * np.sum(Y * np.log(A))
+        return cost
 
     """ Method to evaluate the deep neural network and its predictions """
 
@@ -137,14 +138,10 @@ class DeepNeuralNetwork:
             """ Calculate the gradients for weights and biases """
             dw = 1 / m * np.dot(dz, A_prev.T)
             db = 1 / m * np.sum(dz, axis=1, keepdims=True)
-            """ Calculate the derivative of the pre-activation Z """
-            dz = np.matmul(self.__weights['W' + str(i)].T,
-                           dz) * A_prev * (1 - A_prev)
             if self.activation == 'sig':
-                dz = dz * (cache['A'+str(i-1)] *
-                           (1-cache['A'+str(i-1)]))
+                dz = np.matmul(self.__weights['W' + str(i)].T, dz) * A_prev * (1 - A_prev)
             else:
-                dz = dz * (1-cache['A'+str(i-1)]**2)
+                dz = np.matmul(self.__weights['W' + str(i)].T, dz) * (1 - A_prev ** 2)
 
             self.__weights['W' + str(i)] -= alpha * dw
             self.__weights['b' + str(i)] -= alpha * db
@@ -182,7 +179,7 @@ class DeepNeuralNetwork:
         for i in range(iterations):
             A = self.forward_prop(X)
             self.gradient_descent(Y, self.cache, alpha)
-            cost = self.cost(Y, A)
+            cost = self.cost(Y, self.cache['A' + str(self.L)])
             if verbose and ((i % step) == 0 or i == iterations):
                 print("Cost after", i, " iterations: ", cost)
                 costs.append(cost)
