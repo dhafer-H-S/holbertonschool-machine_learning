@@ -32,10 +32,11 @@ class DeepNeuralNetwork:
             raise ValueError("activation must be 'sig' or 'tanh'")
 
         """ Set private instance attributes """
+        self.__activation = activation
         self.__L = len(layers)
         self.__cache = {}
         self.__weights = {}
-        self.__activation = activation
+        
 
         layer_size = nx
         """ Loop through the range of numbers of layers """
@@ -60,16 +61,10 @@ class DeepNeuralNetwork:
     def weights(self):
         return self.__weights
     @property
-    def __activation(self):
+    def activation(self):
         return self.__activation
-    """ function methode for activation condition"""
-    def activation(self, Z):
-        if self.__activation == 'sig':
-            return 1 / (1 + np.exp(-Z))
-        elif self.__activation == 'tanh':
-            return (np.exp(Z) - np.exp(-Z)) / (np.exp(Z) + np.exp(-Z))
-        else:
-            raise ValueError("Invalid activation function")
+    
+
 
     """ Method for forward propagation of the neural network """
 
@@ -91,11 +86,17 @@ class DeepNeuralNetwork:
                 A = np.exp(Z) / np.sum(np.exp(Z), axis=0, keepdims=True)
                 self.__cache['A' + str(L)] = A
             else:
-                """ calculat eusing sigmoid function"""
-                A = self.activation(Z)
+                """ function methode for activation condition"""
+                if self.__activation == 'sig':
+                    return 1 / (1 + np.exp(-Z))
+                elif self.__activation == 'tanh':
+                    return np.tanh(Z)
+                else:
+                    raise ValueError("Invalid activation function")
 
                 """ Store data in cache """
                 self.__cache['A' + str(L)] = A
+                self.__cache['Z' + str(L)] = Z
 
         return A, self.__cache
 
@@ -175,7 +176,7 @@ class DeepNeuralNetwork:
         costs = []
         iter = []
         for i in range(iterations):
-            A, cache = self.forward_prop(X)
+            A = self.forward_prop(X)
             self.gradient_descent(Y, self.cache, alpha)
             cost = self.cost(Y, A)
             if verbose and ((i % step) == 0 or i == iterations):
