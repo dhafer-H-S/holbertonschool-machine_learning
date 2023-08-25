@@ -66,6 +66,7 @@ class DeepNeuralNetwork:
     
 
 
+        
     """ Method for forward propagation of the neural network """
 
     def forward_prop(self, X):
@@ -88,15 +89,14 @@ class DeepNeuralNetwork:
             else:
                 """ function methode for activation condition"""
                 if self.__activation == 'sig':
-                    return 1 / (1 + np.exp(-Z))
+                    A = 1 / (1 + np.exp(-Z))
                 elif self.__activation == 'tanh':
-                    return np.tanh(Z)
+                    A = np.tanh(Z)
                 else:
                     raise ValueError("Invalid activation function")
 
                 """ Store data in cache """
                 self.__cache['A' + str(L)] = A
-                self.__cache['Z' + str(L)] = Z
 
         return A, self.__cache
 
@@ -108,9 +108,8 @@ class DeepNeuralNetwork:
         """
         """ A (numpy.ndarray): Predicted activations of shape (classes, m)"""
         """ Calculate the cost function """
-        m = Y.shape[1]
-        cost = -1 / m * np.sum(Y * np.log(A))
-        return cost
+        m = Y.shape[1] 
+        return -1 / m * np.sum(Y * np.log(A))
 
     """ Method to evaluate the deep neural network and its predictions """
 
@@ -139,9 +138,14 @@ class DeepNeuralNetwork:
             dw = 1 / m * np.dot(dz, A_prev.T)
             db = 1 / m * np.sum(dz, axis=1, keepdims=True)
             """ Calculate the derivative of the pre-activation Z """
-            dz = np.dot(self.__weights['W' + str(i)].T,
-                        dz) * A_prev * (1 - A_prev)
-            """ Update weights and biases using the learning rate alpha """
+            dz = np.matmul(self.__weights['W' + str(i)].T,
+                           dz) * A_prev * (1 - A_prev)
+            if self.activation == 'sig':
+                dz = dz * (cache['A'+str(i-1)] *
+                           (1-cache['A'+str(i-1)]))
+            else:
+                dz = dz * (1-cache['A'+str(i-1)]**2)
+
             self.__weights['W' + str(i)] -= alpha * dw
             self.__weights['b' + str(i)] -= alpha * db
 
@@ -194,7 +198,6 @@ class DeepNeuralNetwork:
         return self.evaluate(X, Y)
 
     """ def function methode to save the instance objects to a file """
-
     def save(self, filename):
         """ add .pkl to the filename if it dosen't exist"""
         if not filename.endswith(".pkl"):
@@ -214,3 +217,4 @@ class DeepNeuralNetwork:
             return loaded_object
         except FileNotFoundError:
             return None
+
