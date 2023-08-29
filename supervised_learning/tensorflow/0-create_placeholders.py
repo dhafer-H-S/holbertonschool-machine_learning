@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 
 
+import tensorflow.compat.v1 as tf
+
 """ a place holder function return x, and y for the neural network"""
 def create_placeholders(nx, classes):
     """nx the number of feature colims in our data"""
