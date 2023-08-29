@@ -5,6 +5,7 @@ import tensorflow.compat.v1 as tf
 """Import the create_layer function"""
 create_layer = __import__('1-create_layer').create_layer
 
+
 """ function of the forword propagation"""
 def forward_prop(x, layer_sizes=[], activations=[]):
     """ x is the inpute tensor to the neural network"""
