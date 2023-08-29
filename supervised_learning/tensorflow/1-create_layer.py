@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
 
-import tensorflow as tf
-
 """create layer """
 import tensorflow.compat.v1 as tf
 
