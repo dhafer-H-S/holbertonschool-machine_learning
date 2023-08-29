@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-
+""" import tenserflow module """
 import tensorflow.compat.v1 as tf
 
 
