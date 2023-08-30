@@ -3,7 +3,10 @@
 """Calculate the accuracy of predictions."""
 import tensorflow.compat.v1 as tf
 
-
+"""
+refers to measuring how well model's predictions match the actual values
+Accuracy = (Number of Correct Predictions) / (Total Number of Predictions)
+"""
 def calculate_accuracy(y, y_pred):
     """
         y A placeholder for the labels of the input data.
