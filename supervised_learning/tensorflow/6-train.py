@@ -3,6 +3,7 @@
 """train function that builds, trains, and saves a neural network classifier"""
 
 import tensorflow as tf
+
 calculate_accuracy = __import__('3-calculate_accuracy').calculate_accuracy
 calculate_loss = __import__('4-calculate_loss').calculate_loss
 create_placeholders = __import__('0-create_placeholders').create_placeholders
