@@ -3,20 +3,12 @@
 import tensorflow.compat.v1 as tf
 
 
-""" function to updzte the parameters in the neural network and
-evaluet the process"""
-
-
+"""Evaluate the output of a neural network."""
 def evaluate(X, Y, save_path):
-    """Evaluate the output of a neural network.
-
-    Args:
-        X: Numpy array containing input data to evaluate.
-        Y: Numpy array containing one-hot labels for X.
-        save_path: Location to load the model from.
-
-    Returns:
-        The network's prediction, accuracy, and loss.
+    """
+        X Numpy array containing input data to evaluate.
+        Y Numpy array containing one-hot labels for X.
+        save_path Location to load the model from.
     """
     """ Reset the TensorFlow graph to ensure a clean slate """
     tf.reset_default_graph()
