@@ -12,13 +12,14 @@ def create_train_op(loss, alpha):
     """alpha is the learning rate"""
 
     """ an operation that trains the network usnig gradent descent """
-    """This line creates an instance of the GradientDescentOptimizer 
+    """This line creates an instance of the GradientDescentOptimizer
     from TensorFlow's training module"""
     optimizer = tf.train.GradientDescentOptimizer(learning_rate=alpha)
     """ this function call generates the operation that minimizes
-    the provided loss using the optimization methode defined by the optimizer"""
+    the provided loss using the optimization methode defined
+    by the optimizer """
     """ it calculates gradient with respect to the model's trainble variables
     and updates them based on the learning rate"""
     train_op = optimizer.minimize(loss)
-    
+
     return train_op
