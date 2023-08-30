@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 
-import tensorflow.compat.v1 as tf
-
 """Evaluate the output of a neural network."""
+import tensorflow.compat.v1 as tf
 
 
 def evaluate(X, Y, save_path):
