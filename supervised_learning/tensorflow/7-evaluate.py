@@ -2,8 +2,9 @@
 
 import tensorflow.compat.v1 as tf
 
-
 """Evaluate the output of a neural network."""
+
+
 def evaluate(X, Y, save_path):
     """
         X Numpy array containing input data to evaluate.
