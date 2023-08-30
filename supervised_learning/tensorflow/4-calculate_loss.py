@@ -10,10 +10,14 @@ def calculate_loss(y, y_pred):
     y_pred a tensor containing the network's predictions
     """
 
-    """tf.reduce. mean calculate the mean of the computed cross entropy losses"""
-    """this function calculates th esoftmax cross entropy loss between the
+    """
+    tf.reduce. mean calculate the mean of the computed cross entropy losses
+    """
+    """
+    this function calculates th esoftmax cross entropy loss between the
     true lbels yan the netwwork prediction y_pred it computes the cross entropy
-    loss for each example and classs and the takes the mean over all examples """
+    loss for each example and classs and the takes the mean over all examples
+    """
     loss = tf.reduce_mean(
         tf.nn.softmax_cross_entropy_with_logits(
             labels=y, logits=y_pred))
