@@ -14,7 +14,7 @@ forward_prop = __import__('2-forward_prop').forward_prop
 def train(X_train, Y_train, X_valid, Y_valid, layer_sizes,
           activations, alpha, iterations, save_path="/tmp/model.ckpt"):
     """
-builds, trains, and saves a neural network classifier
+    builds, trains, and saves a neural network classifier
     """
     x, y = create_placeholders(X_train.shape[1], Y_train.shape[1])
 
