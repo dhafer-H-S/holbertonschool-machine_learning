@@ -4,6 +4,7 @@
 
 import numpy as np
 
+
 """ normalize data"""
 def normalize(X, m, s):
     """
@@ -13,6 +14,6 @@ def normalize(X, m, s):
     """
     """ m is the mean of all features of x"""
     """ s contains the standar deviation of all features of x"""
-    """ the function to calculate the normilasied data"""
+    """ the function to calculate the normilized data"""
     normalized_X = (X - m) / s
     return normalized_X
