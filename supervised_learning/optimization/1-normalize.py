@@ -3,9 +3,9 @@
 
 
 import numpy as np
-
-
 """ normalize data"""
+
+
 def normalize(X, m, s):
     """
     x is the data with sahpe (d, nx)
