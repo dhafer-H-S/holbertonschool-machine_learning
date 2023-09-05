@@ -3,9 +3,9 @@
 
 
 import numpy as np
-
-
 """shuffle data points in two matrices the same way"""
+
+
 def shuffle_data(X, Y):
     """
     x is the data with sahpe (m, nx)
