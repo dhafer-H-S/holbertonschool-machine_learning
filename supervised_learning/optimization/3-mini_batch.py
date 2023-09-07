@@ -26,7 +26,6 @@ def train_mini_batch(
 
         for i in range(epochs):
             print('After {} epochs:'.format(i))
-            print('After {} epochs:'.format(i))
             train_cost, train_accuracy = sess.run(
                 (loss, accuracy), feed_dict={
                     x: X_train, y: Y_train})
