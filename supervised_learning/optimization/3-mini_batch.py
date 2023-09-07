@@ -27,7 +27,7 @@ def train_mini_batch(
         train_op = tf.get_collection('train_op')[0]
 
         for i in range(epochs):
-            print('After {} epochs: '.format(i))
+            print('After {} epochs:'.format(i))
             train_cost, train_accuracy = sess.run(
                 (loss, accuracy), feed_dict={
                     x: X_train, y: Y_train})
