@@ -5,9 +5,6 @@ import tensorflow.compat.v1 as tf
 shuffle_data = __import__('2-shuffle_data').shuffle_data
 
 
-"""
-function trains a loaded neural network model using mini batch gradient descent
-"""
 def train_mini_batch(
         X_train,
         Y_train,
