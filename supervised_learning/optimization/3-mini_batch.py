@@ -35,7 +35,7 @@ def train_mini_batch(
             print('\tTraining Accuracy: {}'.format(train_accuracy))
             valid_cost, valid_accuracy = sess.run(
                 (loss, accuracy), feed_dict={
-                    x: X_valid, y: Y_valid})
+                    x:X_valid, y:Y_valid})
             print('\tValidation Cost: {}'.format(valid_cost))
             print('\tValidation Accuracy: {}'.format(valid_accuracy))
             X_shuffle, Y_shuffle = shuffle_data(X_train, Y_train)
@@ -46,7 +46,7 @@ def train_mini_batch(
                 if not ((j // batch_size + 1) % 100):
                     cost, acc = sess.run(
                         (loss, accuracy), feed_dict={
-                            x: X_batch, y: Y_batch})
+                            x:X_batch, y:Y_batch})
                     print('\tStep {}:'.format(j // batch_size + 1))
                     print('\t\tCost: {}'.format(cost))
                     print('\t\tAccuracy: {}'.format(acc))
