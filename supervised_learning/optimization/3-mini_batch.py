@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+"""
+a function to Train a loaded neural network model using mini-batch
+gradient descent
+"""
 
 import tensorflow.compat.v1 as tf
 shuffle_data = __import__('2-shuffle_data').shuffle_data
