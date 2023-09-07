@@ -17,21 +17,8 @@ def train_mini_batch(
         save_path="/tmp/model.ckpt"):
     """ create tensorflow session """
     with tf.Session() as sess:
-        """
-        the saver import a pres trained model graph froma '.meta' file
-        using tensorflow function
-        the model is loaded but not the weights
-        """
         saver = tf.train.import_meta_graph(load_path + '.meta')
-        """
-        restore data models weights and other variabales froma checkpoint file
-        """
         saver.restore(sess, load_path)
-        """
-        These lines retrieve specific tensors and operations from the imported graph
-        using their collection names. These tensors and operations are assumed to
-        be named and collected in the loaded model
-        """
         x = tf.get_collection('x')[0]
         y = tf.get_collection('y')[0]
         accuracy = tf.get_collection('accuracy')[0]
