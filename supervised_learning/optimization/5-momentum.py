@@ -10,7 +10,7 @@ def update_variables_momentum(alpha, beta1, var, grad, v):
     grad: is a numpy.ndarray containing the gradient of var
     v: is the previous first moment of var
     """
-    v = beta1 * v + alpha * grad
+    v = beta1 * v + (1- beta1) * grad
     """ update the momentum v """
-    var = var - v
+    var = var - alpha * v
     return var, v
