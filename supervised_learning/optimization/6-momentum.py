@@ -8,6 +8,7 @@ optimization algorithm
 
 import tensorflow.compat.v1 as tf
 
+
 def create_momentum_op(loss, alpha, beta1):
     """
     loss is the loss of the network
