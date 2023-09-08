@@ -11,5 +11,6 @@ def update_variables_momentum(alpha, beta1, var, grad, v):
     v: is the previous first moment of var
     """
     v = beta1 * v + alpha * grad
-    var -= v
+    """ update the momentum v """
+    var = var - v
     return var, v
