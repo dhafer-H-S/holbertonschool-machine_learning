@@ -16,5 +16,5 @@ def create_RMSProp_op(loss, alpha, beta2, epsilon):
     """ loss of the model network """
 
     optimizer = tf.train.RMSPropOptimizer(
-        learning_rate=alpha, decay=beta2, epsilon=epsilon)
+                                          learning_rate=alpha, decay=beta2, epsilon=epsilon)
     return optimizer.minimze(loss)
