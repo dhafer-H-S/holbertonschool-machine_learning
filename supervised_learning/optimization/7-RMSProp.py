@@ -18,3 +18,4 @@ def update_variables_RMSProp(alpha, beta2, epsilon, var, grad, s):
     s_updated = beta2 * s + (1 - beta2) * gred_squared
     """ update the variable using the rms prop updates rule """
     var = var - alpha / (np.sqrt( s + epsilon) * grad)
+    return var, s_updated
