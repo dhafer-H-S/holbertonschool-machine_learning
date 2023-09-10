@@ -14,6 +14,6 @@ def create_RMSProp_op(loss, alpha, beta2, epsilon):
     """ epilson is a small  number to avid divisin by zero """
     """ loss of the model network """
 
-    optimizer = tf.train.RMSPropOptimizer(
-        learning_rate=alpha, decay=beta2, epsilon=epsilon)
-    return optimizer.minimze(loss)
+    optimizer = tf.train.RMSPropOptimizer(learning_rate=alpha,
+                                          decay=beta2, epsilon=epsilon)
+    return optimizer.minimize(loss)
