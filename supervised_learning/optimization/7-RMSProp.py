@@ -1,4 +1,4 @@
-#!/usr/biin/env python3
+#!/usr/bin/env python3
 """ RMS_prop optimizer that updates the parameters """
 import numpy as np
 
