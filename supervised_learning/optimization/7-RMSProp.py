@@ -15,7 +15,7 @@ def update_variables_RMSProp(alpha, beta2, epsilon, var, grad, s):
     gred_squared = grad ** 2
     """ update the seconde moment (S) using exponential moving average """
     """ s = exp(gred_squared) """
-    s_updated = beta2 * s + (1 - beta2) * gred_squared
+    s = beta2 * s + (1 - beta2) * gred_squared
     """ update the variable using the rms prop updates rule """
-    var_updated = (var - alpha) * (grad / (np.sqrt(s_updated) + epsilon))
-    return var_updated, s_updated
+    var = var - (alpha * grad / (np.sqrt(s) + epsilon))
+    return var, s
