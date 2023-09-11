@@ -6,7 +6,8 @@ import tensorflow.compat.v1 as tf
 
 
 def learning_rate_decay(alpha, decay_rate, global_step, decay_step):
-    """ function to calculate decay operation using tensorflow predefined function """
+    """ function to calculate decay operation using
+    tensorflow predefined function """
 
     decay = tf.train.inverse_time_decay(
         learning_rate=alpha,
