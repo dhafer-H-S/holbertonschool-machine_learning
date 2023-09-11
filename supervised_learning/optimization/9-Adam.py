@@ -20,8 +20,8 @@ def update_variables_Adam(alpha, beta1, beta2, epsilon, var, grad, v, s, t):
     """updating the moving average of the grdient for the seconde moment """
     s = beta2 * s + (1 - beta2) * (grad ** 2)
     """ correcting the bias  """
-    v_hat = v / ( 1 - (beta1^t))
-    s_hat = s / (1 - (beta2^t))
+    v_hat = v / ( 1 - (beta1**t))
+    s_hat = s / (1 - (beta2**t))
     """ updating the parameters """
-    var = var - alpha * v_hat / np.sqrt(s_hat) + epsilon
+    var -= alpha * v_hat / np.sqrt(s_hat) + epsilon
     return var, v_hat, s_hat
