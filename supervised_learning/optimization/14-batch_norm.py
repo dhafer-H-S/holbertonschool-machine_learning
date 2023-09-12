@@ -14,24 +14,22 @@ def create_batch_norm_layer(prev, n, activation):
     n: Number of nodes in the layer to be created.
     activation: Activation function to be used on the output of the layer.
     """
-    """Create a Dense layer with VarianceScaling initializer"""
-    dense = tf.layers.Dense(
+    dense_layer = tf.layers.Dense(
         units=n,
         kernel_initializer=tf.contrib.layers.variance_scaling_initializer(
             mode="FAN_AVG"),
         use_bias=False)
 
-    mean, variance = tf.nn.moments(dense(prev), axes=0)
+    dense_output = dense_layer(prev)
 
-    gamma = tf.Variable(tf.ones([n]), dtype=tf.float32)
-    beta = tf.Variable(tf.zeros([n]), dtype=tf.float32)
+    batch_norm_layer = tf.layers.BatchNormalization(
+        epsilon=1e-8,
+        trainable=True,
+        gamma_initializer=tf.ones_initializer(),
+        beta_initializer=tf.zeros_initializer())
 
-    bn = tf.nn.batch_normalization(
-        dense(prev),
-        mean=mean,
-        variance=variance,
-        offset=beta,
-        scale=gamma,
-        variance_epsilon=1e-8)
+    bn_output = batch_norm_layer(dense_output)
 
-    return activation(bn)
+    activated_output = activation(bn_output)
+
+    return activated_output
