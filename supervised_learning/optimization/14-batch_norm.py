@@ -17,7 +17,7 @@ def create_batch_norm_layer(prev, n, activation):
     """Create a Dense layer with VarianceScaling initializer"""
     dense = tf.layers.Dense(
         units=n,
-        kernel_initializer=tf.contrib.layers. variance_scaling_initializer(
+        kernel_initializer=tf.contrib.layers.variance_scaling_initializer(
             mode="FAN_AVG"),
         use_bias=False)
 
@@ -26,8 +26,12 @@ def create_batch_norm_layer(prev, n, activation):
     gamma = tf.Variable(tf.ones([n]), dtype=tf.float32)
     beta = tf.Variable(tf.zeros([n]), dtype=tf.float32)
 
-    bn = tf.nn.batch_normalization(dense(
-        prev), mean=mean, variance=variance, offset=beta,
-        scale=gamma, variance_epsilon=1e-8)
+    bn = tf.nn.batch_normalization(
+        dense(prev),
+        mean=mean,
+        variance=variance,
+        offset=beta,
+        scale=gamma,
+        variance_epsilon=1e-8)
 
     return activation(bn)
