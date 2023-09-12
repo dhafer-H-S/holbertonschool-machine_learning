@@ -5,6 +5,7 @@ neural network using batch normalization predefined tensorflow function
 """
 import tensorflow.compat.v1 as tf
 
+
 def create_batch_norm_layer(prev, n, activation):
     """
     Create a batch normalization layer for a neural network in TensorFlow.
@@ -14,10 +15,11 @@ def create_batch_norm_layer(prev, n, activation):
     activation: Activation function to be used on the output of the layer.
     """
     """Create a Dense layer with VarianceScaling initializer"""
-    dense = tf.layers.Dense(units=n,
-                            kernel_initializer=tf.contrib.layers.
-                            variance_scaling_initializer(mode="FAN_AVG")
-                            , use_bias=False)
+    dense = tf.layers.Dense(
+        units=n,
+        kernel_initializer=tf.contrib.layers. variance_scaling_initializer(
+            mode="FAN_AVG"),
+        use_bias=False)
 
     mean, variance = tf.nn.moments(dense(prev), axes=0)
 
