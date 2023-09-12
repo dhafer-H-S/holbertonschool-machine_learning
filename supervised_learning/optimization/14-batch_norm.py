@@ -30,6 +30,4 @@ def create_batch_norm_layer(prev, n, activation):
         prev), mean=mean, variance=variance, offset=beta,
         scale=gamma, variance_epsilon=1e-8)
 
-    output = activation(bn)
-
-    return output
+    return activation(bn)
