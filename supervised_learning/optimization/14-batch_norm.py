@@ -14,20 +14,20 @@ def create_batch_norm_layer(prev, n, activation):
     activation: Activation function to be used on the output of the layer.
     """
     """Create a Dense layer with VarianceScaling initializer"""
-    dense_layer = tf.keras.layers.Dense(
-        n, kernel_initializer=tf.keras.initializers.VarianceScaling(
-            mode='fan_avg'))
+    dense = tf.layers.Dense(units=n,
+                            kernel_initializer=tf.contrib.layers.
+                            variance_scaling_initializer(mode="FAN_AVG")
+                            , use_bias=False)
 
-    """Apply the Dense layer to the previous layer"""
-    dense_output = dense_layer(prev)
+    mean, variance = tf.nn.moments(dense(prev), axes=0)
 
-    """Create a BatchNormalization layer with trainable parameters gamma and beta"""
-    batch_norm_layer = tf.keras.layers.BatchNormalization(epsilon=1e-8)
+    gamma = tf.Variable(tf.ones([n]), dtype=tf.float32)
+    beta = tf.Variable(tf.zeros([n]), dtype=tf.float32)
 
-    """Apply BatchNormalization to the output of the Dense layer"""
-    bn_output = batch_norm_layer(dense_output)
+    bn = tf.nn.batch_normalization(dense(
+        prev), mean=mean, variance=variance, offset=beta,
+        scale=gamma, variance_epsilon=1e-8)
 
-    """Apply the activation function to the normalized output"""
-    activated_output = activation(bn_output)
+    output = activation(bn)
 
-    return activated_output
+    return output
