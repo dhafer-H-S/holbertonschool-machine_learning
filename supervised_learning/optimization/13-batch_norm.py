@@ -10,10 +10,10 @@ def batch_norm(Z, gamma, beta, epsilon):
     """ batch normalize function """
     """
     z : represent the unactivated output of a neural network
-    gamma: contain scaling factors used in batch normalization 
+    gamma: contain scaling factors used in batch normalization
     gamma ->allows the neural network to learn whether to amplify
             or reduce the normalized values for each feature
-    beta : contains offset factor used in batch normalization 
+    beta : contains offset factor used in batch normalization
     beta -> allows the neural network to learn an offset or
             shift in the data for each feature
     epilson is just used to prevent division by zero when
