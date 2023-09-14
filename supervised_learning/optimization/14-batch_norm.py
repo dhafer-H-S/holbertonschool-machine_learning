@@ -6,7 +6,6 @@ neural network using batch normalization predefined tensorflow function
 import tensorflow.compat.v1 as tf
 
 
-
 def create_batch_norm_layer(prev, n, activation):
     """
     Create a batch normalization layer for a neural network in TensorFlow.
