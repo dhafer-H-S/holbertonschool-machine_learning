@@ -11,7 +11,7 @@ def create_confusion_matrix(labels, logits):
     classes = labels.shape[1]
     
     # Initialize the confusion matrix with zeros
-    confusion = np.zeros((classes, classes), dtype=int)
+    confusion = np.zeros(classes, classes)
     
     # Iterate through each data point
     for i in range(labels.shape[0]):
