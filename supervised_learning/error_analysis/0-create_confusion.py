@@ -12,14 +12,14 @@ def create_confusion_matrix(labels, logits):
 
     # Initialize the confusion matrix with zeros
     confusion = np.zeros((classes, classes))
-    
+
     # Iterate through each data point
     for i in range(labels.shape[0]):
         # Find the index of the correct label (truth) and predicted label
         true_label = np.argmax(labels[i])
         predicted_label = np.argmax(logits[i])
-        
+
         # Increment the corresponding cell in the confusion matrix
         confusion[true_label, predicted_label] += 1
-    
+
     return confusion
