@@ -2,6 +2,7 @@
 """calculates the precision for eache class in confusion matrix """
 import numpy as np
 
+
 def precision(confusion):
     """ find the precision of the neural network """
     classes = confusion.shape[0]
