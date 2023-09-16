@@ -20,6 +20,10 @@ def sensitivity(confusion):
         """ this make the confusion had access to row and column """
         total_actuale_positive = np.sum(confusion[i, :])
         """
+        np.sum(confusion[i, :]) for sensitivity calculation it correctly
+        identifies false negative
+        """
+        """
         the clone ':' means select all elements along this axis i
         it take the entire row of the indexed i
         """
