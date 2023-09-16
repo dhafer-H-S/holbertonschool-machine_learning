@@ -7,7 +7,12 @@ import numpy as np
 
 
 def sensitivity(confusion):
+    """ calculates sensitivity based on the data in the confusion martix """
     classes = confusion.shape[0]
+    """
+    confusion is a shape of (classes , classes) and by
+    confussion.shape[0] we only get the classes at first not the second
+    """
     sensitivities = np.zeros(classes)
     """ an array to store sensitivity in it """
     for i in range(classes):
@@ -20,4 +25,3 @@ def sensitivity(confusion):
         sensitivities[i] = sensitivity
         """ store sensitivity in the array sensitivities """
     return sensitivities
-
