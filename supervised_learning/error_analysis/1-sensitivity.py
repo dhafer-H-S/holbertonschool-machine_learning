@@ -19,7 +19,10 @@ def sensitivity(confusion):
         TP = confusion[i, i]
         """ this make the confusion had access to row and column """
         total_actuale_positive = np.sum(confusion[i, :])
-        """ the clone ':' means select all elements along this axis i """
+        """
+        the clone ':' means select all elements along this axis i
+        it take the entire row of the indexed i
+        """
         sensitivity = TP / total_actuale_positive
         """ calculate the sensitivity """
         sensitivities[i] = sensitivity
