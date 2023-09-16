@@ -8,10 +8,8 @@ precision = __import__('2-precision').precision
 
 
 def f1_score(confusion):
-    classes = confusion.shape[0]
-    f1_scores = np.zeros(classes)
-    for i in range(classes):
-        sens = sensitivity(confusion[i, :])
-        prec = precision(confusion[:, i])
-        f1_scores[i] = 2 * (prec * sens) / (prec + sens)
+    """ f1 score function"""
+    sens = sensitivity(confusion)
+    prec = precision(confusion)
+    f1_scores = 2 * (prec * sens) / (prec + sens)
     return f1_scores
