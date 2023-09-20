@@ -7,13 +7,15 @@ def l2_reg_gradient_descent(Y, weights, cache, alpha, lambtha, L):
     """
     Y : conatins the correct labels for the data witha a shape (classes, M)
     weights : dictionnary containig the weights and biases of neural network
-    cache :  a dictionnary containg the output of each layer of the neural network
+    cache :  a dictionnary containg the output of each layer of the neural
+    network
     alpha : learning rate
     lambtha : the L2 regularization
     L : the number of layers og th network
     """
     """
-    to update the wieghts and biases using gradient descent we need to perform
+    to update the wieghts and biases using gradient descent we need
+    to perform
     a backpropagation to computes the gradient of the cost function with respect
     to the weights and biases
     rhis involves moving backward throught the network from the output layer to
@@ -44,9 +46,9 @@ def l2_reg_gradient_descent(Y, weights, cache, alpha, lambtha, L):
             """ calculates the gradient of the loss """
         dW = (1 / m) * np.dot(dZ, A_prev.T) + (lambtha / m) * W
         """
-        dW is to compute as the product of 1 / m to normalize by the number of data points
-        the dot product of dZ and A_prev.T to calculate the weight gradient
-        (lambtha / m) * W is to add L2 regularization
+        dW is to compute as the product of 1 / m to normalize by the number of
+        data points the dot product of dZ and A_prev.T to calculate
+        the weight gradient (lambtha / m) * W is to add L2 regularization
         """
         db = (1 / m) * np.sum(dZ, axis=1, keepdims=True)
         """
