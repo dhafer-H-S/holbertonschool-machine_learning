@@ -29,31 +29,30 @@ def l2_reg_gradient_descent(Y, weights, cache, alpha, lambtha, L):
     The neural network uses tanh activations on each layer except the last
     , which uses a softmax activation
     """
-    m = Y.shape[1]
-    dZ = cache[f'A{L}'] - Y
+
     """ number of data points in the neural netwrok """
+    m = len(Y[0])
+    dz = cache['A'+str(L)] - Y
     for i in range(L, 0, -1):
-        """ loop through layers"""
-        A_prev = cache[f'A{i - 1}']
-        A = cache[f'A{i}']
-        W = weights[f'W{i}']
+        dw = (1/m) * np.matmul(dz, cache['A'+str(i-1)].T)\
+            + (lambtha / m)*weights['W'+str(i)]
+        db = (1/m) * np.sum(dz, axis=1, keepdims=True)
+        da = np.matmul(weights['W'+str(i)].T, dz)
+        dz = da * (1-cache['A'+str(i-1)]**2)
+
+        weights['W'+str(i)] = weights['W'+str(i)]\
+            - alpha * dw
+        weights['b'+str(i)] = weights['b'+str(i)]\
+            - alpha * db
         """ retrieve cached values """
-        if i != L:
-            dZ = np.dot(weights[f'W{i + 1}'].T, dZ) * (1 - np.power(A, 2))
-            """ calculates the gradient of the loss """
-        dW = (1 / m) * np.dot(dZ, A_prev.T) + (lambtha / m) * W
         """
         dW is to compute as the product of 1 / m to normalize by the number of
         data points the dot product of dZ and A_prev.T to calculate
         the weight gradient (lambtha / m) * W is to add L2 regularization
         """
-        db = (1 / m) * np.sum(dZ, axis=1, keepdims=True)
         """
         this satnds for the gradient descent for the biases
         """
-        weights[f'W{i}'] -= alpha * dW
-        weights[f'b{i}'] -= alpha * db
-        weights[f'W{i}'] -= alpha * (lambtha / m) * weights[f'W{i}']
         """
         update paramaetrs as
         weights
