@@ -1,4 +1,4 @@
-# usr/bin/env python3
+#!/usr/bin/env python3
 """ update parameters unsing gradient descent and L2 regularization """
 import numpy as np
 
