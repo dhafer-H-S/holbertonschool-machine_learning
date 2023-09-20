@@ -34,5 +34,3 @@ def l2_reg_cost(cost, lambtha, weights, L, m):
     """
     total_cost = cost + L2_regularization_cost
     return total_cost
-
-
