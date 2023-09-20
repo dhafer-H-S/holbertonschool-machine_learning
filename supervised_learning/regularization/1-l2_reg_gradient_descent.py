@@ -16,8 +16,8 @@ def l2_reg_gradient_descent(Y, weights, cache, alpha, lambtha, L):
     """
     to update the wieghts and biases using gradient descent we need
     to perform
-    a backpropagation to computes the gradient of the cost function with respect
-    to the weights and biases
+    a backpropagation to computes the gradient of the cost function with
+    respect to the weights and biases
     rhis involves moving backward throught the network from the output layer to
     the inpute layer
     """
