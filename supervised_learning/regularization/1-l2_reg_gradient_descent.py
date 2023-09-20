@@ -32,7 +32,7 @@ def l2_reg_gradient_descent(Y, weights, cache, alpha, lambtha, L):
     """ number of data points in the neural netwrok """
     for i in range(1, L + 1):
         """ loop through layers"""
-        A_prev = cache[f'A{i-1}']
+        A_prev = cache[f'A{i - 1}']
         A = cache[f'A{i}']
         W = weights[f'W{i}']
         """ retrieve cached values """
