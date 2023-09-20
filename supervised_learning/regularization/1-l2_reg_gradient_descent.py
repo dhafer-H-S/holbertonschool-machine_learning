@@ -30,18 +30,16 @@ def l2_reg_gradient_descent(Y, weights, cache, alpha, lambtha, L):
     , which uses a softmax activation
     """
     m = Y.shape[1]
-    grad_cache = {}
+    dZ = cache[f'A{L}'] - Y
     """ number of data points in the neural netwrok """
-    for i in range(1, L + 1):
+    for i in range(L, 0, -1):
         """ loop through layers"""
         A_prev = cache[f'A{i - 1}']
         A = cache[f'A{i}']
         W = weights[f'W{i}']
         """ retrieve cached values """
-        if i == L:
-            dZ = A - Y
-        else:
-            dZ = np.dot(weights[f'W{i + 1}'].T, grad_cache[f'dZ{i + 1}']) * (1 - np.power(A, 2))
+        if i != L:
+            dZ = np.dot(weights[f'W{i + 1}'].T, dZ) * (1 - np.power(A, 2))
             """ calculates the gradient of the loss """
         dW = (1 / m) * np.dot(dZ, A_prev.T) + (lambtha / m) * W
         """
