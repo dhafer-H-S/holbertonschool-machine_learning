@@ -41,8 +41,7 @@ def l2_reg_gradient_descent(Y, weights, cache, alpha, lambtha, L):
         if i == L:
             dZ = A - Y
         else:
-            dZ = np.dot(
-                weights[f'W{i + 1}'].T, grad_cache[f'dZ{i + 1}']) * (1 - np.power(A, 2))
+            dZ = np.dot(weights[f'W{i + 1}'].T, grad_cache[f'dZ{i + 1}']) * (1 - np.power(A, 2))
             """ calculates the gradient of the loss """
         dW = (1 / m) * np.dot(dZ, A_prev.T) + (lambtha / m) * W
         """
