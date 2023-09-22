@@ -15,5 +15,5 @@ def l2_reg_create_layer(prev, n, activation, lambtha):
         activation=activation,
         kernel_initializer=tf.keras.initializers.VarianceScaling(scale=2.0, mode=("fan_avg")),
         kernel_reglarization=tf.contrib.layers.l2_regularizer(lambtha)
-    )(prev)
-    return layer
+    )
+    return layer(prev)
