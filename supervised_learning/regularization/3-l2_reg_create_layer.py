@@ -10,10 +10,12 @@ def l2_reg_create_layer(prev, n, activation, lambtha):
     activation: is the activation function that should be used on the layer
     lambtha: the L2 regularization parameter
     """
+    layer_weight = tf.keras.initializers.VarianceScaling(scale=2.0, mode=("fan_avg"))
+    L2_regularization = tf.keras.regularizers.L2(lambtha)
+
     layer = tf.layers.Dense(
-        units=n,
+        n,
         activation=activation,
-        kernel_initializer=tf.keras.initializers.VarianceScaling(
-            mode=("fan_avg")),
-        kernel_reglarization=tf.contrib.layers.l2_regularizer(lambtha))
+        kernel_initializer=layer_weight,
+        kernel_reglarization=L2_regularization)
     return layer(prev)
