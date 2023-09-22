@@ -12,9 +12,9 @@ def l2_reg_create_layer(prev, n, activation, lambtha):
     """
     L2_regularization = tf.keras.regularizers.L2(lambtha)
     """a regularier that applies a L2 regularization penalty"""
-    layer_weight = tf.keras.initializers.VarianceScaling(scale=2.0, mode=("fan_avg"))
+    layer_weight = tf.keras.initializers.VarianceScaling(
+        scale=2.0, mode=("fan_avg"))
     """initializer that adapt tits scale tot the shape og it's inpute tensors"""
-
 
     layer = tf.layers.Dense(n, activation=activation,
                             kernel_initializer=layer_weight,
