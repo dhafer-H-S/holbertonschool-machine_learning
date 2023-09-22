@@ -13,6 +13,6 @@ def l2_reg_create_layer(prev, n, activation, lambtha):
     layer = tf.layers.dense(
         units=n,
         activation=activation,
-        kernel_reglarization=tf.keras.regularizers.l2(lambtha)
+        kernel_reglarization=tf.keras.regularizers.L2(lambtha)
     )(prev)
     return layer
