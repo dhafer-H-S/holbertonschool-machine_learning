@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """a function that conducts forword propagation using dropout"""
 import numpy as np
-import tensorflow.compat.v1 as tf
 
 
 def dropout_forward_prop(X, weights, L, keep_prob):
