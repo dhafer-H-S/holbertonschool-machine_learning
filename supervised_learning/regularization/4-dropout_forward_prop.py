@@ -18,7 +18,7 @@ def dropout_forward_prop(X, weights, L, keep_prob):
         A dictionary containing the outputs of each layer and dropout masks.
     """
     output_layer = {}
-    dropouts = {}
+
     for i in range(1, L + 1):
         if i == 1:
             output_layer['A0'] = X
@@ -32,7 +32,7 @@ def dropout_forward_prop(X, weights, L, keep_prob):
             A *= dropout_mask / keep_prob
 
             output_layer['A' + str(i)] = A
-            dropouts['D' + str(i)] = dropout_mask
+            output_layer['D' + str(i)] = dropout_mask
 
         else:
             # Using softmax activation
@@ -41,4 +41,4 @@ def dropout_forward_prop(X, weights, L, keep_prob):
 
             output_layer['A' + str(i)] = A
 
-    return output_layer, dropouts
+    return output_layer
