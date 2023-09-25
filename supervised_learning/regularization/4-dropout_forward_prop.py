@@ -40,4 +40,4 @@ def dropout_forward_prop(X, weights, L, keep_prob):
 
             output_layer['A' + str(i)] = A
 
-    return output_layer
+    return output_layer, dropouts
