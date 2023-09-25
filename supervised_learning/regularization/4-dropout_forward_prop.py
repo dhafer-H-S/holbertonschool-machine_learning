@@ -15,7 +15,7 @@ def dropout_forward_prop(X, weights, L, keep_prob):
     keep_prob : propability that node will kept
     """
     output_layer = {}
-    dropouts = {}
+    dropout_mask = {}
     for i in range(1, L + 1):
         if i < L:
             Z = np.dot(weights['W' + str(i)], X) + weights['b' + str(i)]
