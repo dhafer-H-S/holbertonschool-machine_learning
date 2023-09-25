@@ -27,13 +27,13 @@ def dropout_forward_prop(X, weights, L, keep_prob):
                     activation.shape[1]) < keep_prob)
             """dropout"""
             activation *= dropout_mask / keep_prob
-            output_layer[f'activation{i}'] = activation
+            output_layer['activation' + str(i)] = activation
             dropout_mask[f'D{i}'] = dropout_mask
 
             X = activation
         else:
-            Z = np.dot(weights[f'W{i}'], X) + weights[f'b{i}']
+            Z = np.dot(weights['W' + str(i)], X) + weights['b' + str(i)]
             A = np.exp(Z) / np.sum(np.exp(Z), axis=0, keepdims=True)
 
-            output_layer[f'activation{i}'] = A
+            output_layer['activation' + str(i)] = A
     return {'output_layer': output_layer, 'dropout_mask': dropout_mask}
