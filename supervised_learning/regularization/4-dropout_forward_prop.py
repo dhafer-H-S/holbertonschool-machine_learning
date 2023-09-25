@@ -2,6 +2,7 @@
 """a function that conducts forword propagation using dropout"""
 import numpy as np
 
+
 def dropout_forward_prop(X, weights, L, keep_prob):
     """
     Conduct forward propagation using dropout for a neural network.
@@ -25,7 +26,8 @@ def dropout_forward_prop(X, weights, L, keep_prob):
 
         if i < L:
             # Activation with tanh activation function
-            Z = np.dot(weights['W' + str(i)], output_layer['A' + str(i - 1)]) + weights['b' + str(i)]
+            Z = np.dot(weights['W' + str(i)],
+                       output_layer['A' + str(i - 1)]) + weights['b' + str(i)]
             A = np.tanh(Z)
 
             dropout_mask = (np.random.rand(A.shape[0], A.shape[1]) < keep_prob)
@@ -37,10 +39,10 @@ def dropout_forward_prop(X, weights, L, keep_prob):
 
         else:
             # Using softmax activation
-            Z = np.dot(weights['W' + str(i)], output_layer['A' + str(i - 1)]) + weights['b' + str(i)]
+            Z = np.dot(weights['W' + str(i)],
+                       output_layer['A' + str(i - 1)]) + weights['b' + str(i)]
             A = np.exp(Z) / np.sum(np.exp(Z), axis=0, keepdims=True)
 
             output_layer['A' + str(i)] = A
-
 
     return output_layer
