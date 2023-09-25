@@ -20,7 +20,9 @@ def dropout_forward_prop(X, weights, L, keep_prob):
     output_layer = {}
     dropouts = {}
     for i in range(1, L + 1):
-        output_layer['A0'] = X
+        if i == 1:
+            output_layer['A0'] = X
+
         if i < L:
             """ Activation with tanh activation function """
             
