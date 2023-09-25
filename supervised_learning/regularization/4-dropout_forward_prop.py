@@ -28,7 +28,7 @@ def dropout_forward_prop(X, weights, L, keep_prob):
             """dropout"""
             activation *= dropout_mask / keep_prob
             output_layer['activation' + str(i)] = activation
-            dropout_mask[f'D{i}'] = dropout_mask
+            dropout_mask['D' + str(i)] = dropout_mask
 
             X = activation
         else:
