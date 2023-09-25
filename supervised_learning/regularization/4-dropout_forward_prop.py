@@ -40,6 +40,6 @@ def dropout_forward_prop(X, weights, L, keep_prob):
             A = np.exp(Z) / np.sum(np.exp(Z), axis=0, keepdims=True)
 
             output_layer['A' + str(i)] = A
-            output_layer['D' + str(i)] = dropout_mask
+
 
     return output_layer
