@@ -38,4 +38,4 @@ def dropout_forward_prop(X, weights, L, keep_prob):
 
             output_layer['activation' + str(i)] = A
 
-    return output_layer, dropouts
+    return output_layer
