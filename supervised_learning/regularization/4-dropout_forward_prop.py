@@ -22,20 +22,22 @@ def dropout_forward_prop(X, weights, L, keep_prob):
 
     for i in range(1, L + 1):
         if i < L:
-            Z = np.dot(weights['W' + str(i)], X) + weights['b' + str(i)]
-            A = np.tanh(Z)  # Activation with tanh activation function
+            """ Activation with tanh activation function """
+            Z = np.dot(weights['W' + str(i)], output_layer['A' + str(i - 1)]) + weights['b' + str(i)]
+            A = np.tanh(Z)
 
             dropout_mask = (np.random.rand(A.shape[0], A.shape[1]) < keep_prob)
             A *= dropout_mask / keep_prob
 
-            output_layer['activation' + str(i)] = A
+            output_layer['A' + str(i)] = A
             dropouts['D' + str(i)] = dropout_mask
 
-            X = A
+            output_layer['A0'] = X
         else:
+            """ using softmax activation """
             Z = np.dot(weights['W' + str(i)], X) + weights['b' + str(i)]
             A = np.exp(Z) / np.sum(np.exp(Z), axis=0, keepdims=True)
 
-            output_layer['activation' + str(i)] = A
+            output_layer['A' + str(i)] = A
 
     return output_layer
