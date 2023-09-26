@@ -14,10 +14,13 @@ def build_model(nx, layers, activations, lambtha, keep_prob):
     model = k.Sequential()
     regularizer = k.regulaziers.L2(lambtha)
     for i in range(len(layers)):
+        if i == 0
         model.add(k.layers.Dense(layers[i], activation=activations[i], input_shape=(nx,),
                                  kernel_regularizer=regularizer
                                  ))
-        if i != len(layers) - 1:
-            rate = 1 - keep_prob
-            model.add(k.layers.Dropout(rate))
+    else:
+        model.add(k.layers.Dense(layers[i], activation=activations[i],  kernel_regularizer=regularizer))
+    if i != len(layers) - 1:
+        rate = 1 - keep_prob
+        model.add(k.layers.Dropout(rate))
     return model
