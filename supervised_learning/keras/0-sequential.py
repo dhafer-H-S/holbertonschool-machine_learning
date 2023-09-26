@@ -12,11 +12,12 @@ def build_model(nx, layers, activations, lambtha, keep_prob):
     keep_prob is the propability that node will be kept for dropout
     """
     model = k.Sequential()
-    initializer = k.regulaziers.L2(lambtha)
+    regularizer = k.regulaziers.L2(lambtha)
     for i in range(len(layers)):
         model.add(k.layers.Dense(layers[i], activation=activations[i], input_shape=(nx,),
-                                 kernel_regularizer=initializer
+                                 kernel_regularizer=regularizer
                                  ))
-        rate = 1 - keep_prob
-        model.add(k.layers.Dropout(rate))
+        if i != len(layers) - 1:
+            rate = 1 - keep_prob
+            model.add(k.layers.Dropout(rate))
     return model
