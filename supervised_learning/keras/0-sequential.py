@@ -12,7 +12,7 @@ def build_model(nx, layers, activations, lambtha, keep_prob):
     keep_prob is the propability that node will be kept for dropout
     """
     model = k.Sequential()
-    regularizer = k.regulaziers.L2(lambtha)
+    regularizer = k.regularizers.L2(lambtha)
     for i in range(len(layers)):
         if i == 0:
             model.add(
