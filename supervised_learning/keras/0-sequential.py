@@ -6,8 +6,10 @@ import tensorflow.keras as k
 def build_model(nx, layers, activations, lambtha, keep_prob):
     """
     nx is the number of input features to the network
-    layers is a list containing the number of nodes in each layer of the network
-    activation is a list containg the activation function used for each layer of the network
+    layers is a list containing the number of nodes in each layer
+    of the network
+    activation is a list containg the activation function used for each
+    layer of the network
     lambtha is the L2 regularization parameter
     keep_prob is the propability that node will be kept for dropout
     """
