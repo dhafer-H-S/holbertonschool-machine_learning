@@ -34,13 +34,17 @@ def build_model(nx, layers, activations, lambtha, keep_prob):
                 kernel_regularizer=regulaizer)(input)
         if i != len(layers) - 1:
             """this conditon check if the layer is the last layer or not"""
-            """if it's not then a dropout layer is added after the curent layer"""
+            """
+            if it's not then a dropout layer is added after the curent layer
+            """
             hiden_layer = K.layers.Dense(
                 layers[i],
                 activation=activations[i],
                 kernel_regularizer=regulaizer)(hiden_layer)
             hiden_layer = K.layers.Dropout(1 - keep_prob)(hiden_layer)
-            """1 - keep_prob is the propability that a node wil be dropped out """
+            """
+            1 - keep_prob is the propability that a node wil be dropped out
+            """
         if i == layers[i]:
             hiden_layer = K.layers.Dense(
                 layers[i], activation='softmax')(hiden_layer)
