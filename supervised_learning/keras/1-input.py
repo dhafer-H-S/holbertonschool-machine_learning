@@ -15,7 +15,7 @@ def build_model(nx, layers, activations, lambtha, keep_prob):
     Returns: the keras model
     """
     """define the inpute layer"""
-    input = K.layers.Input(shape=(nx,))
+    input = K.Input(shape=(nx,))
     prev = input
     """
     connect the layers then creat a hiden layer as a dense
