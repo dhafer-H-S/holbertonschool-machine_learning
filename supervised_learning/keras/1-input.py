@@ -22,7 +22,7 @@ def build_model(nx, layers, activations, lambtha, keep_prob):
     that recive the inpute only form the inpute layer
     """
     regulaizer = K.regularizers.L2(lambtha)
-    for i in range(len(layers)):
+    for i , layer in enumerate(layers):
         """this conditon check if the layer is the first layer or not"""
         """
         if it's the first layer then the inpute layer is
