@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+"""Build a neural network with the Keras library"""
 import tensorflow.keras as K
 
 
