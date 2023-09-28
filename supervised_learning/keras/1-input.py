@@ -29,7 +29,7 @@ def build_model(nx, layers, activations, lambtha, keep_prob):
         connected to it
         """
         hiden_layer = K.layers.Dense(
-            layers[i],
+            layer,
             activation=activations[i],
             kernel_regularizer=regulaizer)(prev)
         if i != len(layers) - 1:
