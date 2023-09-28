@@ -20,7 +20,7 @@ def build_model(nx, layers, activations, lambtha, keep_prob):
     connect the layers then creat a hiden layer as a dense
     that recive the inpute only form the inpute layer
     """
-    regulaizer = K.regularizers.l2(lambtha)
+    regulaizer = K.regularizers.L2(lambtha)
     for i in range(len(layers)):
         if i == 0:
             """this conditon check if the layer is the first layer or not"""
