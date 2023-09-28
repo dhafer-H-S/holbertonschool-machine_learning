@@ -32,7 +32,7 @@ def build_model(nx, layers, activations, lambtha, keep_prob):
             hiden_layer = K.layers.Dense(layers[i], activation=activations[i], kernel_regularizer=regulaizer)(hiden_layer)
             hiden_layer = K.layers.Dropout(1 - keep_prob)(hiden_layer)
             """1 - keep_prob is the propability that a node wil be dropped out """
-            
+            hiden_layer = K.layers.Dense(10, activation='softmax')(hiden_layer)
     output = hiden_layer
     model = K.Model(inputs=input, outputs=output)
     return model
