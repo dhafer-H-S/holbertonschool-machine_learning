@@ -22,7 +22,7 @@ def build_model(nx, layers, activations, lambtha, keep_prob):
     """
     regulaizer = K.regularizers.L2(lambtha)
     for i in range(len(layers)):
-        hiden_layer = K.layers.Dense(layers[i], activation=activations, kernel_regularizer=regulaizer)(input)
+        hiden_layer = K.layers.Dense(layers[i], activation=activations[i], kernel_regularizer=regulaizer)(input)
         if i != len(layers) - 1:
             """this conditon check if the layer is the last layer or not"""
             """if it's not then a dropout layer is added after the curent layer"""
