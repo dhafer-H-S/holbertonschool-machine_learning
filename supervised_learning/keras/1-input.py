@@ -20,7 +20,7 @@ def build_model(nx, layers, activations, lambtha, keep_prob):
     connect the layers then creat a hiden layer as a dense
     that recive the inpute only form the inpute layer
     """
-    regulaizer = K.regularizers.L2(lambtha)
+    regulaizer = K.regularizers.l2(lambtha)
     for i in range(len(layers)):
         hiden_layer = K.layers.Dense(layers[i], activation=activations[i], kernel_regularizer=regulaizer)(input)
         if i != len(layers) - 1:
