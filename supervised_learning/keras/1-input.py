@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-"""Build a neural network with the Keras library"""
 import tensorflow.keras as K
 
 
@@ -22,27 +20,31 @@ def build_model(nx, layers, activations, lambtha, keep_prob):
     Returns: the keras model
     """
     # Define input layer
-    input = K.layers.Input(shape=(nx,))
+    input_layer = K.layers.Input(shape=(nx,))
 
     # Define regularization
     regularizer = K.regularizers.l2(lambtha)
 
     # Define hidden layers
-    prev = input
+    prev_layer = input_layer
     for i, layer in enumerate(layers):
         # Define dense layer
         dense_layer = K.layers.Dense(
             layer,
             activation=activations[i],
-            kernel_regularizer=regularizer)(prev)
+            kernel_regularizer=regularizer)(prev_layer)
+
         # Add dropout layer if not last layer
         if i != len(layers) - 1:
             dropout_layer = K.layers.Dropout(1 - keep_prob)(dense_layer)
-            prev = dropout_layer
+            prev_layer = dropout_layer
         else:
-            prev = dense_layer
+            prev_layer = dense_layer
+
     # Define output layer
-    output = prev
+    output_layer = prev_layer
+
     # Create model
-    model = K.Model(inputs=input, outputs=output)
+    model = K.Model(inputs=input_layer, outputs=output_layer)
+
     return model
