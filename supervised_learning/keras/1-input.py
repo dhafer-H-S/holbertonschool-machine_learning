@@ -1,47 +1,46 @@
-#!/usr/bin/env python3
-""" build a neural network with keras library"""
-
 import tensorflow.keras as K
 
 
 def build_model(nx, layers, activations, lambtha, keep_prob):
     """
-    nx is the number of the inpute features to the network
-    layer is the number of nodes in each layer of the netwrok
-    activation is a list containing the activation functionused
-    for each layer of the network
-    lambtha is th eL2 regularization parameter
-    keep_prob is the propability that a node will kept for the dropout
+    Build a neural network with the Keras library.
+
+    nx is the number of input features to the network
+
+    layers is a list containing the number of nodes in
+    each layer of the network
+
+    activations is a list containing the activation functions
+    used for each layer of the network
+
+    lambtha is the L2 regularization parameter
+
+    keep_prob is the probability that a node will be kept for dropout
+
     Returns: the keras model
     """
-    """define the inpute layer"""
-    input = K.Input(shape=(nx,))
+    # Define input layer
+    input = K.layers.Input(shape=(nx,))
+
+    # Define regularization
+    regularizer = K.regularizers.l2(lambtha)
+
+    # Define hidden layers
     prev = input
-    """
-    connect the layers then creat a hiden layer as a dense
-    that recive the inpute only form the inpute layer
-    """
-    regulaizer = K.regularizers.L2(lambtha)
-    for i , layer in enumerate(layers):
-        """this conditon check if the layer is the first layer or not"""
-        """
-        if it's the first layer then the inpute layer is
-        connected to it
-        """
-        prev = K.layers.Dense(
+    for i, layer in enumerate(layers):
+        # Define dense layer
+        dense_layer = K.layers.Dense(
             layer,
             activation=activations[i],
-            kernel_regularizer=regulaizer)(prev)
+            kernel_regularizer=regularizer)(prev)
+        # Add dropout layer if not last layer
         if i != len(layers) - 1:
-            """this conditon check if the layer is the last layer or not"""
-            """
-            if it's not then a dropout layer is added after the curent layer
-            """
-
-            prev = K.layers.Dropout(1 - keep_prob)(prev)
-            """
-            1 - keep_prob is the propability that a node wil be dropped out
-            """
+            dropout_layer = K.layers.Dropout(1 - keep_prob)(dense_layer)
+            prev = dropout_layer
+        else:
+            prev = dense_layer
+    # Define output layer
     output = prev
-    model = K.Model(inputs=prev, outputs=output)
+    # Create model
+    model = K.Model(inputs=input, outputs=output)
     return model
