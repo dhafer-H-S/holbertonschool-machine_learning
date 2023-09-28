@@ -29,10 +29,10 @@ def build_model(nx, layers, activations, lambtha, keep_prob):
 
     # Define hidden layers
     prev_layer = input_layer
-    for i, layer in enumerate(layers):
+    for i in range(len(layers)):
         # Define dense layer
         dense_layer = K.layers.Dense(
-            layer,
+            layers[i],
             activation=activations[i],
             kernel_regularizer=regularizer)(prev_layer)
 
