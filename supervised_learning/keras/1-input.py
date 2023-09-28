@@ -28,7 +28,7 @@ def build_model(nx, layers, activations, lambtha, keep_prob):
         if it's the first layer then the inpute layer is
         connected to it
         """
-        hiden_layer = K.layers.Dense(
+        prev = K.layers.Dense(
             layer,
             activation=activations[i],
             kernel_regularizer=regulaizer)(prev)
@@ -38,10 +38,10 @@ def build_model(nx, layers, activations, lambtha, keep_prob):
             if it's not then a dropout layer is added after the curent layer
             """
 
-            hiden_layer = K.layers.Dropout(1 - keep_prob)(hiden_layer)
+            prev = K.layers.Dropout(1 - keep_prob)(prev)
             """
             1 - keep_prob is the propability that a node wil be dropped out
             """
-    output = hiden_layer
+    output = prev
     model = K.Model(inputs=prev, outputs=output)
     return model
