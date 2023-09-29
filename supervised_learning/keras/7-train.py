@@ -15,19 +15,23 @@ def train_model(network, data, labels, batch_size, epochs,
     labels containing the labels of data of shape (m, classes)
     batch_size is the size of the batch used for mini-batch gradient descent
     validation_data is the data to validate the model with
-    early_stopping is a boolean that indicates whether early stopping should be used
+    early_stopping is a boolean that indicates whether early stopping
+    should be used
     early stopping should only be performed if validation_data exists
     early stopping should be based on validation loss
     patience is the patience used for early stopping
-    learning_rate_decay is a boolean that indicates whether learning rate decay should be used
+    learning_rate_decay is a boolean that indicates whether learning
+    rate decay should be used
     learning rate decay should only be performed if validation_data exists
     the decay should be performed using inverse time decay
     the learning rate should decay in a stepwise fashion after each epoch
     each time the learning rate updates, Keras should print a message
     alpha is the initial learning rate
     decay_rate is the decay rate
-    verbose is a boolean that determines if output should be printed during training
-    shuffle is a boolean that determines whether to shuffle the batches every epoch
+    verbose is a boolean that determines if output should be printed
+    during training
+    shuffle is a boolean that determines whether to shuffle the batches
+    every epoch
     """
     """
     Returns: the History object generated after training the model
