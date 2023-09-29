@@ -3,7 +3,17 @@
 import tensorflow.keras as K
 
 
-def train_model(network, data, labels, batch_size, epochs, validation_data=None, early_stopping=False, patience=0, verbose=True, shuffle=False):
+def train_model(
+        network,
+        data,
+        labels,
+        batch_size,
+        epochs,
+        validation_data=None,
+        early_stopping=False,
+        patience=0,
+        verbose=True,
+        shuffle=False):
     """
     network is the model to be trained
     data conating the inpute data of sahpe (m, nx)
@@ -19,6 +29,11 @@ def train_model(network, data, labels, batch_size, epochs, validation_data=None,
     shuffle is a boolean that detemines whether to shuffle the batches
     every epoch normaly it's a good idea
     """
+    callbacks = []
+    if validation_data and early_stoping:
+        early_stopping_callback = K.callbacks.EarlyStopping(
+            monitor=early_stopping, patience=patience)
+        callbacks.append(early_stopping_callback)
     model = network.fit(
         x=data,
         y=labels,
@@ -27,5 +42,6 @@ def train_model(network, data, labels, batch_size, epochs, validation_data=None,
         verbose=verbose,
         validation_data=validation_data,
         shuffle=shuffle,
+        callbacks=callbacks
     )
-    return model.K.callbacks.EarlyStopping(monitor=early_stopping, patience=patience)
+    return model
