@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
-"""
-train a model using mini batch gradient descent and analyse validation data
-and use early stopping and also train with learining rate decay
-"""
+"""Train keras Model."""
 import tensorflow.keras as K
 
 
-def train_model(network, data, labels, batch_size, epochs, validation_data=None, early_stopping=False, patience=0, learning_rate_decay=False, alpha=0.1, decay_rate=1, verbose=True, shuffle=False):
+def train_model(network, data, labels, batch_size, epochs,
+                validation_data=None, early_stopping=False,
+                patience=0, learning_rate_decay=False,
+                alpha=0.1, decay_rate=1, verbose=True,
+                shuffle=False):
+
     """
     network is the model to be trained
     data containing the input data of shape (m, nx)
@@ -27,43 +29,32 @@ def train_model(network, data, labels, batch_size, epochs, validation_data=None,
     verbose is a boolean that determines if output should be printed during training
     shuffle is a boolean that determines whether to shuffle the batches every epoch
     """
+    """
+    Returns: the History object generated after training the model
+    """
+
+    def schedule(epoch):
+        previous_lr = 1
+
+        def lr(epoch, start_lr, decay):
+            nonlocal previous_lr
+            previous_lr *= (start_lr / (1. + decay * epoch))
+            return previous_lr
+        return lr(epoch, alpha, decay_rate)
+
     callbacks = []
-    if validation_data and early_stopping:
-        early_stopping_callback = K.callbacks.EarlyStopping(
-            monitor='val_loss',
-            patience=patience
-        )
-        callbacks.append(early_stopping_callback)
+    if validation_data:
+        if early_stopping:
+            early_stopping_callback = K.callbacks.EarlyStopping(
+                'val_loss', patience=patience)
+            callbacks.append(early_stopping_callback)
+        if learning_rate_decay:
+            lr_callback = K.callbacks.LearningRateScheduler(
+                schedule, verbose=True)
+            callbacks.append(lr_callback)
 
-    if validation_data and learning_rate_decay:
-        def schedule(epoch):
-            return alpha / (1 + decay_rate * epoch)
-
-        lr_scheduler_callback = K.callbacks.LearningRateScheduler(
-            schedule,
-            verbose=1
-        )
-
-        class LrUpdaterCallback(K.callbacks.Callback):
-            def on_epoch_end(self, epoch, logs=None):
-                new_lr = schedule(epoch)
-                K.backend.set_value(self.model.optimizer.lr, new_lr)
-                print(f'Learning rate updated to {new_lr:.5f}')
-
-        lr_updater_callback = LrUpdaterCallback()
-
-        callbacks.append(lr_scheduler_callback)
-        callbacks.append(lr_updater_callback)
-
-    model = network.fit(
-        x=data,
-        y=labels,
-        batch_size=batch_size,
-        epochs=epochs,
-        verbose=verbose,
-        validation_data=validation_data,
-        shuffle=shuffle,
-        callbacks=callbacks
-    )
-
-    return model
+    history = network.fit(data, labels, batch_size, epochs,
+                          verbose=verbose, shuffle=shuffle,
+                          validation_data=validation_data,
+                          callbacks=callbacks)
+    return history
