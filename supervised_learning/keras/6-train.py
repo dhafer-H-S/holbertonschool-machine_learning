@@ -30,10 +30,13 @@ def train_model(
     every epoch normaly it's a good idea
     """
     callbacks = []
-    if validation_data and early_stoping:
+    if validation_data and early_stopping:
         early_stopping_callback = K.callbacks.EarlyStopping(
-            monitor=early_stopping, patience=patience)
+            monitor='val_loss',
+            patience=patience
+        )
         callbacks.append(early_stopping_callback)
+
     model = network.fit(
         x=data,
         y=labels,
@@ -44,4 +47,5 @@ def train_model(
         shuffle=shuffle,
         callbacks=callbacks
     )
+
     return model
