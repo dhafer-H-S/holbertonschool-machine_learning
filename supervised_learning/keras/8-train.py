@@ -72,8 +72,7 @@ def train_model(
         if save_best and filepath:
             save_best_callback = K.callbacks.ModelCheckpoint(
                 filepath,
-                monitor='val_loss',
-                mode=min
+                save_best_only=save_best
             )
             callbacks.append(save_best_callback)
     history = network.fit(data, labels, batch_size, epochs,
