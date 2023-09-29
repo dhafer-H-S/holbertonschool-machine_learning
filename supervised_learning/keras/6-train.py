@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-"""train a model using mini batch gradient descent and analyse validation data and use early stopping"""
+"""
+train a model using mini batch gradient descent and analyse validation data
+and use early stopping
+"""
 import tensorflow.keras as K
 
 
@@ -20,7 +23,8 @@ def train_model(
     labels conating the labels of data of shape (m, classes)
     batch_size is the size of the batch used for mini batch gradient descent
     validation data is the data to validate the model with
-    early stoping is a boolean that indicates whether early stopping should be used
+    early stoping is a boolean that indicates whether early stopping should
+    be used
     early stopping should only be performed if validation_data exists
     early stopping should be based on validation loss
     patience is the patience used for early stopping
