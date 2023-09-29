@@ -32,7 +32,6 @@ def train_model(network, data, labels, batch_size, epochs,
     """
     Returns: the History object generated after training the model
     """
-
     def schedule(epoch):
         previous_lr = 1
 
