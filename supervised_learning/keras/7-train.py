@@ -6,20 +6,7 @@ and use early stopping and also train with learining rate decay
 import tensorflow.keras as K
 
 
-def train_model(
-        network,
-        data,
-        labels,
-        batch_size,
-        epochs,
-        validation_data=None,
-        early_stopping=False,
-        patience=0,
-        learning_rate_decay=False,
-        alpha=0.1,
-        decay_rate=1,
-        verbose=True,
-        shuffle=False):
+def train_model(network, data, labels, batch_size, epochs, validation_data=None, early_stopping=False, patience=0, learning_rate_decay=False, alpha=0.1, decay_rate=1, verbose=True, shuffle=False):
     """
     network is the model to be trained
     data containing the input data of shape (m, nx)
