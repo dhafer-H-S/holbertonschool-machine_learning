@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-a save function that save model in a specific filename 
+a save function that save model in a specific filename
 a load function that load a model from a specific filename
 """
 import tensorflow.keras as K
@@ -12,6 +12,7 @@ def save_model(network, filename):
     filename is the path of the file that the model should be saved
     """
     K.models.save_model(network, filename)
+
 
 def load_model(filename):
     """
