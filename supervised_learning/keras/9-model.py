@@ -11,10 +11,10 @@ def save_model(network, filename):
     network is the model to save
     filename is the path of the file that the model should be saved
     """
-    K.saving.save_model(network, filename)
+    K.models.save_model(network, filename)
 
 def load_model(filename):
     """
     filename is the path of the file that the model should be loaded
     """
-    return K.saving.load_model(filename)
+    return K.models.load_model(filename)
