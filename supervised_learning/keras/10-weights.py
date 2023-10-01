@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-function that saves weights and load 
+function that saves weights and load
 """
 import tensorflow.keras as K
 
