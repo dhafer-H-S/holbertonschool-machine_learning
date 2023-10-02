@@ -1,5 +1,6 @@
 #!/usr/bin/env python3ù
 """save model configuration in JSON and load model configuration from JSON"""
+import tensorflow.keras as K
 
 
 def save_config(network, filename):
