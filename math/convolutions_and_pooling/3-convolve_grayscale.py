@@ -14,7 +14,7 @@ def convolve_grayscale(images, kernel, padding='same', stride=(1, 1)):
     kh is height of the kernelt
     kw is the width of the kernel
 
-    
+
     padding is either a tuple of (ph, pw), ‘same’, or ‘valid’
     if ‘same’, performs a same convolution
     if ‘valid’, performs a valid convolution
@@ -39,7 +39,7 @@ def convolve_grayscale(images, kernel, padding='same', stride=(1, 1)):
         ph, pw = 0, 0
     else:
         ph, pw = padding
-    
+
     """calculate the padding needed"""
     pad = ((0, 0), (ph, ph), (pw, pw))
     images = np.pad(images, pad_width=pad, mode='constant')
