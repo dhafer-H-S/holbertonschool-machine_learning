@@ -22,7 +22,7 @@ def convolve_grayscale_same(images, kernel):
     """calculate the padding needed"""
     pad = ((0, 0), (padd_h, padd_h), (padd_w, padd_w))
     images = np.pad(images, pad_width=pad, mode='constant')
-    
+
     for i in range(0, h):
         for j in range(0, w):
             output[:, i, j] = (kernel * images[:, i: i + kh,
