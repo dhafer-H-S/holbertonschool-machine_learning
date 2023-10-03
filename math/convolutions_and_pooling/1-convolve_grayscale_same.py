@@ -14,7 +14,7 @@ def convolve_grayscale_same(images, kernel):
     kh is height of the kernelt
     kw is the width of the kernel
     """
-    m, h, w = images.shape
+    _, h, w = images.shape
     kh, kw = kernel.shape
     padd_h = (kh - 1) // 2
     padd_w = (kw - 1) // 2 
