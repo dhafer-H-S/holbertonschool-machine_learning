@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """a functionthat performs a valid convolution on grayscale images """
 import numpy as np
-from numpy.lib.stride_tricks import as_strided
+
 
 def convolve_grayscale(images, kernel, padding='same', stride=(1, 1)):
     """
