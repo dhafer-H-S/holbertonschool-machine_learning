@@ -10,7 +10,7 @@ def convolve_channels(images, kernel, padding='same', stride=(1, 1)):
     Args:
         images (numpy.ndarray): Input images with shape (m, h, w, c).
         kernel (numpy.ndarray): Convolution kernel with shape (kh, kw, c).
-        padding (tuple or str): Padding for the height and width dimensions. 
+        padding (tuple or str): Padding for the height and width dimensions.
             Can be a tuple of (ph, pw), 'same', or 'valid'.
         stride (tuple): Stride for the height and width dimensions.
 
