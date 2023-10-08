@@ -5,7 +5,7 @@ import numpy as np
 
 def convolve(images, kernels, padding='same', stride=(1, 1)):
     """
-    
+
     images of shape (m, h, w, c)
     m is the number of images
     h is the height in pixels of the images
@@ -30,7 +30,7 @@ def convolve(images, kernels, padding='same', stride=(1, 1)):
     kh, kw, c, nc = kernels.shape
     sh, sw = stride
 
-    if type(padding) is tuple:
+    if isinstance(padding, tuple):
         ph, pw = padding
     elif padding == 'valid':
         ph, pw = 0, 0
@@ -48,6 +48,6 @@ def convolve(images, kernels, padding='same', stride=(1, 1)):
             y = j * sw
             for k in range(nc):
                 output[:, i, j, k] = np.sum(
-                    images[:, x:x+kh, y:y+kw] * kernels[:, :, :, k],
+                    images[:, x:x + kh, y:y + kw] * kernels[:, :, :, k],
                     axis=(1, 2, 3))
     return output
