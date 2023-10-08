@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-""" a convolution function performs on image with diffrent or multiple types of kernels """
+"""
+a convolution function performs on image with diffrent
+or multiple types of kernels
+"""
 import numpy as np
 
 
