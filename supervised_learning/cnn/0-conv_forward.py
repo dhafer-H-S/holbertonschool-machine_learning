@@ -55,7 +55,7 @@ def conv_forward(A, W, b, activation, padding="same", stride=(1, 1)):
                 for channel in range(c_new):
                     output[i, j, k, channel] = np.sum(
                         A_prev_padded[i, j * sh: j * sh + kh,
-                                    k * sw: k * sw + kw, :] * W[:, :, :, channel])
+                                      k * sw: k * sw + kw, :] * W[:, :, :, channel])
     A = activation(output + b)
 
     return A
