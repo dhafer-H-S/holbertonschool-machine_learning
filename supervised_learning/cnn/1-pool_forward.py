@@ -38,7 +38,9 @@ def pool_forward(A, kernel_shape, stride=(1, 1), mode='max'):
             for k in range(output_w):
                 for x in range(c_prv):
                     if mode == 'max':
-                        output[i, j, k, x] = np.max(A[i, j * sh: j * sh + kh, k * sw: k * sw + kw, x])
+                        output[i, j, k, x] = np.max(
+                            A[i, j * sh: j * sh + kh, k * sw: k * sw + kw, x])
                     elif mode == 'avg':
-                        output[i, j, k, x] = np.mean(A[i, j * sh: j * sh + kh, k * sw: k * sw + kw, x])
+                        output[i, j, k, x] = np.mean(
+                            A[i, j * sh: j * sh + kh, k * sw: k * sw + kw, x])
     return output
