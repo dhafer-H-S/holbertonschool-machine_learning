@@ -62,7 +62,7 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
 
                     # Update dA_prev using the chain rule
                     dA_prev[i, h * sh: h * sh + kh, w * sw: w * sw + kw,
-                            :] += W[:, :, :, c] * dZ[i, h, w, c][..., np.newaxis]
+                        :] += W[:, :, :, c] * dZ[i, h, w, c][..., np.newaxis]
 
                     # Update dW using the chain rule
                     dW[:, :, :, c] += slice_A_prev * \
