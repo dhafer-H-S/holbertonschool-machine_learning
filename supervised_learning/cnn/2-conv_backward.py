@@ -24,21 +24,26 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
         pad_bottom = pad_h - pad_top
         pad_left = pad_w // 2
         pad_right = pad_w - pad_left
-        A_prev = np.pad(A_prev, ((0, 0), (pad_top, pad_bottom), (pad_left, pad_right), (0, 0)), mode='constant')
+        A_prev = np.pad(A_prev, ((0, 0), (pad_top, pad_bottom),
+                        (pad_left, pad_right), (0, 0)), mode='constant')
     else:
         pad_h, pad_w = 0, 0
     for i in range(m):
         for h in range(output_h):
             for w in range(output_w):
                 for c in range(c_new):
-                    # Compute the slice of A_prev that was used to generate the output
-                    slice_A_prev = A_prev[i, h * sh: h * sh + kh, w * sw: w * sw + kw, :]
+                    # Compute the slice of A_prev that was used to generate the
+                    # output
+                    slice_A_prev = A_prev[i, h * sh: h *
+                                          sh + kh, w * sw: w * sw + kw, :]
 
                     # Update dA_prev using the chain rule
-                    dA_prev[i, h * sh: h * sh + kh, w * sw: w * sw + kw, :] += W[:, :, :, c] * dZ[i, h, w, c][..., np.newaxis]
+                    dA_prev[i, h * sh: h * sh + kh, w * sw: w * sw + kw,
+                            :] += W[:, :, :, c] * dZ[i, h, w, c][..., np.newaxis]
 
                     # Update dW using the chain rule
-                    dW[:, :, :, c] += slice_A_prev * dZ[i, h, w, c][..., np.newaxis]
+                    dW[:, :, :, c] += slice_A_prev * \
+                        dZ[i, h, w, c][..., np.newaxis]
 
     # Remove padding from dA_prev if necessary
     if padding == 'same':
