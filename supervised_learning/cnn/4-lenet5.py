@@ -7,6 +7,9 @@ import tensorflow.compat.v1 as tf
 
 
 def lenet5(x, y):
+    """
+    a modified version of the LeNet-5 architecture using tensorflow
+    """
     m = x.shape
     """
     m is the number of images
