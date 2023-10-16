@@ -62,4 +62,4 @@ def conv_backward(dZ, A_prev, W, b, padding="same", stride=(1, 1)):
 
     if padding == 'same':
         dA = dA[:, ph:-ph, pw:-pw, :]
-    return dA, dw, 
+    return dA, dw, db
