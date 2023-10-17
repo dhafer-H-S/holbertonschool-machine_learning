@@ -14,7 +14,7 @@ def accuracy(Y, prediction):
     return tf.reduce_mean(tf.cast(correct, dtype='float'))
 
 
-def lenet5(X, Y):
+def lenet5(x, y):
     init = tf.keras.initializers.VarianceScaling(scale=2.0)
     x1 = tf.layers.Conv2D(filters=6, kernel_size=5, padding='same',
                           kernel_initializer=init, activation='relu')(x)
