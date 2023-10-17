@@ -20,41 +20,35 @@ def lenet5(x, y):
     """
     conv1 = tf.layers.Conv2D(
         filters=6,
-        kernel_size=(
-            5,
-            5),
+        kernel_size=5,
         padding='same',
-        activation='tanh',
-        input_shape=x,
         kernel_initializer=tf.keras.initializers.VarianceScaling(scale=2.0),
+        activation='tanh',
         name='conv1')(x)
     """
     convolution layer 1
     """
-    pool1 = tf.layers.MaxPooling2D(pool_size=(2, 2), strides=(2, 2))(conv1)
+    pool1 = tf.layers.MaxPooling2D(2, 2)(conv1)
     """
     max pooling layer 1
     """
     conv2 = tf.layers.Conv2D(
         filters=16,
-        kernel_size=(5, 5),
+        kernel_size=5,
         padding='valid',
-        activation='tanh',
         kernel_initializer=tf.keras.initializers.VarianceScaling(scale=2.0),
+        activation='tanh',
         name='conv2')(pool1)
     """
     convolution layer 2
     """
-    pool2 = tf.layers.MaxPooling2D(
-        pool_size=(
-            2, 2), strides=(
-            2, 2), name='pool2')(conv2)
+    pool2 = tf.layers.MaxPooling2D(2, 2)(conv2)
     """
     max pooling layer 2
     """
     flatten = tf.layers.Flatten()(pool2)
     fully_con = tf.layers.Dense(
-        units=120,
+        120,
         activation='relu',
         kernel_initializer=tf.keras.initializers.VarianceScaling(scale=2.0),
         name='fully_con')(flatten)
@@ -62,7 +56,7 @@ def lenet5(x, y):
     fully connected layer with 120 nodes
     """
     fully_con2 = tf.layers.Dense(
-        units=84,
+        84,
         activation='relu',
         kernel_initializer=tf.keras.initializers.VarianceScaling(scale=2.0),
         name='fully_con2')(fully_con)
@@ -70,7 +64,7 @@ def lenet5(x, y):
     fully connected layer with 84 nodes
     """
     fully_con3 = tf.layers.Dense(
-        units=10,
+        10,
         kernel_initializer=tf.keras.initializers.VarianceScaling(scale=2.0),
         name='fully_con3')(fully_con2)
     """
