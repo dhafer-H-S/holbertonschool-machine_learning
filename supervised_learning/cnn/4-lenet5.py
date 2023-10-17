@@ -18,10 +18,6 @@ def lenet5(x, y):
     """
     function that builds a modified version of LeNet 5 architecture
     """
-    m = x.shape
-    """
-    m is the number of images
-    """
     conv1 = tf.layers.Conv2D(
         filters=6,
         kernel_size=(
