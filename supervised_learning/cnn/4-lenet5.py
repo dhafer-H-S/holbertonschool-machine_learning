@@ -5,6 +5,7 @@ using tensorflow
 """
 import tensorflow.compat.v1 as tf
 
+
 def accuracy(y, prediction):
     """
     function that calculates the accuracy of a prediction
