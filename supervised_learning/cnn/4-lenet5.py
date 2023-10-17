@@ -6,22 +6,22 @@ using tensorflow
 import tensorflow.compat.v1 as tf
 
 
-def accuracy(y, prediction):
+def accuracy(Y, prediction):
     """
     function that calculates the accuracy of a prediction
     """
-    y = tf.argmax(y, axis=1)
+    Y = tf.argmax(Y, axis=1)
     prediction = tf.argmax(prediction, axis=1)
-    correct_prediction = tf.equal(y, prediction)
+    correct_prediction = tf.equal(Y, prediction)
     accuracy = tf.reduce_mean(tf.cast(correct_prediction, dtype='float'))
     return accuracy
 
 
-def lenet5(x, y):
+def lenet5(X, Y):
     """
     function that builds a modified version of LeNet 5 architecture
     """
-    m = x.shape
+    m = X.shape
     """
     m is the number of images
     """
@@ -32,9 +32,9 @@ def lenet5(x, y):
             5),
         padding='same',
         activation='tanh',
-        input_shape=x,
+        input_shape=X,
         kernel_initializer=tf.keras.initializers.VarianceScaling(scale=2.0),
-        name='conv1')(x)
+        name='conv1')(X)
     """
     convolution layer 1ers
     """
@@ -86,11 +86,11 @@ def lenet5(x, y):
     """
     output = tf.nn.softmax(fully_con3)
     loss = tf.losses.softmax_cross_entropy_with_logits_v2(
-            onehot_labels=y, logits=fully_con3)
+            onehot_labels=Y, logits=fully_con3)
     """
     we calculate the loss using softmax cross entropy with logits v2"""
     train_op = tf.train.AdamOptimizer().minimize(loss)
     """ train operation using AdamOptimizer  """
-    accuracy = accuracy(y, output)
+    accuracy = accuracy(Y, output)
     """ we calculate the accuracy based on the function bellow """
     return output, train_op, loss, accuracy
