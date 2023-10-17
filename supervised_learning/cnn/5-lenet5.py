@@ -46,6 +46,6 @@ def lenet5(X):
     model.add(K.layers.Dense(units=10, activation='softmax'))
 
     # Compile the Model
-    model.compile(loss='categorical_crossentropy', optimizer=K.optimizers.SGD(lr=0.1, momentum=0.0, decay=0.0), metrics=['accuracy'])
+    model.compile(loss='categorical_crossentropy', optimizer=K.AdamOptimizer(), metrics=['accuracy'])
 
     return model
