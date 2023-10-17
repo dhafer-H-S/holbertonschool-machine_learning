@@ -30,6 +30,6 @@ def lenet5(X, Y):
     y_pred = tf.nn.softmax(cx3)
     loss = tf.losses.softmax_cross_entropy(onehot_labels=y, logits=cx3)
     train_op = tf.train.AdamOptimizer().minimize(loss)
-    accuracy = calculate_accuracy(y, y_pred)
+    accuracy = accuracy(y, y_pred)
 
     return y_pred, train_op, loss, accuracy
