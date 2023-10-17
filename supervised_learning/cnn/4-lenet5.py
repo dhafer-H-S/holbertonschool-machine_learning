@@ -6,7 +6,7 @@ using tensorflow
 import tensorflow.compat.v1 as tf
 
 
-def accuracy(Y, prediction):
+def accuracy(y, y_pred):
     """Accuracy of prediction."""
     y = tf.argmax(y, axis=1)
     y_pred = tf.argmax(y_pred, axis=1)
