@@ -24,7 +24,7 @@ def calculate_accuracy(y, y_pred):
 
 def lenet5(x, y):
     """
-    Build a modified version of LeNet 5 architecture using TensorFlow.
+    Build a modified LeNet-5 model for number recognition.
 
     x is a tf.placeholder of shape (m, 28, 28, 1)
     containing the input images for the network
@@ -32,58 +32,19 @@ def lenet5(x, y):
     y is a tf.placeholder of shape (m, 10)
     containing the one-hot labels for the network
     """
-    conv1 = tf.layers.Conv2D(
-        filters=6,
-        kernel_size=5,
-        padding='same',
-        kernel_initializer=tf.keras.initializers.VarianceScaling(scale=2.0),
-        activation='tanh',
-        name='conv1')(x)
-    """
-    convolution layer 1
-    """
+    init = tf.keras.initializers.VarianceScaling(scale=2.0)
+    conv1 = tf.layers.Conv2D(filters=6, kernel_size=5, padding='same',
+                             kernel_initializer=init, activation='tanh')(x)
     pool1 = tf.layers.MaxPooling2D(pool_size=2, strides=2)(conv1)
-    """
-    max pooling layer 1
-    """
-    conv2 = tf.layers.Conv2D(
-        filters=16,
-        kernel_size=5,
-        padding='valid',
-        kernel_initializer=tf.keras.initializers.VarianceScaling(scale=2.0),
-        activation='tanh',
-        name='conv2')(pool1)
-    """
-    convolution layer 2
-    """
+    conv2 = tf.layers.Conv2D(filters=16, kernel_size=5, padding='valid',
+                             kernel_initializer=init, activation='tanh')(pool1)
     pool2 = tf.layers.MaxPooling2D(pool_size=2, strides=2)(conv2)
-    """
-    max pooling layer 2
-    """
     flatten = tf.layers.Flatten()(pool2)
-    fc1 = tf.layers.Dense(
-        units=120,
-        activation='relu',
-        kernel_initializer=tf.keras.initializers.VarianceScaling(
-            scale=2.0))(flatten)
-    """
-    fully connected layer with 120 nodes
-    """
-    fc2 = tf.layers.Dense(
-        units=84,
-        activation='relu',
-        kernel_initializer=tf.keras.initializers.VarianceScaling(
-            scale=2.0))(fc1)
-    """
-    fully connected layer with 84 nodes
-    """
-    logits = tf.layers.Dense(
-        units=10,
-        kernel_initializer=tf.keras.initializers.VarianceScaling(
-            scale=2.0))(fc2)
-    """
-    fully connected layer with 10 nodes and no activation function
-    """
+    fc1 = tf.layers.Dense(units=120, activation='relu',
+                          kernel_initializer=init)(flatten)
+    fc2 = tf.layers.Dense(units=84, activation='relu',
+                          kernel_initializer=init)(fc1)
+    logits = tf.layers.Dense(units=10, kernel_initializer=init)(fc2)
     y_pred = tf.nn.softmax(logits)
     loss = tf.losses.softmax_cross_entropy(onehot_labels=y, logits=logits)
     train_op = tf.train.AdamOptimizer().minimize(loss)
