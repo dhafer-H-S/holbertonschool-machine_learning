@@ -25,7 +25,7 @@ def lenet5(x, y):
     m is the number of images
     """
     conv1 = tf.layers.Conv2D(
-        fliters=6,
+        filters=6,
         kernel_size=(
             5,
             5),
@@ -42,7 +42,7 @@ def lenet5(x, y):
     max pooling layer 1
     """
     conv2 = tf.layers.Conv2D(
-        fliters=16,
+        filters=16,
         kernel_size=(5, 5),
         padding='valid',
         activation='tanh',
