@@ -81,10 +81,9 @@ def lenet5(x, y):
     """
     fully conected layer with 10 nodes and softmax activation
     """
-
-    loss = tf.reduce_mean(
-        tf.nn.softmax_cross_entropy_with_logits_v2(
-            labels=y, logits=fully_con3))
+    output = tf.nn.softmax(fully_con3)
+    loss = tf.nn.softmax_cross_entropy_with_logits_v2(
+            labels=y, logits=fully_con3)
     """
     we calculate the loss using softmax cross entropy with logits v2"""
     optimizer = tf.train.AdamOptimizer()
@@ -95,4 +94,4 @@ def lenet5(x, y):
     """ we check if the prediction is correct"""
     accuracy = tf.reduce_mean(tf.cast(correct_prediction, tf.float32))
     """ we calculate the accuracy"""
-    return fully_con3, train_op, loss, accuracy
+    return output, train_op, loss, accuracy
