@@ -61,17 +61,26 @@ def lenet5(x, y):
     max pooling layer 2
     """
     flatten = tf.layers.Flatten()(pool2)
-    fc1 = tf.layers.Dense(units=120, activation='relu',
-                          kernel_initializer=tf.keras.initializers.VarianceScaling(scale=2.0))(flatten)
+    fc1 = tf.layers.Dense(
+        units=120,
+        activation='relu',
+        kernel_initializer=tf.keras.initializers.VarianceScaling(
+            scale=2.0))(flatten)
     """
     fully connected layer with 120 nodes
     """
-    fc2 = tf.layers.Dense(units=84, activation='relu',
-                          kernel_initializer=tf.keras.initializers.VarianceScaling(scale=2.0))(fc1)
+    fc2 = tf.layers.Dense(
+        units=84,
+        activation='relu',
+        kernel_initializer=tf.keras.initializers.VarianceScaling(
+            scale=2.0))(fc1)
     """
     fully connected layer with 84 nodes
     """
-    logits = tf.layers.Dense(units=10, kernel_initializer=tf.keras.initializers.VarianceScaling(scale=2.0))(fc2)
+    logits = tf.layers.Dense(
+        units=10,
+        kernel_initializer=tf.keras.initializers.VarianceScaling(
+            scale=2.0))(fc2)
     """
     fully connected layer with 10 nodes and no activation function
     """
