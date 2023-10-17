@@ -24,16 +24,6 @@ def lenet5(x, y):
     """
     m is the number of images
     """
-    x = tf.placeholder(tf.float32, shape=[m, 28, 28, 1])
-    """
-    place holder containing the inpute images for the network
-    """
-    y = tf.placeholder(tf.float32, shape=[m, 10])
-    """
-    place holder containing the one hot labels for the network
-    """    """
-    define sequential model
-    """
     conv1 = tf.layers.Conv2D(
         fliters=6,
         kernel_size=(
