@@ -1,0 +1,1 @@
+this is deep Convolutional Architectures project for supervised learning projects in machine learning
