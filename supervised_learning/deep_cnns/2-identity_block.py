@@ -14,7 +14,6 @@ def identity_block(A_prev, filters):
     r2 = K.layers.Activation('relu')(b2)
     c3 = K.layers.Conv2D(filters=F12, kernel_size=(1, 1), padding='same', strides=(1, 1), kernel_initializer='he_normal')(r2)
     b3 = K.layers.BatchNormalization(axis=3)(c3)
-    r3 = K.layers.Activation('relu')(b3)
-    add = K.layers.Add()([r3, A_prev])
+    add = K.layers.Add()([b3, A_prev])
     output = K.layers.Activation('relu')(add)
     return output
