@@ -22,14 +22,21 @@ def inception_network():
     Mpool1 = K.layers.MaxPool2D((3, 3), 2, padding='same')(c1)
     """second convolution block"""
     c2 = K.layers.Conv2D(
+        64,
+        1,
+        1,
+        activation='relu',
+        padding='same',
+        kernel_initializer=init)(Mpool1)
+    c3 = K.layers.Conv2D(
         192,
         3,
         1,
         activation='relu',
         padding='same',
-        kernel_initializer=init)(Mpool1)
+        kernel_initializer=init)(c2)
     """192 filters, 3*3 kernel, 1 stride, same padding"""
-    M2pool = K.layers.MaxPool2D((3, 3), 2, padding='same')(c2)
+    M2pool = K.layers.MaxPool2D((3, 3), 2, padding='same')(c3)
     """max pooling layer 2"""
     """inception blocks"""
     i1 = inception_block(M2pool, [64, 96, 128, 16, 32, 32])
