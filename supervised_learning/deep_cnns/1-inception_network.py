@@ -5,6 +5,7 @@ inception_block = __import__('0-inception_block').inception_block
 
 
 def inception_network():
+    """function that builds inception block in a modified way"""
     init = K.initializers.HeNormal()
     inputs = K.Input((224, 224, 3))
     """ 3 channels with 224*224 pixels, RGB"""
