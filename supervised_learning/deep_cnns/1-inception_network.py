@@ -9,12 +9,24 @@ def inception_network():
     inputs = K.Input((224, 224, 3))
     """ 3 channels with 224*224 pixels, RGB"""
     """first convolution block"""
-    c1 = K.layers.Conv2D(64, 7, 2, activation='relu',padding='same', kernel_initializer=init)(inputs)
+    c1 = K.layers.Conv2D(
+        64,
+        7,
+        2,
+        activation='relu',
+        padding='same',
+        kernel_initializer=init)(inputs)
     """64 filters, 7*7 kernel, 2 stride, same padding"""
     """max pooling layer"""
     Mpool1 = K.layers.MaxPool2D((3, 3), 2, padding='same')(c1)
     """second convolution block"""
-    c2 = K.layers.Conv2D(192, 3, 1, activation='relu', padding='same', kernel_initializer=init)(Mpool1)
+    c2 = K.layers.Conv2D(
+        192,
+        3,
+        1,
+        activation='relu',
+        padding='same',
+        kernel_initializer=init)(Mpool1)
     """192 filters, 3*3 kernel, 1 stride, same padding"""
     M2pool = K.layers.MaxPool2D((3, 3), 2, padding='same')(c2)
     """max pooling layer 2"""
@@ -45,9 +57,10 @@ def inception_network():
     """dropout layer"""
     dropout = K.layers.Dropout(0.4)(avg_pool)
     """softmax layer"""
-    linear = K.layers.Dense(1000, activation='softmax', kernel_initializer=init)(dropout)
+    linear = K.layers.Dense(
+        1000,
+        activation='softmax',
+        kernel_initializer=init)(dropout)
     """model"""
     model = K.Model(inputs=inputs, outputs=linear)
     return model
-
-    
