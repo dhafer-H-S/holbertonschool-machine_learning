@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
 """ projection of block as described """
-
-
 import tensorflow.keras as K
 
 
 def projection_block(A_prev, filters, s=2):
+    """ projection of block as described """
     F11, F3, F12 = filters
     """ convolution 1"""
     c1 = K.layers.Conv2D(filters=F11, kernel_size=(1, 1), strides=(
