@@ -17,14 +17,14 @@ def projection_block(A_prev, filters, s=2):
     """ convolution 2"""
     c2 = K.layers.Conv2D(
         filters=F3, kernel_size=(
-            3, 3), stride=(
-            s, s), padding='same', kernel_initializer='he_normal')(a1)
+            3, 3), strides=(
+            1, 1), padding='same', kernel_initializer='he_normal')(a1)
     """batch normalisation 2"""
     b2 = K.layers.BatchNormalization(axis=3)(c2)
     """relu activation function 2"""
     a2 = K.layers.Activation('relu')(b2)
     """ convolution 3"""
-    c3 = K.layers.Conv2D(filters=F12, kernel_size=(1, 1), strides=(s, s),
+    c3 = K.layers.Conv2D(filters=F12, kernel_size=(1, 1), strides=(1, 1),
                          padding='same', kernel_initializer='he_normal')(a2)
     """batch normalisation 3"""
     b3 = K.layers.BatchNormalization(axis=3)(c3)
