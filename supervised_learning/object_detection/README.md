@@ -1,0 +1,1 @@
+this is object_detection project for supervised learning projects in machine learning
