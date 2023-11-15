@@ -25,10 +25,12 @@ where outputs is the number of outputs (predictions) made by the Darknet model,
 anchor_boxes is the number of anchor boxes used for each prediction,
 and 2 corresponds to [anchor_box_width, anchor_box_height].
 """
+
+
+
+
 import tensorflow.keras as Keras
 import numpy as np
-
-
 class Yolo():
     def __init__(self, model_path, classes_path, class_t, nms_t, anchors):
         """ initialize class constructor """
