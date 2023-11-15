@@ -27,9 +27,10 @@ class Yolo():
 
     anchors: This is a numpy.ndarray containing all of the anchor boxes.
     The shape of this array should be (outputs, anchor_boxes, 2),
-    where outputs is the number of outputs (predictions) made by the Darknet model,
-    anchor_boxes is the number of anchor boxes used for each prediction,
-    and 2 corresponds to [anchor_box_width, anchor_box_height].
+    where outputs is the number of outputs (predictions) made by the
+    Darknet model, anchor_boxes is the number of anchor boxes used
+    for each prediction, and 2 corresponds to [anchor_box_width,
+    anchor_box_height].
     """
 
     def __init__(self, model_path, classes_path, class_t, nms_t, anchors):
