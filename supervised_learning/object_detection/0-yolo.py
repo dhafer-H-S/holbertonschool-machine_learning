@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
 """a class that uses the Yolo v3 algorithm to perform object detection"""
+
+import tensorflow.keras as Keras
+import numpy as np
+
 """in this task we used yolo.h5 file yolo.h5':
 This is the path to the Darknet Keras model. The model is stored in
 the H5 file format, which is a common format for storing large amounts
@@ -27,10 +31,6 @@ and 2 corresponds to [anchor_box_width, anchor_box_height].
 """
 
 
-
-
-import tensorflow.keras as Keras
-import numpy as np
 class Yolo():
     def __init__(self, model_path, classes_path, class_t, nms_t, anchors):
         """ initialize class constructor """
