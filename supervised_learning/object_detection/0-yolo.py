@@ -31,6 +31,7 @@ class Yolo():
     anchor_boxes is the number of anchor boxes used for each prediction,
     and 2 corresponds to [anchor_box_width, anchor_box_height].
     """
+
     def __init__(self, model_path, classes_path, class_t, nms_t, anchors):
         """ initialize class constructor """
         self.model = Keras.models.load_model(model_path)
