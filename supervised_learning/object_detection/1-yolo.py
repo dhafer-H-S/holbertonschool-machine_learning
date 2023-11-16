@@ -100,4 +100,4 @@ class Yolo:
             box[:, :, :, 3] = y2
             boxes.append(box)
             i += 1
-    return boxes, box_confidences, box_class_probs
+        return boxes, box_confidences, box_class_probs
