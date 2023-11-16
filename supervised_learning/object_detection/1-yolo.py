@@ -124,11 +124,11 @@ class Yolo():
             from the output scale to be the width and height of the bounding box
             relative to the anchor box.
             """
-            box[..., :2] *= self.anchors[i, :, :2]
+            box[..., :2] *= self.anchors[i, :, :]
             """
             (which represent the center coordinates of the box)
             """
-            box[..., 2:] *= self.anchors[i, :, 2:]
+            box[..., 2:] *= self.anchors[i, :, :]
             """
             (which represent the width and height of the box)
             """
