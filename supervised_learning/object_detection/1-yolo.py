@@ -1,21 +1,39 @@
 #!/usr/bin/env python3
-"""this module contains the class Yolo"""
+"""a class that uses the Yolo v3 algorithm to perform object detection"""
 
-import tensorflow.keras as K
+import tensorflow.keras as Keras
 import numpy as np
 
 
-def sigmoid(x):
-    """sigmoid function"""
-    return 1 / (1 + np.exp(-x))
-
-
-class Yolo:
-    """Yolo class"""
+class Yolo():
+    """in this task we used yolo.h5 file yolo.h5':
+    This is the path to the Darknet Keras model. The model is stored in
+    the H5 file format, which is a common format for storing large amounts
+    of numerical data, and is particularly popular in the machine learning
+    field for storing models.
+    """
+    """coco_classes.txt': This is the path to the file containing the list
+    of class names used for the Darknet model.
+    The classes are listed in order of index.
+    """
+    """
+    0.6: This is the box score threshold for the initial filtering step.
+    Any boxes with a score below this value will be discarded.
+    0.5: This is the IOU (Intersection Over Union) threshold for
+    non-max suppression. Non-max suppression is a technique used
+    to ensure that when multiple bounding boxes are detected for
+    the same object, only the one with the highest score is kept.
+    anchors: This is a numpy.ndarray containing all of the anchor boxes.
+    The shape of this array should be (outputs, anchor_boxes, 2),
+    where outputs is the number of outputs (predictions) made by the
+    Darknet model, anchor_boxes is the number of anchor boxes used
+    for each prediction, and 2 corresponds to [anchor_box_width,
+    anchor_box_height].
+    """
 
     def __init__(self, model_path, classes_path, class_t, nms_t, anchors):
         """ initialize class constructor """
-        self.model = K.models.load_model(model_path)
+        self.model = Keras.models.load_model(model_path)
         """the path where is the Darknet model is stored"""
         self.class_t = class_t
         """
@@ -41,63 +59,108 @@ class Yolo:
         self.class_names = classes
 
     def process_outputs(self, outputs, image_size):
-        """Process and normalize the output of the YoloV3 model"""
         boxes = []
         box_confidences = []
+        """
+        box_confidences: a list of numpy.ndarrays of shape
+        (grid_height, grid_width, anchor_boxes, 1) containing
+        the box confidences for each output, respectively
+        """
         box_class_probs = []
-        img_h, img_w = image_size
-        i = 0
+        """
+        box_class_probs: a list of numpy.ndarrays of shape
+        (grid_height, grid_width, anchor_boxes, classes) containing
+        the boxs class probabilities for each output, respectively
+        """
         for output in outputs:
-            grid_h, grid_w, nb_box, _ = output.shape
-            box_conf = sigmoid(output[:, :, :, 4])
-            """the true value that based on the value of box_confidences"""
-            box_prob = sigmoid(output[:, :, :, 5:])
-            """classes probabilities of to what class it belongs"""
-            box_confidences.append(box_conf)
-            box_class_probs.append(box_prob)
-            # t_x, t_y : x and y coordinates of the center pt of the anchor box
-            # t_w, t_h : width and height of the anchor box
-            t_x = output[:, :, :, 0]
-            t_y = output[:, :, :, 1]
-            t_w = output[:, :, :, 2]
-            t_h = output[:, :, :, 3]
-            # c_x, c_y : is going to represent the grid of indexes
-            c_x = np.arange(grid_w)
-            c_x = np.tile(c_x, grid_h)
-            c_x = c_x.reshape(grid_h, grid_w, 1)
+            # Extract boxes
+            boxes.append(output[..., :4])
+            """
+            This line is extracting the first 4 elements along
+            the last axis of the output array. These represent
+            the parameters of the bounding box (t_x, t_y, t_w, t_h),
+            where t_x, t_y are the center coordinates of the box,
+            and t_w, t_h are the width and height of the box.
+            """
+            # Extract box confidences
+            box_confidences.append(output[..., 4:5])
+            """
+            This line is extracting the 5th element along the last
+            axis of the output array. This represents the confidence
+            score that the box contains an object.
+            """
+            # Extract box class probabilities
+            box_class_probs.append(output[..., 5:])
+            """
+            This line is extracting all elements from the 6th onwards
+            along the last axis of the output array. These represent
+            the probabilities of the object belonging to each class.
+            """
 
-            c_y = np.arange(grid_h)
-            c_y = np.tile(c_y, grid_w)
-            c_y = c_y.reshape(1, grid_h, grid_w).T
-
-            # p_w, p_h : anchors dimensions in the c
-
-            p_w = self.anchors[i, :, 0]
-            p_h = self.anchors[i, :, 1]
-
-            # yolo formula (get the coordinates in the prediction box)
-            b_x = (sigmoid(t_x) + c_x)
-            b_y = (sigmoid(t_y) + c_y)
-            b_w = (np.exp(t_w) * p_w)
-            b_h = (np.exp(t_h) * p_h)
-            # normalize to the input size
-            b_x = b_x / grid_w
-            b_y = b_y / grid_h
-            b_w = b_w / self.model.input.shape[1]
-            b_h = b_h / self.model.input.shape[2]
-            # scale to the image size (in pixels)
-            # top left corner
-            x1 = (b_x - b_w / 2) * img_w
-            y1 = (b_y - b_h / 2) * img_h
-            # bottom right corner
-            x2 = (b_x + b_w / 2) * img_w
-            y2 = (b_y + b_h / 2) * img_h
-            # create the current box
-            box = np.zeros((grid_h, grid_w, nb_box, 4))
-            box[:, :, :, 0] = x1
-            box[:, :, :, 1] = y1
-            box[:, :, :, 2] = x2
-            box[:, :, :, 3] = y2
-            boxes.append(box)
-            i += 1
+        for i, box in enumerate(boxes):
+            """
+            a built-in function that allows you to iterate through
+            a sequence and keep track of the index of each element
+            """
+            grid_height, grid_width, anchor_boxes, _ = box.shape
+            """
+            this line extract the dimension of the grid and the number
+            of anchor boxes from the shape of the box
+            """
+            # Update box dimensions
+            box[..., :2] = 1 / (1 + np.exp(-(box[..., :2])))
+            """
+            This line applies the sigmoid function to the first two elements
+            of the last axis of the box (t_x, t_y). This transforms these
+            elements from the output scale to the range (0, 1), representing
+            the center of the bounding box relative to the grid cell.
+            """
+            box[..., 2:] = np.exp(box[..., 2:])
+            """
+            This line applies the exponential function to the last two elements
+            of the last axis of the box (t_w, t_h). This transforms these elements
+            from the output scale to be the width and height of the bounding box
+            relative to the anchor box.
+            """
+            box[..., :2] *= self.anchors[i]
+            """
+            (which represent the center coordinates of the box)
+            """
+            box[..., 2:] *= self.anchors[i]
+            """
+            (which represent the width and height of the box)
+            """
+            # Scale boxes back to original image size
+            """
+            image_size : containing the images original size
+            [image_height, image_width]
+            """
+            box[..., 0] *= image_size[1] / grid_width
+            """
+            This line is selecting the first element of
+            the last axis of the box array
+            (which represents the x-coordinate of the center of the box)
+            and scaling it by the ratio of the original image width to
+            the grid width.
+            """
+            box[..., 1] *= image_size[0] / grid_height
+            """
+            This line is selecting the second element of the last axis of
+            the box array
+            (which represents the y-coordinate of the center of the box)
+            and scaling it by the ratio of the original image height to
+            the grid height.
+            """
+            box[..., 2] *= image_size[1] / grid_width
+            """
+            This line is selecting the third element of the last axis of
+            the box array (which represents the width of the box) and scaling
+            it by the ratio of the original image width to the grid width.
+            """
+            box[..., 3] *= image_size[0] / grid_height
+            """
+            This line is selecting the fourth element of the last axis of the
+            box array (which represents the height of the box) and scaling it
+            by the ratio of the original image height to the grid height.
+            """
         return boxes, box_confidences, box_class_probs
