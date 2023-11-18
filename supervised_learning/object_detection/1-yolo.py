@@ -70,7 +70,7 @@ class Yolo():
         img_h, img_w = image_size
         i = 0
         for output in outputs:
-            grid_h, grid_w, nb_box, _ = output.shape.value
+            grid_h, grid_w, nb_box, _ = output.shape
             box_conf = sigmoid(output[:, :, :, 4])
             box_prob = sigmoid(output[:, :, :, 5:])
             box_confidences.append(box_conf)
@@ -93,8 +93,8 @@ class Yolo():
             b_h = (np.exp(t_h) * p_h)
             b_x = b_x / grid_w
             b_y = b_y / grid_h
-            b_w = b_w / self.model.input.shape.value[1]
-            b_h = b_h / self.model.input.shape.value[2]
+            b_w = b_w / self.model.input.shape[1].value
+            b_h = b_h / self.model.input.shape[2].value
             x1 = (b_x - b_w / 2) * img_w
             y1 = (b_y - b_h / 2) * img_h
             x2 = (b_x + b_w / 2) * img_w
