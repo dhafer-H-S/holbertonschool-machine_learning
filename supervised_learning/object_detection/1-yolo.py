@@ -61,44 +61,87 @@ class Yolo():
     def process_outputs(self, outputs, image_size):
         """Process and normalize the output of the YoloV3 model"""
         def sigmoid(x):
-            """sigmoid function"""
+            """
+            sigmoid that applies the sigmoid activation function
+            element-wise. It's later used to transform certain values
+            in the YOLOv3 output
+            """
             return 1 / (1 + np.exp(-x))
 
         boxes = []
         box_confidences = []
         box_class_probs = []
         img_h, img_w = image_size
+        """
+        These lines initialize empty lists
+        (boxes, box_confidences, box_class_probs)
+        to store bounding box information, confidence scores,
+        and class probabilities. img_h and img_w are unpacked
+        from image_size.
+        """
         i = 0
         for output in outputs:
             grid_h, grid_w, nb_box, _ = output.shape
+            """
+            This line unpacks the shape of the current output,
+            representing the grid dimensions and the number of bounding boxes
+            """
             box_conf = sigmoid(output[:, :, :, 4:5])
             box_prob = sigmoid(output[:, :, :, 5:])
             box_confidences.append(box_conf)
             box_class_probs.append(box_prob)
+            """
+            Here, confidence scores (box_conf) and class probabilities
+            (box_prob)are extracted from the output and then appended
+            to their respective lists.
+            """
             t_x = output[:, :, :, 0]
             t_y = output[:, :, :, 1]
             t_w = output[:, :, :, 2]
             t_h = output[:, :, :, 3]
+            """
+            These lines extract the raw predicted values for bounding box
+            coordinates and dimensions.
+            """
             c_x = np.arange(grid_w)
             c_x = np.tile(c_x, grid_h)
             c_x = c_x.reshape(grid_h, grid_w, 1)
             c_y = np.arange(grid_h)
             c_y = np.tile(c_y, grid_w)
             c_y = c_y.reshape(1, grid_h, grid_w).T
+            """
+            These lines create arrays c_x and c_y representing
+            the coordinates of the grid cells.
+            """
             p_w = self.anchors[i, :, 0]
             p_h = self.anchors[i, :, 1]
+            """
+            These lines extract the width (p_w) and height (p_h)
+            of the anchor boxes for the current scale.
+            """
             b_x = (sigmoid(t_x) + c_x)
             b_y = (sigmoid(t_y) + c_y)
             b_w = (np.exp(t_w) * p_w)
             b_h = (np.exp(t_h) * p_h)
+            """
+            These lines extract the width (p_w) and height (p_h)
+            of the anchor boxes for the current scale.
+            """
             b_x = b_x / grid_w
             b_y = b_y / grid_h
             b_w = b_w / self.model.input.shape[1].value
             b_h = b_h / self.model.input.shape[2].value
+            """
+            These lines normalize the bounding box coordinates and dimensions
+            """
             x1 = (b_x - b_w / 2) * img_w
             y1 = (b_y - b_h / 2) * img_h
             x2 = (b_x + b_w / 2) * img_w
             y2 = (b_y + b_h / 2) * img_h
+            """
+            These lines compute the absolute coordinates of the bounding boxes
+            in the original image space.
+            """
             box = np.zeros((grid_h, grid_w, nb_box, 4))
             box[:, :, :, 0] = x1
             box[:, :, :, 1] = y1
@@ -106,4 +149,8 @@ class Yolo():
             box[:, :, :, 3] = y2
             boxes.append(box)
             i += 1
+            """
+            These lines organize the bounding box coordinates into a 4D NumPy
+            array (box) and append it to the boxes list.
+            """
         return boxes, box_confidences, box_class_probs
