@@ -72,6 +72,7 @@ class Yolo():
         for output in outputs:
             grid_h, grid_w, nb_box, _ = output.shape
             box_conf = sigmoid(output[:, :, :, 4])
+            box_conf = box_conf.reshape(-1, 1)
             box_prob = sigmoid(output[:, :, :, 5:])
             box_confidences.append(box_conf)
             box_class_probs.append(box_prob)
