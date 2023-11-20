@@ -156,43 +156,23 @@ class Yolo():
         return boxes, box_confidences, box_class_probs
 
     def filter_boxes(self, boxes, box_confidences, box_class_probs):
-        """
-        We initialize three empty lists
-        (filtered_boxes, filtered_scores, filtered_classes)
-        to store the filtered results.
-        """
+        """Filter boxes based on class confidence score."""
         filtered_boxes = []
         filtered_scores = []
         filtered_classes = []
+
         for i in range(len(boxes)):
-            """
-            This line extracts the bounding box coordinates from boxes
-            for the current output scale, reshapes them into a 2D array,
-            and appends them to filtered_boxes.
-            """
-            box = boxes[i]
-            box_confidence = box_confidences[i]
-            box_class_prob = box_class_probs[i]
-            box_scores = box_confidence * box_class_prob
-            """
-            These lines compute the box scores for each output scale
-            and append them to filtered_scores.
-            """
+            box_scores = box_confidences[i] * box_class_probs[i]
             box_classes = np.argmax(box_scores, axis=-1)
-            box_class_scores = np.max(box_scores, axis=-1, keepdims=False)
-            """
-            These lines compute the box classes and box scores for each
-            output scale and append them to filtered_classes and
-            filtered_scores, respectively.
-            """
+            box_class_scores = np.max(box_scores, axis=-1)
             filtering_mask = box_class_scores >= self.class_t
-            """
-            This line creates a mask for filtering based on box scores.
-            """
-            filtered_boxes += (box[filtering_mask].tolist())
-            filtered_scores += (box_class_scores[filtering_mask].tolist())
-            filtered_classes += (box_classes[filtering_mask].tolist())
-            """
-            These lines filter the boxes, scores, and classes based on
-            the mask and append them to their respective lists.
-            """
+
+            filtered_boxes += boxes[i][filtering_mask].tolist()
+            filtered_scores += box_class_scores[filtering_mask].tolist()
+            filtered_classes += box_classes[filtering_mask].tolist()
+
+        filtered_boxes = np.array(filtered_boxes)
+        filtered_scores = np.array(filtered_scores)
+        filtered_classes = np.array(filtered_classes)
+
+        return filtered_boxes, filtered_classes, filtered_scores
