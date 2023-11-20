@@ -178,64 +178,54 @@ class Yolo():
         return filtered_boxes, filtered_classes, filtered_scores
 
     def non_max_suppression(self, filtered_boxes, box_classes, box_scores):
-        """Non-max suppression"""
+        """Non-max suppression."""
+        nms_t = self.nms_t
         box_predictions = []
         predicted_box_classes = []
         predicted_box_scores = []
+        unique_classes = np.unique(box_classes)
 
-        for i in np.unique(box_classes):
-            """This line iterates over the unique predicted classes"""
-            indexes = np.where(box_classes == i)
-            """This line finds the predicted boxes and their associated
-            class confidence scores for the current class"""
-            boxes_of_class = filtered_boxes[indexes]
-            classes_of_class = box_classes[indexes]
-            scores_of_class = box_scores[indexes]
-            """This line computes the bounding box coordinates
-            for the current class"""
-            x1 = boxes_of_class[:, 0]
-            y1 = boxes_of_class[:, 1]
-            x2 = boxes_of_class[:, 2]
-            y2 = boxes_of_class[:, 3]
-            """This line computes the area of the bounding boxes"""
-            area = (x2 - x1 + 1) * (y2 - y1 + 1)
-            """This line sorts the bounding boxes by their bottom-right
-            y-coordinate"""
-            idxs = scores_of_class.argsort()[::-1]
-            """This line initializes a list to store the final bounding
-            boxes, class confidence scores, and predicted classes"""
-            pick = []
-            """This line loops over the indexes of the bounding boxes"""
-            while len(idxs) > 0:
-                """This line finds the bounding box with the largest
-                confidence score, and appends it to the pick list"""
-                last = len(idxs) - 1
-                i = idxs[last]
-                pick.append(i)
-                """This line finds the largest (x, y) coordinates for
-                the start of the bounding box and the smallest (x, y)
-                coordinates for the end of the bounding box"""
-                xx1 = np.maximum(x1[i], x1[idxs[:last]])
-                yy1 = np.maximum(y1[i], y1[idxs[:last]])
-                xx2 = np.minimum(x2[i], x2[idxs[:last]])
-                yy2 = np.minimum(y2[i], y2[idxs[:last]])
-                """This line computes the width and height of the bounding
-                box"""
-                w = np.maximum(0, xx2 - xx1 + 1)
-                h = np.maximum(0, yy2 - yy1 + 1)
-                """This line computes the ratio of overlap"""
-                overlap = (w * h) / area[idxs[:last]]
-                """This line deletes all indexes from the index list
-                that have overlap greater than the provided overlap
-                threshold"""
-                idxs = np.delete(idxs, np.concatenate(
-                    ([last], np.where(overlap > self.nms_t)[0])))
-            """This line appends the bounding boxes, class confidence
-            scores, and predicted classes for the current class to
-            their respective lists"""
-            box_predictions.append(filtered_boxes[pick])
-            predicted_box_classes.append(box_classes[pick])
-            predicted_box_scores.append(box_scores[pick])
-        """This line returns the bounding boxes, class confidence scores,
-        and predicted classes for all classes"""
+        for cls in unique_classes:
+            idx = np.where(box_classes == cls)
+            boxes_of_cls = filtered_boxes[idx]
+            classes_of_cls = box_classes[idx]
+            scores_of_cls = box_scores[idx]
+
+            order = scores_of_cls.argsort()[::-1]
+            keep = []
+
+            x1 = boxes_of_cls[:, 0]
+            y1 = boxes_of_cls[:, 1]
+            x2 = boxes_of_cls[:, 2]
+            y2 = boxes_of_cls[:, 3]
+
+            areas = (x2 - x1 + 1) * (y2 - y1 + 1)
+
+            while order.shape[0] > 0:
+                i = order[0]
+                keep.append(i)
+
+                xx1 = np.maximum(x1[i], x1[order[1:]])
+                yy1 = np.maximum(y1[i], y1[order[1:]])
+                xx2 = np.minimum(x2[i], x2[order[1:]])
+                yy2 = np.minimum(y2[i], y2[order[1:]])
+
+                w = np.maximum(0.0, xx2 - xx1 + 1)
+                h = np.maximum(0.0, yy2 - yy1 + 1)
+
+                inter = w * h
+                all_area = areas[i] + areas[order[1:]] - inter
+                overlap = inter / all_area
+
+                inds = np.where(overlap <= nms_t)[0]
+                order = order[inds + 1]
+
+            box_predictions.append(boxes_of_cls[keep])
+            predicted_box_classes.append(classes_of_cls[keep])
+            predicted_box_scores.append(scores_of_cls[keep])
+
+        box_predictions = np.concatenate(box_predictions)
+        predicted_box_classes = np.concatenate(predicted_box_classes)
+        predicted_box_scores = np.concatenate(predicted_box_scores)
+
         return box_predictions, predicted_box_classes, predicted_box_scores
