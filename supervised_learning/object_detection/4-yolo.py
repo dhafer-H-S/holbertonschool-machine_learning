@@ -245,4 +245,4 @@ class Yolo():
                 images.append(img)
                 paths.append(image_path)
 
-        return images, paths
+        return (images, paths)
