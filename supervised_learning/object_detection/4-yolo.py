@@ -231,6 +231,7 @@ class Yolo():
 
         return box_predictions, predicted_box_classes, predicted_box_scores
 
+    @staticmethod
     def load_images(folder_path):
         """Load images from a folder."""
         images = []
