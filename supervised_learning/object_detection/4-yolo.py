@@ -3,7 +3,7 @@
 
 import tensorflow.keras as Keras
 import numpy as np
-import opencv as cv2
+import cv2
 
 
 class Yolo():
@@ -234,9 +234,14 @@ class Yolo():
     def load_images(folder_path):
         """Load images from a folder."""
         images = []
-        image_paths = glob.glob(folder_path + '/*')
+        paths = []
+        image_paths = cv2.glob(folder_path + "/*.jpg")  # Assuming images are in jpg format, adjust if necessary
 
         for image_path in image_paths:
-            images.append(cv2.imread(image_path))
+            img = cv2.imread(image_path)
 
-        return images, image_paths
+            if img is not None:
+                images.append(img)
+                paths.append(image_path)
+
+        return images, paths
