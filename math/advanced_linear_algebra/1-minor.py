@@ -44,7 +44,7 @@ def minor(matrix):
     if len(matrix[0]) == 0:
         raise ValueError("matrix must be a non-empty square matrix")
     if len(matrix) != len(matrix[0]):
-        raise ValueError("matrix must be a non-empty square matrix")
+        raise ValueError("matrix must be a square matrix")
 
     if len(matrix) == 1:
         return [[1]]
