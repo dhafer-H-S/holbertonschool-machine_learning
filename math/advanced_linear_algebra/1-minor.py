@@ -50,13 +50,13 @@ def minor(matrix):
     minor_output = []
 
     for i in range(len(matrix)):
-        inner = []
+        inside = []
         for j in range(len(matrix[0])):
             matrix_copy = [row[:] for row in matrix]
             del matrix_copy[i]
             for row in matrix_copy:
                 del row[j]
-            inner.append(determinant(matrix_copy))
-        minor_output.append(inner)
+            inside.append(determinant(matrix_copy))
+        minor_output.append(inside)
 
     return minor_output
