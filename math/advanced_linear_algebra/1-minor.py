@@ -40,12 +40,10 @@ def minor(matrix):
     for sub_list in matrix:
         if not isinstance(sub_list, list):
             raise TypeError("matrix must be a list of lists")
-
     if len(matrix[0]) == 0:
         raise ValueError("matrix must be a non-empty square matrix")
     if len(matrix) != len(matrix[0]):
-        raise ValueError("matrix must be a square matrix")
-
+        raise ValueError("matrix must be a non-empty square matrix")
     if len(matrix) == 1:
         return [[1]]
 
