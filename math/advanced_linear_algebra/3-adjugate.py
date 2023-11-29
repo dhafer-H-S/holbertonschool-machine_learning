@@ -87,6 +87,7 @@ def cofactor(matrix):
         cofactor_output.append(inside)
     return cofactor_output
 
+
 def adjugate(matrix):
     """calculate the adjugate matrix of a matrix"""
     if not isinstance(matrix, list) or len(matrix) == 0:
