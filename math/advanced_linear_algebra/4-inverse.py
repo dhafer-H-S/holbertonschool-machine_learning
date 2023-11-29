@@ -129,7 +129,6 @@ def inverse(matrix):
             for i in range(len(adjugate_output)):
                 inside = []
                 for j in range(len(adjugate_output[0])):
-                     inside.append(adjugate_output[i][j] / det)
+                    inside.append(adjugate_output[i][j] / det)
                 inverse_output.append(inside)
             return inverse_output
-    
