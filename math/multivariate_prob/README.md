@@ -1,0 +1,1 @@
+this is multivariate_prob project for Mathematics For Machine Learning
