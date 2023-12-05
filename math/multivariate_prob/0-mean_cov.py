@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-"""mean and covarience : a fucntion that calculates the covariance of a matrix"""
+"""
+mean and covarience : a fucntion that calculates
+the covariance of a matrix
+"""
 import numpy as np
 
 
