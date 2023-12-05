@@ -9,16 +9,16 @@ def mean_cov(X):
     n: number of the data points
     d : is the number of dimensions in each data point
     """
-    if X is None:
+    if not isinstance(X, np.ndarray) or len(X.shape) != 2:
         raise TypeError("X must be a 2D numpy.ndarray")
-    if len(X.shape) != 2:
+    if X.shape[0] != 2:
         raise TypeError("X must be a 2D numpy.ndarray")
     if X.shape[0] < 2:
         raise ValueError("X must contain multiple data points")
     n, d = X.shape
     if n < 2:
         raise ValueError("X must contain multiple data points")
-    mean = np.mean(X, axis=0)
+    mean = np.mean(X, axis=0, keepdims=True)
     X = X - mean
     cov = np.matmul(X.T, X) / (n - 1)
     return mean, cov
