@@ -5,6 +5,7 @@ import numpy as np
 
 class GRUCell:
     """ GRU cell class"""
+
     def __init__(self, i, h, o):
         """ class constructor """
         self.Wz = np.random.randn(h + i, h)
