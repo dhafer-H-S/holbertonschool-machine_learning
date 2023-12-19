@@ -24,6 +24,7 @@ class LSTMCell:
         self.by = np.zeros((1, o))
 
     def softmax(self, x):
+        """softmax activation function"""
         e_x = np.exp(x - np.max(x))
         return e_x / e_x.sum(axis=1, keepdims=True)
 
@@ -51,4 +52,5 @@ class LSTMCell:
         return h_next, c_next, y
 
     def sigmoid(self, x):
+        """sigmoid activation function"""
         return 1 / (1 + np.exp(-x))
