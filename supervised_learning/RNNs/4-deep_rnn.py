@@ -5,7 +5,8 @@ import numpy as np
 
 def deep_rnn(rnn_cells, X, h_0):
     """
-    rnn_cells is a list of RNNCell instances of length l that will be used for the forward propagation
+    rnn_cells is a list of RNNCell instances of length l that will be used
+    for the forward propagation
     l is the number of layers
     X is the data to be used, given as a numpy.ndarray of shape (t, m, i)
     t is the maximum number of time steps
