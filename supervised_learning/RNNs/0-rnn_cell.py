@@ -22,18 +22,16 @@ class RNNCell:
         self.by = np.zeros((1, o))
 
     def forward(self, h_prev, x_t):
-        """function that performs forward propagation for one time step"""
-        """Returns: h_next, y"""
-        h_next = np.tanh(
-            np.matmul(
-                np.hstack(
-                    (h_prev, x_t)), self.Wh) + self.bh)
+        """performs a forward propagation"""
+        h_next = np.concatenate((h_prev, x_t), axis=1)
+        h_next = np.tanh(np.matmul(h_next, self.Wh) + self.bh)
         y = np.matmul(h_next, self.Wy) + self.by
+        """ the use of softmax activation fucntion is to normalize the output"""
+        """ the use of exp is to make the output positive"""
+        """
+        the devision between the exp(y and the sum of exp(y) is to get
+        the real value of the output that it gonna be between 0 and 1
+        """
         y = np.exp(y) / np.sum(np.exp(y), axis=1, keepdims=True)
         return h_next, y
-        """
-        h_next is the next hidden state
-        y is the output of the cell
-        h_prev is the previous hidden state
 
-        """
