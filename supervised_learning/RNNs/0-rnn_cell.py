@@ -26,7 +26,10 @@ class RNNCell:
         h_next = np.concatenate((h_prev, x_t), axis=1)
         h_next = np.tanh(np.matmul(h_next, self.Wh) + self.bh)
         y = np.matmul(h_next, self.Wy) + self.by
-        """ the use of softmax activation fucntion is to normalize the output"""
+        """
+        the use of softmax activation fucntion is to normalize 
+        the output
+        """
         """ the use of exp is to make the output positive"""
         """
         the devision between the exp(y and the sum of exp(y) is to get
