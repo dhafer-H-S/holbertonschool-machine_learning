@@ -28,11 +28,11 @@ class GRUCell:
         def forward(self, h_prev, x_t):
             """ forward propagation for one time step"""
             concat = np.concatenate((h_prev, x_t), axis=1)
-            z = sigmoid(np.matmul(concat, self.Wz) + self.bz)
+            z = sigmoid(np.matmul(concat, self.Wh) + self.bz)
             r = sigmoid(np.matmul(concat, self.Wr) + self.br)
-            concat2 = np.concatenate((r * h_prev, x_t), axis=1)
-            h = tanh(np.matmul(concat2, self.Wh) + self.bh)
-            h_next = (1 - z) * h_prev + z * h
+            concate2 = np.concatenate((r * h_prev, x_t), axis=1)
+            h = tanh(np.matmul(concate2, self.Wh) + self.bh)
+            h_next = z * h + (1 - z) * h_prev
             y = np.matmul(h_next, self.Wy) + self.by
             y = np.exp(y) / np.sum(np.exp(y), axis=1, keepdims=True)
             return h_next, y
