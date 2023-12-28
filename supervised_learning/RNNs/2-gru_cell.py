@@ -17,23 +17,22 @@ class GRUCell:
         self.bh = np.zeros((1, h))
         self.by = np.zeros((1, o))
 
-    @staticmethod
-    def sigmoid(x):
-        """ sigmoid function """
-        return 1 / (1 + np.exp(-x))
+        def sigmoid(x):
+            """ sigmoid function """
+            return 1 / (1 + np.exp(-x))
 
-    @staticmethod
-    def softmax(x):
-        """ softmax activation function """
-        return np.exp(x) / np.sum(np.exp(x), axis=1, keepdims=True)
+        def tanh(x):
+            """ tanh function """
+            return np.tanh(x)
 
-    def forward(self, h_prev, x_t):
-        """ forward propagation for one time step """
-        x = np.concatenate((h_prev, x_t), axis=1)
-        z = self.sigmoid(np.matmul(x, self.Wz) + self.bz)
-        r = self.sigmoid(np.matmul(x, self.Wr) + self.br)
-        x = np.concatenate((r * h_prev, x_t), axis=1)
-        h_tilde = np.tanh(np.matmul(x, self.Wh) + self.bh)
-        h_next = (1 - z) * h_prev + z * h_tilde
-        y = self.softmax(np.matmul(h_next, self.Wy) + self.by)
-        return h_next, y
+        def forward(self, h_prev, x_t):
+            """ forward propagation for one time step"""
+            concat = np.concatenate((h_prev, x_t), axis=1)
+            z = sigmoid(np.matmul(concat, self.Wz) + self.bz)
+            r = sigmoid(np.matmul(concat, self.Wr) + self.br)
+            concat2 = np.concatenate((r * h_prev, x_t), axis=1)
+            h = tanh(np.matmul(concat2, self.Wh) + self.bh)
+            h_next = (1 - z) * h_prev + z * h
+            y = np.matmul(h_next, self.Wy) + self.by
+            y = np.exp(y) / np.sum(np.exp(y), axis=1, keepdims=True)
+            return h_next, y
