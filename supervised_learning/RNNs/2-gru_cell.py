@@ -17,11 +17,11 @@ class GRUCell:
         self.bh = np.zeros((1, h))
         self.by = np.zeros((1, o))
 
-    def sigmoid(x):
+    def sigmoid(self, x):
         """ sigmoid function """
         return 1 / (1 + np.exp(-x))
 
-    def softmax(x):
+    def softmax(self, x):
         """ tanh function """
         return np.exp(x) / np.sum(np.exp(x), axis=1, keepdims=True)
 
