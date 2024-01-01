@@ -28,6 +28,10 @@ class LSTMCell:
         e_x = np.exp(x - np.max(x))
         return e_x / e_x.sum(axis=1, keepdims=True)
 
+    def sigmoid(self, x):
+        """sigmoid activation function"""
+        return 1 / (1 + np.exp(-x))
+
     def forward(self, h_prev, c_prev, x_t):
         """
         x_t is a numpy.ndarray of shape (m, i) that contains
@@ -51,6 +55,3 @@ class LSTMCell:
 
         return h_next, c_next, y
 
-    def sigmoid(self, x):
-        """sigmoid activation function"""
-        return 1 / (1 + np.exp(-x))
