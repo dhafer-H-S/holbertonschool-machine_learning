@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """
-biderctional RNN function that performs forward propagation for a bidirectional RNN
+biderctional RNN function that performs
+forward propagation for a bidirectional RNN
 """
 
 import numpy as np
