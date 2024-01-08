@@ -152,31 +152,31 @@ class WindowGenerator:
         ds = ds.map(self.split_window)
 
         return ds
-class Baseline(tf.keras.Model):
-    """
-    Baseline class
-    """
+# class Baseline(tf.keras.Model):
+#     """
+#     Baseline class
+#     """
 
-    def __init__(self, label_index=None):
-        """
-        Class constructor
-        Argumetns:
-         - label_index
-        """
+#     def __init__(self, label_index=None):
+#         """
+#         Class constructor
+#         Argumetns:
+#          - label_index
+#         """
 
-        super().__init__()
-        self.label_index = label_index
+#         super().__init__()
+#         self.label_index = label_index
 
-    def call(self, inputs):
-        """
-        call
-        Argumetns:
-         - param inputs
-        """
-        if self.label_index is None:
-            return inputs
-        result = inputs[:, :, self.label_index]
-        return result[:, :, tf.newaxis]
+#     def call(self, inputs):
+#         """
+#         call
+#         Argumetns:
+#          - param inputs
+#         """
+#         if self.label_index is None:
+#             return inputs
+#         result = inputs[:, :, self.label_index]
+#         return result[:, :, tf.newaxis]
 
 
 
@@ -190,8 +190,7 @@ def compile_and_fit(model, window, patience=2, epochs=500):
                   optimizer=tf.optimizers.Adam(),
                   metrics=[tf.metrics.MeanAbsoluteError()])
     model = model.fit(window.train_df, window.train_labels, validation_data=(window.val_df, window.val_labels), epochs=epochs, callbacks=[e_s])
-    model = model.fit(window.train_df,window.val_df ,epochs=epochs,
-                        callbacks=[e_s])
+
     print(model.summary())
 
 
@@ -215,10 +214,10 @@ def forecasting(train, validation, test):
     val_performance = {}
     performance = {}
 
-    baseline = Baseline(label_index=column_indices['Close'])
+    # baseline = Baseline(label_index=column_indices['Close'])
 
-    baseline.compile(loss=tf.keras.losses.MeanSquaredError(),
-                     metrics=[tf.keras.metrics.MeanAbsoluteError()])
+    # baseline.compile(loss=tf.keras.losses.MeanSquaredError(),
+    #                  metrics=[tf.keras.metrics.MeanAbsoluteError()])
 
     lstm_model = tf.keras.models.Sequential([
         tf.keras.layers.LSTM(32, return_sequences=True),
