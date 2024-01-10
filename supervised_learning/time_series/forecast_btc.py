@@ -152,6 +152,37 @@ class WindowGenerator:
         ds = ds.map(self.split_window)
 
         return ds
+    @property
+    def train_dataset(self):
+        """
+        Create the training dataset.
+
+        Returns:
+            ds (tf.data.Dataset): Training dataset.
+        """
+
+        return self.make_dataset(self.train_df)
+    @property
+    def validation_dataset(self):
+        """
+        Create the validation dataset.
+
+        Returns:
+            ds (tf.data.Dataset): Validation dataset.
+        """
+
+        return self.make_dataset(self.val_df)
+    @property
+    def test_dataset(self):
+        """
+        Create the test dataset.
+
+        Returns:
+            ds (tf.data.Dataset): Test dataset.
+        """
+
+        return self.make_dataset(self.test_df)
+    
 # class Baseline(tf.keras.Model):
 #     """
 #     Baseline class
@@ -189,12 +220,12 @@ def compile_and_fit(model, window, patience=2, epochs=500):
     model.compile(loss=tf.losses.MeanSquaredError(),
                   optimizer=tf.optimizers.Adam(),
                   metrics=[tf.metrics.MeanAbsoluteError()])
-    model = model.fit(window.train_df, window.train_labels, validation_data=(window.val_df, window.val_labels), epochs=epochs, callbacks=[e_s])
+    history = model.fit(window.train_dataset, validation_data=(window.validation_dataset), epochs=epochs, callbacks=[e_s])
 
     print(model.summary())
 
 
-    return model
+    return history
 
 def forecasting(train, validation, test):
     """
