@@ -182,6 +182,17 @@ class WindowGenerator:
         """
 
         return self.make_dataset(self.test_df)
+    @property
+    def val(self):
+        """
+        Get the validation dataset.
+
+        Returns:
+            ds (tf.data.Dataset): Validation dataset.
+        """
+
+        return self.validation_dataset
+
     
 # class Baseline(tf.keras.Model):
 #     """
