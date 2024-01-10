@@ -11,14 +11,21 @@ def preprocessing(csv_paths):
     for csv_path in csv_paths:
         df = pd.read_csv(csv_path)
         # drop nan
-        df = df.dropna()
-        # take the last 2 years data
-        df = df[-(730 * 24 * 60):]
-        # encode the date
+        df = df.ffill()
+        # encode the date based on timestamp
         df['Date'] = pd.to_datetime(df['Timestamp'], unit='s')
+        # take the last 2 years data
+        df = df[df['Date'] >= '2017-01-01']
+        # drop the timestamp
+        df.drop(['Timestamp'], axis=1, inplace=True)
+
+        sorted_df = df.sort_values(by='Date', ascending=False)
+    
+        print(sorted_df.head())
+        
         # make date as index
         df = df.set_index('Date')
-        df.drop(['Timestamp'], axis=1, inplace=True)
+
         dfs.append(df)
 
     # concatenate all dataframes
