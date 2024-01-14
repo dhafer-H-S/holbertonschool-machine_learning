@@ -14,7 +14,9 @@ def bag_of_words(sentences, vocab=None):
 
     if vocab is None:
         vocab = sorted(
-            set(word for sentence in sentences for word in clean_sentence(sentence)))
+            set(
+                word for sentence in sentences for word 
+                in clean_sentence(sentence)))
 
     embeddings = np.zeros((len(sentences), len(vocab)))
 
