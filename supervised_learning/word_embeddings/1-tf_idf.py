@@ -21,7 +21,7 @@ def tf_idf(sentences, vocab=None):
         for word in vocab:
             tf = ((sentence.count(word)) / len(sentence))
             idf = np.log(len(sentences) /
-                         (sum(word in s for s in sentences) + 1e-10))
+                         (sum(word in s for s in sentences)))
             tf_idf = tf * idf
             embeddings[i, vocab.index(word)] = tf_idf
     return embeddings, vocab
