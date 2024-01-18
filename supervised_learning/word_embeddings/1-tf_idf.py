@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""0. Bag Of Words"""
+"""tf-idf"""
 import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 
