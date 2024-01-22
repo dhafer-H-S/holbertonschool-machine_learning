@@ -18,16 +18,17 @@ def fasttext_model(
         workers=1):
     """fasttest model"""
     sg = 0 if cbow else 1
-    """set sg to 0 for CBOW, 1 for Skip-gram"""
     model = FastText(
         vector_size=size,
         window=window,
         min_count=min_count,
         sg=sg,
-        seed=seed)
+        seed=seed,
+        negative=negative,
+        workers=workers)
     model.build_vocab(corpus_iterable=sentences)
     model.train(
         corpus_iterable=sentences,
         total_examples=len(sentences),
-        epochs=10)
+        epochs=iterations)
     return model
