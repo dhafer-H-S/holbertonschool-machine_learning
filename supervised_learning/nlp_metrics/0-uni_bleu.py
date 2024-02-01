@@ -4,6 +4,7 @@
 from collections import Counter
 import numpy as np
 
+
 def uni_bleu(references, sentence):
     """
     references is a list of reference translations
@@ -18,11 +19,19 @@ def uni_bleu(references, sentence):
     for reference in references:
         reference_counter = Counter(reference)
         for word in sentence_counter:
-            max_counts[word] = max(max_counts.get(word, 0), reference_counter[word])
-    clipped_counts = {word: min(count, max_counts.get(word, 0)) for word, count in sentence_counter.items()}
+            max_counts[word] = max(max_counts.get(
+                word, 0), reference_counter[word])
+    clipped_counts = {
+        word: min(
+            count,
+            max_counts.get(
+                word,
+                0)) for word,
+        count in sentence_counter.items()}
     blue_score = sum(clipped_counts.values()) / max(len(sentence), 1)
     """calculate brevity penalty"""
-    closest_ref_len = min((abs(len(sentence) - len(ref)), len(ref)) for ref in references)[1]
+    closest_ref_len = min((abs(len(sentence) - len(ref)), len(ref))
+                          for ref in references)[1]
     if len(sentence) > closest_ref_len:
         brevity_penalty = 1
     else:
