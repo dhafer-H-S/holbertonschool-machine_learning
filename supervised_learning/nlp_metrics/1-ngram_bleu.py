@@ -12,13 +12,13 @@ def ngram_bleu(references, sentence, n):
     sentence is a list containing the model proposed sentence
     n is the number of n gram to use for evoluation
     """
-   # Create n-grams for sentence
+    """Create n-grams for sentence"""
     sentence_ngrams = Counter([tuple(sentence[i:i + n])
                               for i in range(len(sentence) - n + 1)])
 
     max_counts = {}
     for reference in references:
-        # Create n-grams for reference
+        """Create n-grams for reference"""
         reference_ngrams = Counter(
             [tuple(reference[i:i + n]) for i in range(len(reference) - n + 1)])
         for ngram in sentence_ngrams:
@@ -35,7 +35,7 @@ def ngram_bleu(references, sentence, n):
 
     bleu_score = sum(clipped_counts.values()) / max(len(sentence_ngrams), 1)
 
-    # Calculate brevity penalty
+    """Calculate brevity penalty"""
     closest_ref_len = min((abs(len(sentence) - len(ref)), len(ref))
                           for ref in references)[1]
     if len(sentence) > closest_ref_len:
