@@ -54,4 +54,4 @@ def cumulative_bleu(references, sentence, n):
     else:
         brevity_penalty = np.exp(1 - closest_ref_len / len(sentence))
 
-    return brevity_penalty * bleu_score
+    return round(brevity_penalty * bleu_score, 10)
