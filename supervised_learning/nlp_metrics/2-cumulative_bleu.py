@@ -26,7 +26,7 @@ def cumulative_bleu(references, sentence, n):
         max_counts = {}
         for reference in references:
             reference_ngrams = Counter(
-                [tuple(reference[j:j + i]) for j in \
+                [tuple(reference[j:j + i]) for j in
                  range(len(reference) - i + 1)])
             for ngram in sentence_ngrams:
                 max_counts[ngram] = max(max_counts.get(
