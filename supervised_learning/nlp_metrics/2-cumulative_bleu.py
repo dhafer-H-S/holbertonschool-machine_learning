@@ -7,6 +7,18 @@ from math import exp, log
 
 
 def cumulative_bleu(references, sentence, n):
+    """
+    Calculate the cumulative BLEU score for a given sentence.
+
+    Args:
+        references (list): A list of reference sentences.
+        sentence (list): The candidate sentence to evaluate.
+        n (int): The maximum n-gram order to consider.
+
+    Returns:
+        float: The cumulative BLEU score.
+
+    """
     precisions = []
     for i in range(1, n + 1):
         sentence_ngrams = Counter([tuple(sentence[j:j + i])
@@ -26,7 +38,7 @@ def cumulative_bleu(references, sentence, n):
                     0)) for ngram,
             count in sentence_ngrams.items()}
         precisions.append(sum(clipped_counts.values()) /
-                          max(len(sentence_ngrams), 1))
+                          sum(sentence_ngrams.values()))
     bleu_score = exp(sum(log(p) for p in precisions) / len(precisions))
     closest_ref_len = min((abs(len(sentence) - len(ref)), len(ref))
                           for ref in references)[1]
