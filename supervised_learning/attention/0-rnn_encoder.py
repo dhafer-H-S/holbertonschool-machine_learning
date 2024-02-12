@@ -50,23 +50,22 @@ class RNNEncoder:
         return tf.zeros([self.batch, self.units])
 
     def call(self, x, initial):
-            """
-            Perform the forward pass of the RNN Encoder.
-
-            Args:
-                x (tf.Tensor): Input tensor of shape
-                (batch_size, sequence_length, input_dim).
-                initial (tf.Tensor): Initial state tensor of shape
-                (batch_size, units).
-
-            Returns:
-                outputs (tf.Tensor): Output tensor of shape
-                (batch_size, sequence_length, units).
-                state (tf.Tensor): Final state tensor of shape (batch_size, units).
-            """
-            if len(x.shape) == 2:
+        """
+        Perform the forward pass of the RNN Encoder.
+        Args:
+            x (tf.Tensor): Input tensor of shape
+            (batch_size, sequence_length, input_dim).
+            initial (tf.Tensor): Initial state tensor of shape
+            (batch_size, units).
+        Returns:
+            outputs (tf.Tensor): Output tensor of shape
+            (batch_size, sequence_length, units).
+            state (tf.Tensor): Final state tensor of shape
+            (batch_size, units).
+        """
+        if len(x.shape) == 2:
                 x = tf.reshape(x, (x.shape[0], 1, x.shape[1]))
-            if initial is None:
+        if initial is None:
                 initial = tf.zeros((x.shape[0], self.units))
-            outputs, state = self.gru(x, initial)
-            return outputs, state
+        outputs, state = self.gru(x, initial)
+        return outputs, state
