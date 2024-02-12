@@ -11,7 +11,8 @@ class SelfAttention(tf.keras.layers.Layer):
         Initializes a SelfAttention object.
 
         Parameters:
-        - units: An integer representing the number of hidden units in the alignment model.
+        - units: An integer representing the number of hidden units
+        in the alignment model.
         """
         super(SelfAttention, self).__init__()
         self.W = tf.keras.layers.Dense(units)
