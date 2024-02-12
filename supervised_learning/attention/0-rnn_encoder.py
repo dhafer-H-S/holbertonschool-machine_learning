@@ -47,7 +47,7 @@ class RNNEncoder:
         """
         return tf.zeros([self.batch, self.units])
 
-    def __call__(self, x, initial):
+    def call(self, x, initial):
         """
         Extracts input sequences.
 
