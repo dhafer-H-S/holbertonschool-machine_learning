@@ -54,11 +54,14 @@ class RNNEncoder:
             Perform the forward pass of the RNN Encoder.
 
             Args:
-                x (tf.Tensor): Input tensor of shape (batch_size, sequence_length, input_dim).
-                initial (tf.Tensor): Initial state tensor of shape (batch_size, units).
+                x (tf.Tensor): Input tensor of shape
+                (batch_size, sequence_length, input_dim).
+                initial (tf.Tensor): Initial state tensor of shape
+                (batch_size, units).
 
             Returns:
-                outputs (tf.Tensor): Output tensor of shape (batch_size, sequence_length, units).
+                outputs (tf.Tensor): Output tensor of shape
+                (batch_size, sequence_length, units).
                 state (tf.Tensor): Final state tensor of shape (batch_size, units).
             """
             if len(x.shape) == 2:
