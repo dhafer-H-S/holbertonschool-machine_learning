@@ -65,6 +65,6 @@ class RNNEncoder(tf.keras.layers.Layer):
             state (tf.Tensor): Final state tensor of shape
             (batch_size, units).
         """
-        x = self.embedding
+        x = self.embedding(x)
         outputs, hidden = self.gru(x, initial_state=initial)
         return outputs, hidden
