@@ -49,7 +49,6 @@ class RNNEncoder:
         """
         return tf.zeros([self.batch, self.units])
 
-
     def call(self, x, initial):
         """
         Perform the forward pass of the RNN Encoder.
