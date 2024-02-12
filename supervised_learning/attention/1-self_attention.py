@@ -28,14 +28,9 @@ class SelfAttention(tf.keras.layers.Layer):
         hidden_states is a tensor of shape (batch, inut_seq_len, units)
         conatining the output of the encoder
         """
-        score = self.V(
-            tf.nn.tanh(
-                self.W(
-                    tf.expand_dims(
-                        s_prev,
-                        1)) +
-                self.U(hidden_states)))
+        score = self.V(tf.nn.tanh(self.W(tf.expand_dims(s_prev, 1)) + self.U(hidden_states)))
         attention_weights = tf.nn.softmax(score, axis=1)
+        attention_weights = tf.expand_dims(attention_weights, -1)  # Expand the dimensions of attention_weights
         context_vector = attention_weights * hidden_states
         context_vector = tf.reduce_sum(context_vector, axis=1)
 
