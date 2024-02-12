@@ -7,15 +7,15 @@ class SelfAttention(tf.keras.layers.Layer):
     """calculate attention for machine translation"""
 
     def __init__(self, units):
-        """constructor
-        units is an integer representing the number of hidden units in the
-        alignment model"""
+        """
+        Initializes a SelfAttention object.
+
+        Parameters:
+        - units: An integer representing the number of hidden units in the alignment model.
+        """
         super(SelfAttention, self).__init__()
-        # W is hidden state of encoder
         self.W = tf.keras.layers.Dense(units)
-        # U is hidden state of decoder
         self.U = tf.keras.layers.Dense(units)
-        # V is the tanh of the sum of the outputs of W and U
         self.V = tf.keras.layers.Dense(1)
 
     def call(self, s_prev, hidden_states):
