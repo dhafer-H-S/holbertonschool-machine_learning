@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+"""RNN ECODER """
 
 import tensorflow as tf
 
@@ -14,7 +15,8 @@ class RNNEncoder:
         batch (int): The batch size.
 
     Methods:
-        __init__(self, vocab, embedding, units, batch): Initializes the RNNEncoder object.
+        __init__(self, vocab, embedding, units, batch): Initializes
+        the RNNEncoder object.
         initialize_hidden_state(self): Initializes the hidden state to zeros.
         call(self, x, initial): Extracts input sequences.
     """
