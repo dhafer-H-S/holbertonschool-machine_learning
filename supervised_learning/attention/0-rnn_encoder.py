@@ -64,8 +64,8 @@ class RNNEncoder:
             (batch_size, units).
         """
         if len(x.shape) == 2:
-                x = tf.reshape(x, (x.shape[0], 1, x.shape[1]))
+            x = tf.reshape(x, (x.shape[0], 1, x.shape[1]))
         if initial is None:
-                initial = tf.zeros((x.shape[0], self.units))
+            initial = tf.zeros((x.shape[0], self.units))
         outputs, state = self.gru(x, initial)
         return outputs, state
