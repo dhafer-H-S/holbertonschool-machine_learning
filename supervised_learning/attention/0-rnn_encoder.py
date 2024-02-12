@@ -4,7 +4,7 @@
 import tensorflow as tf
 
 
-class RNNEncoder:
+class RNNEncoder(tf.keras.layers.Layer):
     """
     A class representing a Recurrent Neural Network Encoder.
 
