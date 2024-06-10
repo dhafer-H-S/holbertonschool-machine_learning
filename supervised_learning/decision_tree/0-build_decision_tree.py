@@ -8,18 +8,22 @@ class Node:
     """
     This class represents a node in a decision tree.
 
-    A node holds the feature and threshold used for splitting the data, 
-    references to the left and right child nodes, and other properties 
+    A node holds the feature and threshold used for splitting the data,
+    references to the left and right child nodes, and other properties
     related to the node's role in the tree.
 
     Attributes:
-        feature (int): The index of the feature used for splitting the data at this node.
-        threshold (float): The threshold value used for splitting the data at this node.
+        feature (int): The index of the feature used for
+        splitting the data at this node.
+        threshold (float): The threshold value used for splitting the
+        data at this node.
         left_child (Node): The left child node.
         right_child (Node): The right child node.
-        is_root (bool): Indicates whether this node is the root of the decision tree.
+        is_root (bool): Indicates whether this node is the root of
+        the decision tree.
         depth (int): The depth of the node in the decision tree.
     """
+
     def __init__(
             self,
             feature=None,
@@ -112,9 +116,11 @@ class Decision_Tree():
 
     Attributes:
         max_depth (int): The maximum depth of the decision tree. Default is 10.
-        min_pop (int): The minimum number of samples required to split a node. Default is 1.
+        min_pop (int): The minimum number of samples required to split a node.
+        Default is 1.
         seed (int): The seed value for random number generation. Default is 0.
-        split_criterion (str): The criterion used to split the nodes. Default is "random".
+        split_criterion (str): The criterion used to split the nodes.
+        Default is "random".
         root (Node): The root node of the decision tree. Default is None.
 
     Methods:
