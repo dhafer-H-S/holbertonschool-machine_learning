@@ -7,7 +7,6 @@ import numpy as np
 class Node:
     """
     Represents a node in a decision tree.
-
     Attributes:
         feature (str): The feature used for splitting at this node.
         threshold (float): The threshold value for the feature used for
@@ -58,6 +57,7 @@ class Node:
 
         Args:
             only_leaves (bool): If True, only counts the leaf nodes.
+            Default is False.
 
         Returns:
             int: The number of nodes below this node.
