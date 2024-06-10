@@ -115,7 +115,8 @@ class Leaf(Node):
 
         Args:
             value (any): The value associated with the node.
-            depth (int, optional): The depth of the node in the decision tree. Defaults to None.
+            depth (int, optional): The depth of the node in the decision tree.
+            Defaults to None.
         """
         super().__init__()
         self.value = value
