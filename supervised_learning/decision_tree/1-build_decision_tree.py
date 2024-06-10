@@ -6,7 +6,6 @@ import numpy as np
 class Node:
     """
     Represents a node in a decision tree.
-
     Attributes:
         feature (str): The feature used for splitting at this node.
         threshold (float): The threshold value for the feature.
