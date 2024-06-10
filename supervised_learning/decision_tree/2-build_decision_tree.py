@@ -19,17 +19,6 @@ class Node:
         sub_population (None): Placeholder for storing the sub-population
         associated with this node.
         depth (int): The depth of this node in the decision tree.
-
-    Methods:
-        max_depth_below(): Returns the maximum depth of any leaf node below
-        this node.
-        count_nodes_below(only_leaves=False): Returns the number of nodes
-        below this node.
-        left_child_add_prefix(text): Adds a prefix to the text representation
-        of the left child node.
-        right_child_add_prefix(text): Adds a prefix to the text representation
-        of the right child node.
-        __str__(): Returns a string representation of the node.
     """
     def __init__(
             self,
