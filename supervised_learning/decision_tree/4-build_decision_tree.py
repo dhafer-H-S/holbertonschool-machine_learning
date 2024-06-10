@@ -168,26 +168,35 @@ class Node:
         return leaves
 
     def update_bounds_below(self):
-        if self.is_root:
-            self.upper = { 0: np.inf}
-            self.lower = {0 : -1 * np.inf}
+            """
+            Update the lower bounds of the decision tree nodes.
 
-        for child in [self.left_child, self.right_child]:
+            If the current node is the root, initialize the upper and lower bounds dictionaries.
+            For each child node, update its upper and lower bounds based on the current node's bounds.
 
-            if self.right_child:
-                self.right_child.upper = self.upper.copy()
-                self.right_child.lower = self.lower.copy()
-                self.right_child.upper[self.feature] = min(
-                    self.upper.get(self.feature, np.inf), self.threshold)
+            Returns:
+                None
+            """
+            if self.is_root:
+                self.upper = {0: np.inf}
+                self.lower = {0: -1 * np.inf}
 
-            if self.left_child:
-                self.left_child.upper = self.upper.copy()
-                self.left_child.lower = self.lower.copy()
-                self.left_child.lower[self.feature] = max(
-                    self.lower.get(self.feature, -np.inf), self.threshold)
+            for child in [self.left_child, self.right_child]:
 
-        for child in [self.left_child, self.right_child]:
-            child.update_bounds_below()
+                if self.right_child:
+                    self.right_child.upper = self.upper.copy()
+                    self.right_child.lower = self.lower.copy()
+                    self.right_child.upper[self.feature] = min(
+                        self.upper.get(self.feature, np.inf), self.threshold)
+
+                if self.left_child:
+                    self.left_child.upper = self.upper.copy()
+                    self.left_child.lower = self.lower.copy()
+                    self.left_child.lower[self.feature] = max(
+                        self.lower.get(self.feature, -np.inf), self.threshold)
+
+            for child in [self.left_child, self.right_child]:
+                child.update_bounds_below()
 
 
 class Leaf(Node):
