@@ -164,7 +164,8 @@ class Leaf(Node):
         Counts the number of nodes below the current leaf node.
 
         Args:
-            only_leaves (bool, optional): If True, counts only the leaf nodes. Defaults to False.
+            only_leaves (bool, optional): If True, counts only the leaf nodes.
+            Defaults to False.
 
         Returns:
             int: The number of nodes below the current leaf node.
@@ -186,14 +187,21 @@ class Decision_Tree:
     A class representing a decision tree.
 
     Attributes:
-        max_depth (int): The maximum depth of the decision tree. Default is 10.
-        min_pop (int): The minimum population required to create a split. Default is 1.
+        max_depth (int): The maximum depth of the decision tree.
+        Default is 10.
+        min_pop (int): The minimum population required to create a split.
+        Default is 1.
         seed (int): The seed value for random number generation. Default is 0.
-        split_criterion (str): The criterion used for splitting the tree. Default is "random".
-        root (Node): The root node of the decision tree. If not provided, a new root node will be created.
-        explanatory (array-like): The explanatory variables used for training the decision tree.
-        target (array-like): The target variable used for training the decision tree.
-        predict (function): The function used for making predictions with the decision tree.
+        split_criterion (str): The criterion used for splitting the tree.
+        Default is "random".
+        root (Node): The root node of the decision tree. If not provided,
+        a new root node will be created.
+        explanatory (array-like): The explanatory variables used for training
+        the decision tree.
+        target (array-like): The target variable used for training
+        the decision tree.
+        predict (function): The function used for making predictions
+        with the decision tree.
     """
 
     def __init__(
@@ -207,11 +215,16 @@ class Decision_Tree:
         Initializes a DecisionTree object.
 
         Args:
-            max_depth (int, optional): The maximum depth of the decision tree. Defaults to 10.
-            min_pop (int, optional): The minimum population required to create a split. Defaults to 1.
-            seed (int, optional): The seed value for random number generation. Defaults to 0.
-            split_criterion (str, optional): The criterion used for splitting the tree. Defaults to "random".
-            root (Node, optional): The root node of the decision tree. Defaults to a new root node.
+            max_depth (int, optional): The maximum depth of the decision tree.
+            Defaults to 10.
+            min_pop (int, optional): The minimum population required to create
+            a split. Defaults to 1.
+            seed (int, optional): The seed value for random number generation.
+            Defaults to 0.
+            split_criterion (str, optional): The criterion used for splitting
+            the tree. Defaults to "random".
+            root (Node, optional): The root node of the decision tree. Defaults
+            to a new root node.
         """
         self.rng = np.random.default_rng(seed)
         self.root = root if root else Node(is_root=True)
@@ -236,7 +249,8 @@ class Decision_Tree:
         Returns the number of nodes in the decision tree.
 
         Args:
-            only_leaves (bool, optional): If True, only counts the leaf nodes. Defaults to False.
+            only_leaves (bool, optional): If True, only counts the leaf nodes.
+            Defaults to False.
 
         Returns:
             int: The number of nodes in the decision tree.
