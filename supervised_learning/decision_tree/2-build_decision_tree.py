@@ -63,7 +63,7 @@ class Node:
                 self.left_child.max_depth_below(),
                 self.right_child.max_depth_below())
 
-    def count_nodes_below(self, only_leaves=False):
+    def count_nodes_below(self):
         """
         Returns the number of nodes below this node.
 
