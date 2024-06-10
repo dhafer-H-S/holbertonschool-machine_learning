@@ -50,6 +50,12 @@ class Node:
         self.depth = depth
 
     def max_depth_below(self):
+        """
+        This function calculates the maximum depth below this node.
+
+        Returns:
+            int: The maximum depth below this node.
+        """
         if self.is_leaf:
             return self.depth
         else:
