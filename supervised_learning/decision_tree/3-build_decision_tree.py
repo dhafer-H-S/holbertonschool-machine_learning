@@ -268,8 +268,10 @@ class Decision_Tree():
         Initialize a DecisionTree object.
 
         Args:
-            max_depth (int): The maximum depth of the decision tree. Defaults to 10.
-            min_pop (int): The minimum number of samples required to split a node
+            max_depth (int): The maximum depth of the decision tree.
+            Defaults to 10.
+            min_pop (int): The minimum number of samples required to
+            split a node
             Defaults to 1.
             seed (int): The seed value for the random number generator
             Defaults to 0.
