@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-
 """This module contains classes for constructing and managing a decision tree."""
 import numpy as np
 
@@ -91,7 +90,7 @@ class Node:
             text (str): The text representation of the left child node.
 
         Returns:
-            str: The text representation of the left child node with a prefix
+            str: The text representation of the left child node with a prefix.
         """
         lines = text.split("\n")
         new_text = "    +---> " + lines[0] + "\n"
@@ -123,7 +122,7 @@ class Node:
             str: A string representation of the decision tree node.
         """
         node_str = f"{'root' if self.is_root else 'node'}
-        [feature = {self.feature}, threshold = {self.threshold}]"
+        [feature={self.feature}, threshold={self.threshold}]"
         left_str = self.left_child_add_prefix(
             str(self.left_child).strip()) if self.left_child else ""
         right_str = self.right_child_add_prefix(
