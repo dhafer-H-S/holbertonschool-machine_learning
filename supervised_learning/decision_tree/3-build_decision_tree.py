@@ -269,7 +269,13 @@ class Decision_Tree():
         self.predict = None
 
     def depth(self):
-        return self.root.max_depth_below()
+            """
+            Calculate the depth of the decision tree.
+
+            Returns:
+                The depth of the decision tree.
+            """
+            return self.root.max_depth_below()
 
     def count_nodes(self, only_leaves=False):
         """"""
