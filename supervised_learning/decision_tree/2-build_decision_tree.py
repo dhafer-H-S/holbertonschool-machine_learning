@@ -31,7 +31,6 @@ class Node:
         of the right child node.
         __str__(): Returns a string representation of the node.
     """
-
     def __init__(
             self,
             feature=None,
@@ -40,6 +39,7 @@ class Node:
             right_child=None,
             is_root=False,
             depth=0):
+        """initialisation"""
         self.feature = feature
         self.threshold = threshold
         self.left_child = left_child
@@ -63,7 +63,7 @@ class Node:
                 self.left_child.max_depth_below(),
                 self.right_child.max_depth_below())
 
-    def count_nodes_below(self):
+    def count_nodes_below(self, only_leaves=False):
         """
         Returns the number of nodes below this node.
 
