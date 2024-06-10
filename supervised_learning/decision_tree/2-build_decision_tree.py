@@ -1,9 +1,6 @@
 #!/usr/bin/env python3
 
-"""
-This module contains classes for constructing and managing a
-decision tree.
-"""
+"""This module contains classes for constructing and managing a decision tree."""
 import numpy as np
 
 
@@ -134,7 +131,7 @@ class Node:
             str: A string representation of the decision tree node.
         """
         node_str = f"{'root' if self.is_root else 'node'}
-        [feature = {self.feature}, threshold = {self.threshold}]"
+        [feature={self.feature}, threshold={self.threshold}]"
         left_str = self.left_child_add_prefix(
             str(self.left_child).strip()) if self.left_child else ""
         right_str = self.right_child_add_prefix(
@@ -157,8 +154,7 @@ class Leaf(Node):
 
         Args:
             value (any): The value associated with the leaf node.
-            depth (int, optional): The depth of the leaf node in
-            the decision tree Defaults to None.
+            depth (int, optional): The depth of the leaf node in the decision tree. Defaults to None.
         """
         super().__init__(depth=depth)
         self.value = value
