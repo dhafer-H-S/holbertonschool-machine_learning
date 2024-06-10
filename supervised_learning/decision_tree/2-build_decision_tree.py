@@ -83,7 +83,7 @@ class Node:
         for x in lines[1:]:
             new_text += "          " + x + "\n"
         return new_text
-    
+
     def __str__(self):
         if self.is_root:
             node_str = "root [feature={}, threshold={}]".format(
