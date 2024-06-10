@@ -102,6 +102,17 @@ class Node:
         return new_text
 
     def __str__(self):
+        """
+        Returns a string representation of the decision tree node.
+
+        If the node is the root, it is represented as "root [feature=X, threshold=Y]".
+        If the node is not the root, it is represented as "node [feature=X, threshold=Y]".
+
+        The left child and right child nodes are recursively added to the string representation.
+
+        Returns:
+            str: A string representation of the decision tree node.
+        """
         if self.is_root:
             node_str = "root [feature={}, threshold={}]".format(
                 self.feature, self.threshold)
