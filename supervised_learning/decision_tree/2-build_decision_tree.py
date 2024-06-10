@@ -19,7 +19,14 @@ class Node:
         depth (int): The depth of this node in the decision tree.
     """
 
-    def __init__(self, feature=None, threshold=None, left_child=None, right_child=None, is_root=False, depth=0):
+    def __init__(
+            self,
+            feature=None,
+            threshold=None,
+            left_child=None,
+            right_child=None,
+            is_root=False,
+            depth=0):
         """
         Initializes a Node object.
 
@@ -52,8 +59,7 @@ class Node:
         else:
             return max(
                 self.left_child.max_depth_below() if self.left_child else self.depth,
-                self.right_child.max_depth_below() if self.right_child else self.depth
-            )
+                self.right_child.max_depth_below() if self.right_child else self.depth)
 
     def count_nodes_below(self, only_leaves=False):
         """
@@ -67,8 +73,10 @@ class Node:
         """
         if self.is_leaf:
             return 1
-        left_count = self.left_child.count_nodes_below(only_leaves=only_leaves) if self.left_child else 0
-        right_count = self.right_child.count_nodes_below(only_leaves=only_leaves) if self.right_child else 0
+        left_count = self.left_child.count_nodes_below(
+            only_leaves=only_leaves) if self.left_child else 0
+        right_count = self.right_child.count_nodes_below(
+            only_leaves=only_leaves) if self.right_child else 0
         if only_leaves:
             return left_count + right_count
         else:
@@ -114,8 +122,10 @@ class Node:
             str: A string representation of the decision tree node.
         """
         node_str = f"{'root' if self.is_root else 'node'} [feature={self.feature}, threshold={self.threshold}]"
-        left_str = self.left_child_add_prefix(str(self.left_child).strip()) if self.left_child else ""
-        right_str = self.right_child_add_prefix(str(self.right_child).strip()) if self.right_child else ""
+        left_str = self.left_child_add_prefix(
+            str(self.left_child).strip()) if self.left_child else ""
+        right_str = self.right_child_add_prefix(
+            str(self.right_child).strip()) if self.right_child else ""
         return f"{node_str}\n{left_str}{right_str}"
 
 
@@ -171,7 +181,7 @@ class Leaf(Node):
         return f"leaf [value={self.value}]"
 
 
-class DecisionTree:
+class Decision_Tree:
     """
     A class representing a decision tree.
 
@@ -186,7 +196,13 @@ class DecisionTree:
         predict (function): The function used for making predictions with the decision tree.
     """
 
-    def __init__(self, max_depth=10, min_pop=1, seed=0, split_criterion="random", root=None):
+    def __init__(
+            self,
+            max_depth=10,
+            min_pop=1,
+            seed=0,
+            split_criterion="random",
+            root=None):
         """
         Initializes a DecisionTree object.
 
