@@ -83,7 +83,7 @@ class Node:
         for x in lines[1:]:
             new_text += "          " + x + "\n"
         return new_text
-
+    
     def __str__(self):
         if self.is_root:
             node_str = "root [feature={}, threshold={}]".format(
@@ -141,7 +141,7 @@ class Leaf(Node):
         Returns:
             str: A string representation of the leaf node.
         """
-        return f"leaf [value={self.value}]"
+        return (f"leaf [value={self.value}] ")
 
     def get_leaves_below(self):
         """
@@ -151,6 +151,16 @@ class Leaf(Node):
             list: A list of leaf nodes below the current leaf node.
         """
         return [self]
+
+    def __doc__(self):
+        """
+        Represents a leaf node in a decision tree.
+
+        Attributes:
+            value (any): The value associated with the leaf node.
+            depth (int, optional): The depth of the leaf node in the tree.
+        """
+        pass
 
 
 class Decision_Tree():
