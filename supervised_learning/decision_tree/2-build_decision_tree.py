@@ -152,6 +152,16 @@ class Leaf(Node):
         """
         return [self]
 
+    def __doc__(self):
+        """
+        Represents a leaf node in a decision tree.
+
+        Attributes:
+            value (any): The value associated with the leaf node.
+            depth (int, optional): The depth of the leaf node in the tree.
+        """
+        pass
+
 
 class Decision_Tree():
     """
