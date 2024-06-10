@@ -93,8 +93,8 @@ class Node:
                 self.feature, self.threshold)
 
         if self.left_child:
-            left_str = self.left_child_add_prefix(str(self.left_child)\
-                                                  .strip())
+            left_str = self.left_child_add_prefix(
+                str(self.left_child).strip())
         else:
             left_str = ""
 
