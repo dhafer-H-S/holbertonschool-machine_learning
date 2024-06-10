@@ -34,6 +34,12 @@ class Node:
         self.depth = depth
 
     def max_depth_below(self):
+        """
+        Returns the maximum depth of the tree below this node.
+
+        Returns:
+            int: The maximum depth below this node.
+        """
         if self.is_leaf:
             return self.depth
         else:
@@ -42,6 +48,15 @@ class Node:
                 self.right_child.max_depth_below())
 
     def count_nodes_below(self, only_leaves=False):
+        """
+        Counts the number of nodes below this node.
+
+        Args:
+            only_leaves (bool): If True, only counts the leaf nodes.
+
+        Returns:
+            int: The number of nodes below this node.
+        """
         if self.is_leaf:
             return 1
         else:
@@ -55,6 +70,15 @@ class Node:
                 return 1 + right_count + left_count
 
     def left_child_add_prefix(self, text):
+        """
+        Adds a prefix to the text representation of the left child node.
+
+        Args:
+            text (str): The text representation of the left child node.
+
+        Returns:
+            str: The updated text representation with a prefix added.
+        """
         lines = text.split("\n")
         new_text = "    +--" + lines[0] + "\n"
         for x in lines[1:]:
@@ -62,6 +86,15 @@ class Node:
         return new_text
 
     def right_child_add_prefix(self, text):
+        """
+        Adds a prefix to the text representation of the right child node.
+
+        Args:
+            text (str): The text representation of the right child node.
+
+        Returns:
+            str: The updated text representation with a prefix added.
+        """
         lines = text.split("\n")
         new_text = "    `--" + lines[0] + "\n"
         for x in lines[1:]:
@@ -89,6 +122,12 @@ class Node:
         return "{}\n{}{}".format(node_str, left_str, right_str)
 
     def get_leaves_below(self):
+        """
+        Returns a list of leaf nodes below this node.
+
+        Returns:
+            list: A list of leaf nodes below this node.
+        """
         leaves = []
         if self.left_child:
             leaves.extend(self.left_child.get_leaves_below())
@@ -98,6 +137,14 @@ class Node:
 
 
 class Leaf(Node):
+    """
+    Represents a leaf node in a decision tree.
+
+    Attributes:
+        value (any): The value associated with the leaf node.
+        depth (int): The depth of the leaf node in the decision tree.
+    """
+
     def __init__(self, value, depth=None):
         super().__init__()
         self.value = value
@@ -105,19 +152,71 @@ class Leaf(Node):
         self.depth = depth
 
     def max_depth_below(self):
+        """
+        Returns the maximum depth below the leaf node.
+
+        Returns:
+            int: The maximum depth below the leaf node.
+        """
         return self.depth
 
     def count_nodes_below(self, only_leaves=False):
+        """
+        Counts the number of nodes below the leaf node.
+
+        Args:
+            only_leaves (bool): If True, counts only the leaf nodes.
+            If False, counts all nodes.
+
+        Returns:
+            int: The number of nodes below the leaf node.
+        """
         return 1
 
     def __str__(self):
+        """
+        Returns a string representation of the leaf node.
+
+        Returns:
+            str: The string representation of the leaf node.
+        """
         return (f"-> leaf [value={self.value}] ")
 
     def get_leaves_below(self):
+        """
+        Returns a list of leaf nodes below the current leaf node.
+
+        Returns:
+            list: A list of leaf nodes below the current leaf node.
+        """
         return [self]
 
 
 class Decision_Tree():
+    """
+    Decision_Tree class represents a decision tree model.
+
+    Attributes:
+        max_depth (int): The maximum depth of the decision tree.
+        Default is 10.
+        min_pop (int): The minimum number of samples required to
+        split a node. Default is 1.
+        seed (int): The seed value for random number generation.
+        Default is 0.
+        split_criterion (str): The criterion used to split
+        the nodes. Default is "random".
+        root (Node): The root node of the decision tree
+        If not provided, a new root node will be created.
+
+    Methods:
+        depth(): Returns the maximum depth of the decision tree.
+        count_nodes(only_leaves=False): Returns the number of
+        nodes in the decision tree. If only_leaves is True,
+        it returns the number of leaf nodes only.
+        __str__(): Returns a string representation of the decision tree.
+        get_leaves(): Returns a list of leaf nodes in the decision tree.
+    """
+
     def __init__(
             self,
             max_depth=10,
