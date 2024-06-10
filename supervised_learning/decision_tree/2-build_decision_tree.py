@@ -51,7 +51,7 @@ class Node:
 
     def max_depth_below(self):
         """
-        This function calculates the maximum depth below this node.
+        Returns the maximum depth of any leaf node below this node.
 
         Returns:
             int: The maximum depth below this node.
@@ -64,6 +64,15 @@ class Node:
                 self.right_child.max_depth_below())
 
     def count_nodes_below(self, only_leaves=False):
+        """
+        Returns the number of nodes below this node.
+
+        Args:
+            only_leaves (bool): If True, only counts the leaf nodes.
+
+        Returns:
+            int: The number of nodes below this node.
+        """
         if self.is_leaf:
             return 1
         else:
@@ -77,6 +86,15 @@ class Node:
                 return 1 + right_count + left_count
 
     def left_child_add_prefix(self, text):
+        """
+        Adds a prefix to the text representation of the left child node.
+
+        Args:
+            text (str): The text representation of the left child node.
+
+        Returns:
+            str: The text representation of the left child node with a prefix.
+        """
         lines = text.split("\n")
         new_text = "    +---> " + lines[0] + "\n"
         for x in lines[1:]:
@@ -84,6 +102,15 @@ class Node:
         return new_text
 
     def right_child_add_prefix(self, text):
+        """
+        Adds a prefix to the text representation of the right child node.
+
+        Args:
+            text (str): The text representation of the right child node.
+
+        Returns:
+            str: The text representation of the right child node with a prefix.
+        """
         lines = text.split("\n")
         new_text = "    +---> " + lines[0] + "\n"
         for x in lines[1:]:
