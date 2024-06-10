@@ -118,6 +118,7 @@ class Node:
         return new_text
 
     def __str__(self):
+        """print decision tree"""
         if self.is_root:
             node_str = "root [feature={}, threshold={}]".format(
                 self.feature, self.threshold)
