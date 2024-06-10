@@ -83,7 +83,7 @@ class Node:
         for x in lines[1:]:
             new_text += "       " + x + "\n"
         return new_text
-    
+
     def __str__(self):
         if self.is_root:
             node_str = "root [feature={}, threshold={}]".format(
@@ -93,12 +93,14 @@ class Node:
                 self.feature, self.threshold)
 
         if self.left_child:
-            left_str = self.left_child_add_prefix(str(self.left_child).strip())
+            left_str = self.left_child_add_prefix(str(self.left_child)\
+                                                  .strip())
         else:
             left_str = ""
 
         if self.right_child:
-            right_str = self.right_child_add_prefix(str(self.right_child).strip())
+            right_str = self.right_child_add_prefix(
+                str(self.right_child).strip())
         else:
             right_str = ""
 
@@ -106,7 +108,15 @@ class Node:
 
 
 class Leaf(Node):
+    """class leaf"""
     def __init__(self, value, depth=None):
+        """
+        Initializes a DecisionTreeNode object.
+
+        Args:
+            value (any): The value associated with the node.
+            depth (int, optional): The depth of the node in the decision tree. Defaults to None.
+        """
         super().__init__()
         self.value = value
         self.is_leaf = True
@@ -126,7 +136,8 @@ class Leaf(Node):
         Counts the number of nodes below the current leaf node.
 
         Args:
-            only_leaves (bool, optional): If True, counts only the leaf nodes.
+            only_leaves (bool, optional): If True,
+            counts only the leaf nodes
             Defaults to False.
 
         Returns:
@@ -168,10 +179,12 @@ class Decision_Tree():
     A class representing a decision tree.
 
     Attributes:
-        max_depth (int): The maximum depth of the decision tree. Default is 10.
+        max_depth (int): The maximum depth of the decision tree.
+        Default is 10.
         min_pop (int): The minimum population required to create a split.
         Default is 1.
-        seed (int): The seed value for random number generation. Default is 0.
+        seed (int): The seed value for random number generation.
+        Default is 0.
         split_criterion (str): The criterion used for splitting the tree.
         Default is "random".
         root (Node): The root node of the decision tree. If not provided,
