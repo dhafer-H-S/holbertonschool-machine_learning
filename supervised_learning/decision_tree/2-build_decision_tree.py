@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
-"""import numpy module"""
+"""This module contains classes for constructing and managing a decision
+tree."""
 import numpy as np
 
 
@@ -11,13 +12,13 @@ class Node:
     Attributes:
         feature (str): The feature used for splitting at this node.
         threshold (float): The threshold value for the feature used for
-        splitting at this node.
+            splitting at this node.
         left_child (Node): The left child node.
         right_child (Node): The right child node.
         is_leaf (bool): Indicates whether this node is a leaf node.
         is_root (bool): Indicates whether this node is the root node.
         sub_population (None): Placeholder for storing the sub-population
-        associated with this node.
+            associated with this node.
         depth (int): The depth of this node in the decision tree.
     """
 
@@ -29,7 +30,22 @@ class Node:
             right_child=None,
             is_root=False,
             depth=0):
-        """initialisation"""
+        """
+        Initializes a Node object.
+
+        Args:
+            feature (str, optional): The feature used for splitting at this
+                node. Defaults to None.
+            threshold (float, optional): The threshold value for the feature
+                used for splitting at this node. Defaults to None.
+            left_child (Node, optional): The left child node. Defaults to None.
+            right_child (Node, optional): The right child node. Defaults to
+                None.
+            is_root (bool, optional): Indicates whether this node is the root
+                node. Defaults to False.
+            depth (int, optional): The depth of this node in the decision tree.
+                Defaults to 0.
+        """
         self.feature = feature
         self.threshold = threshold
         self.left_child = left_child
@@ -50,8 +66,8 @@ class Node:
             return self.depth
         else:
             return max(
-                self.left_child.max_depth_below(),
-                self.right_child.max_depth_below())
+                self.left_child.max_depth_below() if self.left_child else 0,
+                self.right_child.max_depth_below() if self.right_child else 0)
 
     def count_nodes_below(self, only_leaves=False):
         """
@@ -108,7 +124,12 @@ class Node:
         return new_text
 
     def __str__(self):
-        """print decision tree"""
+        """
+        Returns a string representation of the decision tree.
+
+        Returns:
+            str: A string representation of the decision tree.
+        """
         if self.is_root:
             node_str = "root [feature={}, threshold={}]".format(
                 self.feature, self.threshold)
@@ -132,16 +153,22 @@ class Node:
 
 
 class Leaf(Node):
-    """class leaf"""
+    """
+    Represents a leaf node in a decision tree.
+
+    Attributes:
+        value (any): The value associated with the leaf node.
+        depth (int, optional): The depth of the leaf node in the tree.
+    """
 
     def __init__(self, value, depth=None):
         """
-        Initializes a DecisionTreeNode object.
+        Initializes a Leaf object.
 
         Args:
             value (any): The value associated with the node.
             depth (int, optional): The depth of the node in the decision tree.
-            Defaults to None.
+                Defaults to None.
         """
         super().__init__()
         self.value = value
@@ -162,9 +189,8 @@ class Leaf(Node):
         Counts the number of nodes below the current leaf node.
 
         Args:
-            only_leaves (bool, optional): If True,
-            counts only the leaf nodes
-            Defaults to False.
+            only_leaves (bool, optional): If True, counts only the leaf nodes.
+                Defaults to False.
 
         Returns:
             int: The number of nodes below the current leaf node.
@@ -178,7 +204,7 @@ class Leaf(Node):
         Returns:
             str: A string representation of the leaf node.
         """
-        return (f"leaf [value={self.value}] ")
+        return f"leaf [value={self.value}]"
 
     def get_leaves_below(self):
         """
@@ -189,37 +215,27 @@ class Leaf(Node):
         """
         return [self]
 
-    def __doc__(self):
-        """
-        Represents a leaf node in a decision tree.
 
-        Attributes:
-            value (any): The value associated with the leaf node.
-            depth (int, optional): The depth of the leaf node in the tree.
-        """
-        pass
-
-
-class Decision_Tree():
+class Decision_Tree:
     """
     A class representing a decision tree.
 
     Attributes:
         max_depth (int): The maximum depth of the decision tree.
-        Default is 10.
+            Default is 10.
         min_pop (int): The minimum population required to create a split.
-        Default is 1.
+            Default is 1.
         seed (int): The seed value for random number generation.
-        Default is 0.
+            Default is 0.
         split_criterion (str): The criterion used for splitting the tree.
-        Default is "random".
+            Default is "random".
         root (Node): The root node of the decision tree. If not provided,
-        a new root node will be created.
+            a new root node will be created.
         explanatory: The explanatory variables used for training
-        the decision tree.
+            the decision tree.
         target: The target variable used for training the decision tree.
         predict: The function used for making predictions with
-        the decision tree.
+            the decision tree.
     """
 
     def __init__(
@@ -229,6 +245,21 @@ class Decision_Tree():
             seed=0,
             split_criterion="random",
             root=None):
+        """
+        Initializes a DecisionTree object.
+
+        Args:
+            max_depth (int, optional): The maximum depth of the decision tree.
+                Default is 10.
+            min_pop (int, optional): The minimum population required to create
+                a split. Default is 1.
+            seed (int, optional): The seed value for random number generation.
+                Default is 0.
+            split_criterion (str, optional): The criterion used for splitting
+                the tree. Default is "random".
+            root (Node, optional): The root node of the decision tree. If not
+                provided, a new root node will be created.
+        """
         self.rng = np.random.default_rng(seed)
         if root:
             self.root = root
@@ -256,7 +287,7 @@ class Decision_Tree():
 
         Args:
             only_leaves (bool): If True, only counts the leaf nodes.
-            Default is False.
+                Default is False.
 
         Returns:
             int: The number of nodes in the decision tree.
