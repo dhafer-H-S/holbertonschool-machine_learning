@@ -10,14 +10,12 @@ class Node:
 
     Attributes:
         feature (str): The feature used for splitting at this node.
-        threshold (float): The threshold value for the feature used
-        for splitting at this node.
+        threshold (float): The threshold value for the feature used for splitting at this node.
         left_child (Node): The left child node.
         right_child (Node): The right child node.
         is_leaf (bool): Indicates whether this node is a leaf node.
         is_root (bool): Indicates whether this node is the root node.
-        sub_population (None): Placeholder for storing the sub-population
-        associated with this node.
+        sub_population (None): Placeholder for storing the sub-population associated with this node.
         depth (int): The depth of this node in the decision tree.
     """
 
@@ -33,16 +31,12 @@ class Node:
         Initializes a Node object.
 
         Args:
-            feature (str, optional): The feature used for splitting
-            at this node.
-            threshold (float, optional): The threshold value for the
-            feature used for splitting at this node.
+            feature (str, optional): The feature used for splitting at this node.
+            threshold (float, optional): The threshold value for the feature used for splitting at this node.
             left_child (Node, optional): The left child node.
             right_child (Node, optional): The right child node.
-            is_root (bool, optional): Indicates whether this node is
-            the root node. Defaults to False.
-            depth (int, optional): The depth of this node in the decision
-            tree. Defaults to 0.
+            is_root (bool, optional): Indicates whether this node is the root node. Defaults to False.
+            depth (int, optional): The depth of this node in the decision tree. Defaults to 0.
         """
         self.feature = feature
         self.threshold = threshold
@@ -64,18 +58,15 @@ class Node:
             return self.depth
         else:
             return max(
-                self.left_child.max_depth_below() if self.
-                left_child else self.depth,
-                self.right_child.max_depth_below() if self.
-                right_child else self.depth)
+                self.left_child.max_depth_below() if self.left_child else self.depth,
+                self.right_child.max_depth_below() if self.right_child else self.depth)
 
     def count_nodes_below(self, only_leaves=False):
         """
         Returns the number of nodes below this node.
 
         Args:
-            only_leaves (bool, optional): If True, only counts
-            the leaf nodes. Defaults to False.
+            only_leaves (bool, optional): If True, only counts the leaf nodes. Defaults to False.
 
         Returns:
             int: The number of nodes below this node.
