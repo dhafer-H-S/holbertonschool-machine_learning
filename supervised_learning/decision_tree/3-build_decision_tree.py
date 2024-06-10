@@ -183,7 +183,8 @@ class Leaf(Node):
 
         Args:
             value (any): The value associated with the node.
-            depth (int, optional): The depth of the node in the decision tree. Defaults to None.
+            depth (int, optional): The depth of the node in the decision tree.
+            Defaults to None.
         """
         super().__init__()
         self.value = value
@@ -268,10 +269,14 @@ class Decision_Tree():
 
         Args:
             max_depth (int): The maximum depth of the decision tree. Defaults to 10.
-            min_pop (int): The minimum number of samples required to split a node. Defaults to 1.
-            seed (int): The seed value for the random number generator. Defaults to 0.
-            split_criterion (str): The criterion used to split nodes. Defaults to "random".
-            root (Node): The root node of the decision tree. If not provided, a new root node will be created.
+            min_pop (int): The minimum number of samples required to split a node
+            Defaults to 1.
+            seed (int): The seed value for the random number generator
+            Defaults to 0.
+            split_criterion (str): The criterion used to split nodes
+            Defaults to "random".
+            root (Node): The root node of the decision tree. If not provided
+            a new root node will be created.
 
         Attributes:
             rng (numpy.random.Generator): The random number generator.
@@ -279,7 +284,8 @@ class Decision_Tree():
             explanatory (None): Placeholder for the explanatory variable.
             target (None): Placeholder for the target variable.
             max_depth (int): The maximum depth of the decision tree.
-            min_pop (int): The minimum number of samples required to split a node.
+            min_pop (int): The minimum number of samples
+            required to split a node.
             split_criterion (str): The criterion used to split nodes.
             predict (None): Placeholder for the predict function.
         """
