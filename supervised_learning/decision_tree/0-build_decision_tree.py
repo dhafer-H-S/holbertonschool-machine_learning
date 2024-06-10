@@ -1,6 +1,7 @@
+import numpy as np
+
 #!/usr/bin/env python3
 
-import numpy as np
 
 
 class Node:
@@ -16,27 +17,27 @@ class Node:
         Initialize a DecisionTreeNode object.
 
         Args:
-            feature (int): The index of the feature used for splitting 
+            feature (int): The index of the feature used for splitting
             the data at this node.
-            threshold (float): The threshold value used for splitting 
+            threshold (float): The threshold value used for splitting
             the data at this node.
             left_child (DecisionTreeNode): The left child node.
             right_child (DecisionTreeNode): The right child node.
-            is_root (bool): Indicates whether this node is the root of 
+            is_root (bool): Indicates whether this node is the root of
             the decision tree.
             depth (int): The depth of the node in the decision tree.
 
         Attributes:
             feature (int): The index of the feature used for splitting
-              the data at this node.
-            threshold (float): The threshold value used for splitting 
+            the data at this node.
+            threshold (float): The threshold value used for splitting
             the data at this node.
             left_child (DecisionTreeNode): The left child node.
             right_child (DecisionTreeNode): The right child node.
             is_leaf (bool): Indicates whether this node is a leaf node.
-            is_root (bool): Indicates whether this node is the root of 
+            is_root (bool): Indicates whether this node is the root of
             the decision tree.
-            sub_population (None): Placeholder for storing the subset 
+            sub_population (None): Placeholder for storing the subset
             of data at this node.
             depth (int): The depth of the node in the decision tree.
         """
