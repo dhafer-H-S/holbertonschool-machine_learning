@@ -74,6 +74,14 @@ class Node:
 
 
 class Leaf(Node):
+    """
+    Represents a leaf node in a decision tree.
+
+    Attributes:
+        value (any): The value associated with the leaf node.
+        depth (int): The depth of the leaf node in the decision tree.
+    """
+
     def __init__(self, value, depth=None):
         super().__init__()
         self.value = value
@@ -81,13 +89,43 @@ class Leaf(Node):
         self.depth = depth
 
     def max_depth_below(self):
+        """
+        Returns the maximum depth of any leaf node below this node.
+
+        Returns:
+            int: The maximum depth of any leaf node below this node.
+        """
         return self.depth
 
     def count_nodes_below(self, only_leaves=False):
+        """
+        Counts the number of nodes below this node.
+
+        Args:
+            only_leaves (bool): If True, only counts the leaf nodes. If False, counts all nodes.
+
+        Returns:
+            int: The number of nodes below this node.
+        """
         return 1
 
 
 class Decision_Tree():
+    """
+    Decision_Tree class represents a decision tree model.
+
+    Attributes:
+        max_depth (int): The maximum depth of the decision tree. Default is 10.
+        min_pop (int): The minimum number of samples required to split a node. Default is 1.
+        seed (int): The seed value for random number generation. Default is 0.
+        split_criterion (str): The criterion used to split the nodes. Default is "random".
+        root (Node): The root node of the decision tree. Default is None.
+
+    Methods:
+        depth(): Returns the maximum depth of the decision tree.
+        count_nodes(only_leaves=False): Returns the number of nodes in the decision tree.
+    """
+
     def __init__(
             self,
             max_depth=10,
@@ -108,7 +146,22 @@ class Decision_Tree():
         self.predict = None
 
     def depth(self):
+        """
+        Returns the maximum depth of the decision tree.
+
+        Returns:
+            int: The maximum depth of the decision tree.
+        """
         return self.root.max_depth_below()
 
     def count_nodes(self, only_leaves=False):
+        """
+        Returns the number of nodes in the decision tree.
+
+        Args:
+            only_leaves (bool): If True, only counts the leaf nodes. Default is False.
+
+        Returns:
+            int: The number of nodes in the decision tree.
+        """
         return self.root.count_nodes_below(only_leaves=only_leaves)
