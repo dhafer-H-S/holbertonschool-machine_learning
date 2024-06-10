@@ -70,6 +70,7 @@ class Node:
             else:
                 return 1 + right_count + left_count
 
+
     def left_child_add_prefix(self, text):
         lines = text.split("\n")
         new_text = "    +---> " + lines[0] + "\n"
