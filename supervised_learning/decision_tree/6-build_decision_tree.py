@@ -353,16 +353,16 @@ class Leaf(Node):
         return self.value
 
     def pred(self, x):
-            """
-            Predicts the value for a given input.
+        """
+        Predicts the value for a given input.
 
-            Args:
-                x (any): The input for which the value needs to be predicted.
+        Args:
+            x (any): The input for which the value needs to be predicted.
 
-            Returns:
-                any: The predicted value for the input.
-            """
-            return self.value
+        Returns:
+            any: The predicted value for the input.
+        """
+        return self.value
 
 
 class Decision_Tree():
