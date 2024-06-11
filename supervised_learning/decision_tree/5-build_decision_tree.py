@@ -200,42 +200,52 @@ class Node:
         for child in [self.left_child, self.right_child]:
             child.update_bounds_below()
 
-
     def update_indicator(self):
         """
         Update the indicator function based on the lower and upper bounds.
 
-        The indicator function checks if a given input falls within the specified range for each feature.
+        The indicator function checks if a given input falls within
+        the specified range for each feature.
 
         Returns:
             None
         """
         def is_large_enough(x):
             """
-            Check if all the values in the input array `x` are larger than the corresponding lower bounds.
+            Check if all the values in the input array `x` are
+            larger than the corresponding lower bounds.
 
             Args:
-                x (numpy.ndarray): Input array of shape (n_samples, n_features).
+                x (numpy.ndarray): Input array of
+                shape (n_samples, n_features)
 
             Returns:
-                bool: True if all values in `x` are larger than the lower bounds, False otherwise.
+                bool: True if all values in `x` are larger than the lower
+                bounds False otherwise.
             """
-            return np.all([x[:, key] > self.lower[key] for key in self.lower.keys()], axis=0)
-        
+            return np.all([x[:, key] > self.lower[key]
+                          for key in self.lower.keys()], axis=0)
+
         def is_small_enough(x):
             """
-            Checks if all the values in the input array `x` are smaller than or equal to the corresponding upper bounds.
+            Checks if all the values in the input array `x` are smaller than
+            or equal to the corresponding upper bounds.
 
             Parameters:
-            - x (numpy.ndarray): Input array of shape (n_samples, n_features) containing the feature values.
+            - x (numpy.ndarray): Input array of shape (n_samples, n_features)
+            containing the feature values.
 
             Returns:
-            - bool: True if all the values in `x` are smaller than or equal to the corresponding upper bounds, False otherwise.
+            - bool: True if all the values in `x` are smaller than or equal
+            to the corresponding upper bounds, False otherwise.
             """
-            return np.all([x[:, key] <= self.upper[key] for key in self.upper.keys()], axis=0)
-        
-        self.indicator = lambda x : np.all(np.array([is_large_enough(x),is_small_enough(x)]),axis=0)
-        
+            return np.all([x[:, key] <= self.upper[key]
+                          for key in self.upper.keys()], axis=0)
+
+        self.indicator = lambda x: np.all(
+            np.array([is_large_enough(x), is_small_enough(x)]), axis=0)
+
+
 class Leaf(Node):
     """
     Represents a leaf node in a decision tree.
