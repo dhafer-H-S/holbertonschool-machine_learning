@@ -497,22 +497,6 @@ class Decision_Tree():
         """
         return self.root.pred(x)
 
-    def pred(self, x):
-        """
-        Predicts the class label for a given input sample.
-
-        Args:
-            x (array-like): The input sample to predict the
-            class label for.
-
-        Returns:
-            The predicted class label for the input sample.
-        """
-        return self.root.pred(x)
-
-    def pred(self, x):
-        return self.root.pred(x)
-
     def update_predict(self):
         """
         Update the prediction function of the decision tree.
