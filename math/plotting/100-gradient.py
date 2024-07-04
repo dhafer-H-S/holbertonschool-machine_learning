@@ -4,6 +4,19 @@ import matplotlib.pyplot as plt
 
 
 def gradient():
+    """
+    Plots a gradient scatter plot of mountain elevation.
+
+    This function generates random x and y coordinates, and calculates the corresponding
+    elevation values based on the distance from the origin. It then plots a scatter plot
+    of the coordinates, with the color of each point representing the elevation.
+
+    Args:
+        None
+
+    Returns:
+        None
+    """
     np.random.seed(5)
     x = np.random.randn(2000) * 10
     y = np.random.randn(2000) * 10
