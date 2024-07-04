@@ -1,11 +1,7 @@
 #!/usr/bin/env python3
-#!/usr/bin/env python3
-"""
-import modules
-"""
+"""import modules"""
 import numpy as np
 import matplotlib.pyplot as plt
-
 
 def bars():
     """
