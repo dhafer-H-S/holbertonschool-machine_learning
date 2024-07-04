@@ -1,8 +1,23 @@
 #!/usr/bin/env python3
+"""
+import modules 
+"""
 import numpy as np
 import matplotlib.pyplot as plt
 
 def bars():
+    """
+    Plot a bar chart showing the quantity of fruit per person.
+
+    This function generates a bar chart using randomly generated
+    data for the quantity of fruit
+    for each person. The chart displays the number of apples, bananas,
+    oranges, and peaches for
+    three individuals: Farrah, Fred, and Felicia.
+
+    Returns:
+        None
+    """
     np.random.seed(5)
     fruit = np.random.randint(0, 20, (4,3))
     plt.figure(figsize=(6.4, 4.8))
