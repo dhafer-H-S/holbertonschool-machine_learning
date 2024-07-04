@@ -1,4 +1,11 @@
 #!/usr/bin/env python3
+
+"""
+This module creates a scatter plot to visualize mountain elevation.
+It uses matplotlib to plot x and y coordinates with color coding to
+represent the elevation.
+"""
+
 import numpy as np
 import matplotlib.pyplot as plt
 
