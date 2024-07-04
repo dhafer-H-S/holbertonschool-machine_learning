@@ -10,5 +10,5 @@ def line():
     print(y)
     plt.figure(figsize=(6.4, 4.8))
     plt.plot(y, color='red')
-    plt.axis(0, 10)
+    plt.xlim(0, 10)
     plt.show()
