@@ -2,6 +2,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+
 def gradient():
     np.random.seed(5)
     x = np.random.randn(2000) * 10
