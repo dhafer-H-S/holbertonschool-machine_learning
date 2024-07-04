@@ -12,8 +12,4 @@ def line():
     plt.plot(x, y, color='red')
     plt.xlim(0, 10)
     plt.ylim(0, 1000)
-    plt.xlabel('x-axis')
-    plt.ylabel('y-axis')
-    plt.title('Cubic Line Graph')
-    plt.grid(True)
     plt.show()
