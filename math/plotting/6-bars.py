@@ -5,6 +5,14 @@ import modules
 import numpy as np
 import matplotlib.pyplot as plt
 
+#!/usr/bin/env python3
+"""
+import modules
+"""
+import numpy as np
+import matplotlib.pyplot as plt
+
+
 def bars():
     """
     Plot a bar chart showing the quantity of fruit per person.
@@ -19,9 +27,8 @@ def bars():
         None
     """
     np.random.seed(5)
-    fruit = np.random.randint(0, 20, (4,3))
+    fruit = np.random.randint(0, 20, (4, 3))
     plt.figure(figsize=(6.4, 4.8))
-
     fig, ax = plt.subplots()
     people = ["Farrah", "Fred", "Felicia"]
     colors = ['red', 'yellow', '#ff8000', '#ffe5b4']
