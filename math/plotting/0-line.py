@@ -14,3 +14,4 @@ def line():
     plt.plot(x, y, color='red')
     plt.xlim(0, 10)
     plt.show()
+line()
