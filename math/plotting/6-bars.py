@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+#!/usr/bin/env python3
 """
 import modules
 """
@@ -29,7 +30,7 @@ def bars():
     bottom = np.zeros(len(people))
     for i, row in enumerate(fruit):
         ax.bar(people, row, bottom=bottom,
-            color=colors[i], label=fruits[i], width=0.5)
+               color=colors[i], label=fruits[i], width=0.5)
         bottom += row
 
     ax.set_ylabel('Quantity of Fruit')
