@@ -5,6 +5,7 @@ import modules
 import numpy as np
 import matplotlib.pyplot as plt
 
+
 def bars():
     """
     Plot a bar chart showing the quantity of fruit per person.
@@ -25,9 +26,7 @@ def bars():
     people = ["Farrah", "Fred", "Felicia"]
     colors = ['red', 'yellow', '#ff8000', '#ffe5b4']
     fruits = ['apples', 'bananas', 'oranges', 'peaches']
-
     bottom = np.zeros(len(people))
-
     for i, row in enumerate(fruit):
         ax.bar(people, row, bottom=bottom,
             color=colors[i], label=fruits[i], width=0.5)
