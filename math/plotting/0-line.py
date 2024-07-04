@@ -9,7 +9,6 @@ def line():
     x = np.arange(0, 11)
     plt.figure(figsize=(6.4, 4.8))
     y = x ** 3
-    print(y)
     plt.plot(x, y, color='red')
     plt.xlim(0, 10)
     plt.ylim(0, 1000)
