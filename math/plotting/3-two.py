@@ -1,8 +1,13 @@
 #!/usr/bin/env python3
+"""3. Two is better than one"""
 import numpy as np
 import matplotlib.pyplot as plt
 
+
 def two():
+    """
+    plot x ↦ y1 and x ↦ y2 as line graphs
+    """
 
     x = np.arange(0, 21000, 1000)
     r = np.log(0.5)
@@ -11,15 +16,12 @@ def two():
     y1 = np.exp((r / t1) * x)
     y2 = np.exp((r / t2) * x)
     plt.figure(figsize=(6.4, 4.8))
-    plt.ylim(0, 1)
+    plt.plot(x, y1, 'r--', label='C-14')
+    plt.plot(x, y2, 'g-', label='Ra-226')
+    plt.title('Exponential Decay of Radioactive Elements')
+    plt.xlabel('Time (years)')
     plt.xlim(0, 20000)
-
-    lines = plt.plot(x, y1, 'r--', label='C-14')
-    lines = plt.plot(x, y2, 'g-', label='Ra-226')
-
-    plt.xlabel("Time (years)")
-    plt.ylabel("Fraction Remaining")
-    plt.title("Exponential Decay of Radioactive Elements")
-    plt.plot(x, y1, 'r--', x, y2, 'g-')
-    plt.legend(bbox_to_anchor=(0.77, 1), loc=2, borderaxespad=0.5)
+    plt.ylabel('Fraction Remaining')
+    plt.ylim(0, 1)
+    plt.legend()
     plt.show()
