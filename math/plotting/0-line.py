@@ -7,9 +7,10 @@ import matplotlib.pyplot as plt
 
 def line():
     """plot y as a line graph"""
-    y = np.arange(0, 11) ** 3
+    x = np.arange(0, 11)
+    y = x ** 3
     print(y)
     plt.figure(figsize=(6.4, 4.8))
     plt.plot(y, color='red')
-    plt.ylim(0, 1000)
+    plt.xlim(0, 10)
     plt.show()
