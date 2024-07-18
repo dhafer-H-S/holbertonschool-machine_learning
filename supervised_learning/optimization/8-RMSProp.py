@@ -15,5 +15,5 @@ def create_RMSProp_op(alpha, beta2, epsilon):
     """ epilson is a small  number to avid divisin by zero """
     """ loss of the model network """
     optimizer = tf.keras.optimizers.RMSprop(learning_rate=alpha,
-                                          weight_decay=beta2, epsilon=epsilon)
+                                            rho=beta2, epsilon=epsilon)
     return optimizer
