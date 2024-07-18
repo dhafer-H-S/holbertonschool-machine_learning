@@ -9,7 +9,7 @@ def create_Adam_op(alpha, beta1, beta2, epsilon):
     """ adam optimizer using tenserflow predefined function"""
     optimizer = tf.keras.optimizers.Adam(
         learning_rate=alpha,
-        beta1=beta1,
-        beta2=beta2,
+        beta_1=beta1,
+        beta_2=beta2,
         epsilon=epsilon,)
     return optimizer
