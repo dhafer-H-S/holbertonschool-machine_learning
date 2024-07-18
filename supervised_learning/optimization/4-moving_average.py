@@ -11,15 +11,15 @@ def moving_average(data, beta):
     """ prev is used to keep track of the previous weighted average """
     for i, d in enumerate(data):
         """
-        enumerate is used soo the 'i' trace the index 
-        and 'd' trace it's value of the index 
+        enumerate is used soo the 'i' trace the index
+        and 'd' trace it's value of the index
         """
         prev = (beta * prev + (1 - beta) * d)
         """ calculate the weighted moving average using the prev
         is updated as a weighted sum of the previous value and the
         current data point d """
         correction = prev / (1 - (beta ** (i + 1)))
-        """ calculate the correct factor using the formula that 
+        """ calculate the correct factor using the formula that
         adjust the moving average to account for the bias introduced by
         the initial values """
         avg.append(correction)
