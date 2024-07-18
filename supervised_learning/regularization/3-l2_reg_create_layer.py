@@ -20,6 +20,6 @@ def l2_reg_create_layer(prev, n, activation, lambtha):
     """
 
     layer = tf.keras.layers.Dense(units=n, activation=activation,
-                            kernel_initializer=layer_weight,
-                            kernel_regularizer=L2_regularization)
+                                  kernel_initializer=layer_weight,
+                                  kernel_regularizer=L2_regularization)
     return layer(prev)
