@@ -7,6 +7,8 @@ import tensorflow.compat.v1 as tf
 refers to measuring how well model's predictions match the actual values
 Accuracy = (Number of Correct Predictions) / (Total Number of Predictions)
 """
+
+
 def calculate_accuracy(y, y_pred):
     """
         y A placeholder for the labels of the input data.
@@ -14,7 +16,6 @@ def calculate_accuracy(y, y_pred):
     """
     """Compare predicted labels with true labels and get a boolean tensor"""
 
-    
     correct_predictions = tf.equal(
         tf.argmax(
             y_pred, axis=1), tf.argmax(
