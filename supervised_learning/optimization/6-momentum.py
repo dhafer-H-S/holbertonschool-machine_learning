@@ -6,14 +6,14 @@ optimization algorithm
 """
 
 
-import tensorflow.compat.v1 as tf
+import tensorflow as tf
 
 
-def create_momentum_op(loss, alpha, beta1):
+def create_momentum_op(alpha, beta1):
     """
     loss is the loss of the network
     alpha is the learning rate
     beta1 is the momentum weight
     """
-    optimizer = tf.train.MomentumOptimizer(alpha, beta1)
-    return optimizer.minimize(loss)
+    optimizer = tf.compat.v1.train.MomentumOptimizer(alpha, beta1)
+    return optimizer
