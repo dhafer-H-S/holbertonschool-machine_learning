@@ -17,5 +17,5 @@ def dropout_create_layer(prev, n, activation, keep_prob):
                                                    mode="fan_avg")
     layer = tf.keras.layers.Dense(unites=n, activation=activation,
                             kernel_initializer=weight)
-    dlayer = tf.keras.layers.Dropout(keep_prob)
-    return dlayer(layer(prev))
+    dlayer = tf.keras.layers.Dropout(1 - keep_prob)(layer)
+    return dlayer
