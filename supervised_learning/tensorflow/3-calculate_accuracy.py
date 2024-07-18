@@ -13,6 +13,8 @@ def calculate_accuracy(y, y_pred):
         y_pred A tensor containing the network's predictions.
     """
     """Compare predicted labels with true labels and get a boolean tensor"""
+
+    
     correct_predictions = tf.equal(
         tf.argmax(
             y_pred, axis=1), tf.argmax(
