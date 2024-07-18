@@ -3,7 +3,7 @@
 a function stabilize and accelerate the training process in
 neural network using batch normalization predefined tensorflow function
 """
-import tensorflow.compat.v1 as tf
+import tensorflow as tf
 
 
 def create_batch_norm_layer(prev, n, activation):
