@@ -11,7 +11,7 @@ The model should consist of the following layers in order:
     Fully connected layer with 84 nodes
     Fully connected softmax output layer with 10 nodes
 """
-import tensorflow.keras as K
+from tensorflow import keras as K
 
 
 def lenet5(X):
