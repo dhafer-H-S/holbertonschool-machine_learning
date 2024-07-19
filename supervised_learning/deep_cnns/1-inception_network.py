@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """function that builds inception block in a modified way"""
-import tensorflow.keras as K
+from tensorflow import keras as K
 inception_block = __import__('0-inception_block').inception_block
 
 
