@@ -8,6 +8,7 @@ class DeepNeuralNetwork:
     """ class of a DeepNeuralNetwork """
 
     """ deff methode to initializa the deep neural network """
+
     def __init__(self, nx, layers):
         """nx is the inpute features in the neural network"""
         """ layers is the number of nodes in each layer of the network"""
@@ -47,7 +48,8 @@ class DeepNeuralNetwork:
         """
         for layer_index in range(1, self.L + 1):
             he_et_al = np.sqrt(2 / layer_size)
-            self.weights["W" + str(layer_index)] = np.random.randn(layers[layer_index - 1],
-                                                                layer_size) * he_et_al
-            self.weights["b" + str(layer_index)] = np.zeros((layers[layer_index - 1], 1))
+            self.weights["W" + str(layer_index)] = np.random.randn(
+                layers[layer_index - 1], layer_size) * he_et_al
+            self.weights["b" + str(layer_index)
+                         ] = np.zeros((layers[layer_index - 1], 1))
             layer_size = layers[layer_index - 1]
