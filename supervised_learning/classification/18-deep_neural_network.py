@@ -72,17 +72,17 @@ class DeepNeuralNetwork:
         """X should be saved to the cache dictionary using the key A0"""
         self.__cache['A0'] = X
         """ loop for calculating through every layer in the neural network"""
-        for l in range(self.__L):
-            """ set the methode to get data """
-            data = self.__cache['A' + str(l)]
-            """ set methode to get the weight"""
-            w = self.__weights['W' + str(l + 1)]
-            """set the methode to get the bias """
-            bias = self.__weights['b' + str(l + 1)]
-            """ calculation the froword propagation """
+        for layer_index in range(self.__L):
+            # set the method to get data
+            data = self.__cache['A' + str(layer_index)]
+            # set method to get the weight
+            w = self.__weights['W' + str(layer_index + 1)]
+            # set the method to get the bias
+            bias = self.__weights['b' + str(layer_index + 1)]
+            # calculation the forward propagation
             Z = np.dot(w, data) + bias
-            """ calcualte the activation function using sigmoid"""
+            # calculate the activation function using sigmoid
             A = 1 / (1 + np.exp(-Z))
-            """ store data in cache"""
-            self.__cache['A' + str(l + 1)] = A
+            # store data in cache
+            self.__cache['A' + str(layer_index + 1)] = A
         return A, self.__cache
