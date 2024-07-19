@@ -46,13 +46,13 @@ class DeepNeuralNetwork:
             initialize the biases for the current layer with zeros and store
             them in the weights
         """
-        for l in range(1, self.__L + 1):
-
+        for layer_index in range(1, self.L + 1):
             he_et_al = np.sqrt(2 / layer_size)
-            self.__weights["W" + str(l)] = np.random.randn(
-                layers[l - 1], layer_size) * he_et_al
-            self.__weights["b" + str(l)] = np.zeros((layers[l - 1], 1))
-            layer_size = layers[l - 1]
+            self.weights["W" + str(layer_index)] = np.random.randn(
+                layers[layer_index - 1], layer_size) * he_et_al
+            self.weights["b" + str(layer_index)
+                         ] = np.zeros((layers[layer_index - 1], 1))
+            layer_size = layers[layer_index - 1]
 
     """ getters for private attributes """
     @property
