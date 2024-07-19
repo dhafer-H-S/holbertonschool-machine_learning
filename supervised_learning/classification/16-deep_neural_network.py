@@ -11,7 +11,7 @@ class DeepNeuralNetwork:
     def __init__(self, nx, layers):
         """nx is the inpute features in the neural network"""
         """ layers is the number of nodes in each layer of the network"""
-        
+
         """ check conditions """
         if not isinstance(nx, int):
             raise TypeError("nx must be an integer")
@@ -45,10 +45,9 @@ class DeepNeuralNetwork:
             initialize the biases for the current layer with zeros and store
             them in the weights
         """
-        for l in range(1, self.L + 1):
-
+        for layer_index in range(1, self.L + 1):
             he_et_al = np.sqrt(2 / layer_size)
-            self.weights["W" + str(l)] = np.random.randn(layers[l - 1],
-                                                         layer_size) * he_et_al
-            self.weights["b" + str(l)] = np.zeros((layers[l - 1], 1))
-            layer_size = layers[l - 1]
+            self.weights["W" + str(layer_index)] = np.random.randn(layers[layer_index - 1],
+                                                                layer_size) * he_et_al
+            self.weights["b" + str(layer_index)] = np.zeros((layers[layer_index - 1], 1))
+            layer_size = layers[layer_index - 1]
