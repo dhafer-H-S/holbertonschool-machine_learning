@@ -9,8 +9,7 @@ def identity_block(A_prev, filters):
     c1 = K.layers.Conv2D(
         filters=F11, kernel_size=(
             1, 1), padding='same', strides=(
-            1, 1), kernel_initializer=K.initializers.he_normal(
-                seed=0))(A_prev)
+            1, 1), kernel_initializer=int)(A_prev)
     b1 = K.layers.BatchNormalization(axis=3)(c1)
     r1 = K.layers.Activation('relu')(b1)
     c2 = K.layers.Conv2D(
