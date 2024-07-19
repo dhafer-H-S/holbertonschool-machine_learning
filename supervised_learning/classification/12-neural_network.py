@@ -105,5 +105,3 @@ class NeuralNetwork:
         cost = self.cost(Y, self.__A2)
         """ returning the values """
         return prediction, cost
-    
-    
