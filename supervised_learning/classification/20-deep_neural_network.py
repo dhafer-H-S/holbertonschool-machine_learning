@@ -46,13 +46,13 @@ class DeepNeuralNetwork:
             initialize the biases for the current layer with zeros and store
             them in the weights
         """
-        for l in range(1, self.__L + 1):
-
+        for layer_index in range(1, self.L + 1):
             he_et_al = np.sqrt(2 / layer_size)
-            self.__weights["W" + str(l)] = np.random.randn(
-                layers[l - 1], layer_size) * he_et_al
-            self.__weights["b" + str(l)] = np.zeros((layers[l - 1], 1))
-            layer_size = layers[l - 1]
+            self.weights["W" + str(layer_index)] = np.random.randn(
+                layers[layer_index - 1], layer_size) * he_et_al
+            self.weights["b" + str(layer_index)
+                         ] = np.zeros((layers[layer_index - 1], 1))
+            layer_size = layers[layer_index - 1]
 
     """ getters for private attributes """
     @property
@@ -73,19 +73,19 @@ class DeepNeuralNetwork:
         """X should be saved to the cache dictionary using the key A0"""
         self.__cache['A0'] = X
         """ loop for calculating through every layer in the neural network"""
-        for l in range(self.__L):
-            """ set the methode to get data """
-            data = self.__cache['A' + str(l)]
-            """ set methode to get the weight"""
-            w = self.__weights['W' + str(l + 1)]
-            """set the methode to get the bias """
-            bias = self.__weights['b' + str(l + 1)]
-            """ calculation the froword propagation """
+        for layer_index in range(self.__L):
+            # set the method to get data
+            data = self.__cache['A' + str(layer_index)]
+            # set method to get the weight
+            w = self.__weights['W' + str(layer_index + 1)]
+            # set the method to get the bias
+            bias = self.__weights['b' + str(layer_index + 1)]
+            # calculation the forward propagation
             Z = np.dot(w, data) + bias
-            """ calcualte the activation function using sigmoid"""
+            # calculate the activation function using sigmoid
             A = 1 / (1 + np.exp(-Z))
-            """ store data in cache"""
-            self.__cache['A' + str(l + 1)] = A
+            # store data in cache
+            self.__cache['A' + str(layer_index + 1)] = A
         return A, self.__cache
 
     """ def methode for cost function"""
