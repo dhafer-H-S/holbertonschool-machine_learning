@@ -5,7 +5,7 @@ from tensorflow import keras as K
 
 def dense_block(X, nb_filters, growth_rate, layers):
     """ build a dense block """
-    for i in range(layers):
+    for _ in range(layers):
         batch_normalization = K.layers.BatchNormalization()(X)
         activation = K.layers.Activation('relu')(batch_normalization)
         conv2d = K.layers.Conv2D(filters=4 * growth_rate, kernel_size=1,

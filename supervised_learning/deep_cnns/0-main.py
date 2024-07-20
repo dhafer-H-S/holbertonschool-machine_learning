@@ -1,8 +1,11 @@
 #!/usr/bin/env python3
 
 from tensorflow import keras as K
-resnet50 = __import__('4-resnet50').resnet50
+dense_block = __import__('5-dense_block').dense_block
 
 if __name__ == '__main__':
-    model = resnet50()
+    X = K.Input(shape=(56, 56, 64))
+    Y, nb_filters = dense_block(X, 64, 32, 6)
+    model = K.models.Model(inputs=X, outputs=Y)
     model.summary()
+    print(nb_filters)
