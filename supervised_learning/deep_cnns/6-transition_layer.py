@@ -2,8 +2,7 @@
 """ transition layer"""
 
 
-import tensorflow.keras as K
-
+from tensorflow import keras as K
 
 def transition_layer(X, nb_filters, compression):
     """transition layer 1 × 1 conv followed by 2 × 2 average pool, stride 2"""
