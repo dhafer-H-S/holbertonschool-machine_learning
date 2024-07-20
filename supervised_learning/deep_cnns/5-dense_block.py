@@ -2,6 +2,7 @@
 """build a dense block """
 from tensorflow import keras as K
 
+
 def dense_block(X, nb_filters, growth_rate, layers):
     """ build a dense block """
     for i in range(layers):
