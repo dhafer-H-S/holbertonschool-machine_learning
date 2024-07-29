@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 """
-This module contains a function to calculate the likelihood of obtaining
+This module contains a function to calculate the intersection of obtaining
 data given various hypothetical probabilities of developing
 severe side effects
 """
