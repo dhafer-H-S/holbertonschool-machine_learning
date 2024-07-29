@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 import numpy as np
-from math import factorial
 
 
 def likelihood(x, n, P):
@@ -25,7 +24,11 @@ def likelihood(x, n, P):
         raise ValueError("P must be a 1D numpy.ndarray")
     if np.any((P < 0) | (P > 1)):
         raise ValueError("All values in P must be in the range [0, 1]")
-    binomial_coeff = factorial(n) / (factorial(x) * factorial(n - x))
-    likelihood = binomial_coeff * (P ** x) * ((1 - P) ** (n - x))
 
-    return likelihood
+    res = 1
+    for i in range(x):
+        res = res * (n - i) // (i + 1)
+    likelihoods = np.zeros_like(P)
+    for i, p in enumerate(P):
+        likelihoods[i] = res * (p ** x) * ((1 - p) ** (n - x))
+    return likelihoods
