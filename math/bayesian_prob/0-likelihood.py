@@ -9,8 +9,8 @@ def likelihood(x, n, P):
     various hypothetical probabilities of developing severe side effects
     x : is the number of patients that develop severe side effects
     n : is the totla number of patients observed
-    p : is a 1D numpy.array containing the various hypothetical probabilities of
-    developing sever side effects
+    p : is a 1D numpy.array containing the various hypothetical
+    probabilities of developing sever side effects
     """
 
     if not isinstance(n, int) or n <= 0:
@@ -25,7 +25,6 @@ def likelihood(x, n, P):
     for p in P:
         if p < 0 or p > 1:
             raise ValueError("All values in P must be in the range [0, 1]")
-
     res = 1
     for i in range(x):
         res = res * (n - i) // (i + 1)
