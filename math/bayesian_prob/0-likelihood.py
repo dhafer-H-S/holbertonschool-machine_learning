@@ -7,6 +7,7 @@ data given various hypothetical probabilities of developing
 severe side effects
 """
 
+
 def likelihood(x, n, P):
     """
     calculates the likelihood of obtaining this data given
