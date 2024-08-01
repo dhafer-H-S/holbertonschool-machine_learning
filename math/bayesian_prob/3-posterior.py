@@ -57,6 +57,6 @@ def posterior(x, n, P, Pr):
 
     # Calculate the marginal probability
     marginal_prob = np.sum(likelihoods * Pr)
-    posterior = ( likelihoods * Pr ) / marginal_prob
+    posterior = (likelihoods * Pr) / marginal_prob
 
     return posterior
