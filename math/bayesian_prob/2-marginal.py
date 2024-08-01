@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 
 """
-This module contains a function to calculate the intersection of obtaining
+This module contains a function To calculate the marginal probability
+(also known as the marginal likelihood or evidence)
 data given various hypothetical probabilities of developing
 severe side effects
 """
