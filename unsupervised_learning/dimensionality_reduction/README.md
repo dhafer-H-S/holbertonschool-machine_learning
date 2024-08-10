@@ -1,0 +1,1 @@
+this a holberton school project called Dimensionality Reduction
