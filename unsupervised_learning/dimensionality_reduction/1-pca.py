@@ -15,15 +15,14 @@ def pca(X, ndim):
     sorted_idx = np.argsort(eigenvalues)[::-1]
     sorted_eigenvalues = eigenvalues[sorted_idx]
     sorted_eigenvectors = eigenvectors[:, sorted_idx]
-    
-    # Ensure ndim does not exceed the number of available dimensions
+
     ndim = min(ndim, sorted_eigenvectors.shape[1])
-    
+
     W = sorted_eigenvectors[:, :ndim]
+
     for i in range(ndim):
         if np.sum(W[:, i]) < 0:
             W[:, i] = -W[:, i]
-    
+
     T = np.dot(X_centered, W)
     return T
-
