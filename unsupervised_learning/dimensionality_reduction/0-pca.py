@@ -2,6 +2,7 @@
 
 
 import numpy as np
+"""import numpy module"""
 
 
 def pca(X, var=0.95):
