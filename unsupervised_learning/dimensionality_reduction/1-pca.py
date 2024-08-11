@@ -11,7 +11,6 @@ def pca(X, ndim):
     """fuction that performs PCA on a dataset"""
     """normalisation for values"""
     X_centered = X - np.mean(X, axis=0)
-    
     cov_matrix = np.cov(X, rowvar=False)
     eigenvalues, eigenvectors = np.linalg.eigh(cov_matrix)
     sorted_idx = np.argsort(eigenvalues)[::-1]
@@ -20,6 +19,4 @@ def pca(X, ndim):
     W = sorted_eigenvectors[:, :ndim]
     W = np.sign(w) * W
     T = np.dot(X_centered, W)
-
-
     return T
