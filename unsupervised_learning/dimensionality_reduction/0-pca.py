@@ -16,7 +16,7 @@ def pca(X, var=0.95):
     """
     cumsum : calculates the cumulative sum of the singular values
     sum calculates the totla sum of all singular values
-    the devision gives the cumultative variance 
+    the devision gives the cumultative variance
     """
     cumltative_var = np.cumsum(vector) / np.sum(vector)
     r = next((i for i, v in enumerate(cumltative_var) if v >= var)) + 1
