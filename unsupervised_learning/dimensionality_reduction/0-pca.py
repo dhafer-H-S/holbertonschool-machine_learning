@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 
+"""
+Module for performing Principal Component Analysis (PCA) on a dataset.
+"""
 
 import numpy as np
 
