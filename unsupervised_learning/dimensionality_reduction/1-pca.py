@@ -18,6 +18,7 @@ def pca(X, ndim):
     sorted_eigenvalues = eigenvalues[sorted_idx]
     sorted_eigenvectors = eigenvectors[:, sorted_idx]
     W = sorted_eigenvectors[:, :ndim]
+    W = np.sign(w) * W
     T = np.dot(X_centered, W)
 
 
