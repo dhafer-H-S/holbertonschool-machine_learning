@@ -20,8 +20,9 @@ def pca(X, ndim):
 
     W = sorted_eigenvectors[:, :ndim]
 
+    # Ensure the sign of the eigenvectors aligns with the expected output
     for i in range(ndim):
-        if np.sum(W[:, i]) < 0:
+        if W[0, i] < 0:  # Flip sign if the first element is negative
             W[:, i] = -W[:, i]
 
     T = np.dot(X_centered, W)
