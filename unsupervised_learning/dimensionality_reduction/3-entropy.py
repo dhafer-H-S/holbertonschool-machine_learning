@@ -2,17 +2,20 @@
 
 
 """
-calculate the entropy in t-sne you're essentially quantifying
-how spread out or concentreated the similarities are between
-one point and all other points this helps to control how
-the algorithms represnts the local structure of the data in
-the lower dimensional space
+calculate the entropy in t-sne
 """
 
 import numpy as np
 
 
 def HP(Di, beta):
+    """
+     you're essentially quantifying
+    how spread out or concentreated the similarities are between
+    one point and all other points this helps to control how
+    the algorithms represnts the local structure of the data in
+    the lower dimensional space
+    """
     """
     compute the affinities 
     """
