@@ -12,12 +12,12 @@ this function calculates the symmetric p affinities for the entire dataset
 
 def P_affinities(X, tol=1e-5, perplexity=30.0):
     """Calculate the p affinities for a given dataset.
-
     Args:
         X (numpy.ndarray): The input dataset of shape (n, d).
-        tol (float, optional): Tolerance value for convergence. Defaults to 1e-5.
-        perplexity (float, optional): Perplexity value for determining the number of nearest neighbors. Defaults to 30.0.
-
+        tol (float, optional): Tolerance value for convergence.
+        Defaults to 1e-5.
+        perplexity (float, optional): Perplexity value for determining
+        the number of nearest neighbors. Defaults to 30.0.
     Returns:
         numpy.ndarray: The p affinities matrix of shape (n, n).
     """
