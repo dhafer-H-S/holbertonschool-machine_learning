@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
 
-
-import numpy as np
-
 """
 calculate the entropy in t-sne
 """
+
+import numpy as np
 
 
 def HP(Di, beta):
