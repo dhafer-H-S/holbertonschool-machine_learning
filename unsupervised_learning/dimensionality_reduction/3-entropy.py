@@ -1,6 +1,5 @@
 #!/usr/bin/env pyhton3
 
-
 """
 calculate the entropy in t-sne
 """
