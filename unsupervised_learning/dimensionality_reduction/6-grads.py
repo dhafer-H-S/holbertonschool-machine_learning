@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 """
-function that calcualtes the greadien tof the low dimensional embedding 'y'
+function that calcualtes the greadient of the low dimensional embedding 'y'
 in the sne algorithm this gradient are used to update the position of
 the data point in the lof dimensional space during the optimization process
 """
