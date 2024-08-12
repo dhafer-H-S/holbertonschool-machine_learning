@@ -7,6 +7,7 @@ import numpy as np
 calculate the entropy in t-sne
 """
 
+
 def HP(Di, beta):
     """
      you're essentially quantifying
@@ -16,7 +17,7 @@ def HP(Di, beta):
     the lower dimensional space
     """
     """
-    compute the affinities 
+    compute the affinities
     """
     Pi = np.exp(-Di * beta)
     sum_Pi = np.sum(Pi)
