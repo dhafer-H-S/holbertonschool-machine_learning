@@ -1,11 +1,11 @@
 #!/usr/bin/env pyhton3
 
-"""
-calculate the entropy in t-sne
-"""
 
 import numpy as np
 
+"""
+calculate the entropy in t-sne
+"""
 
 def HP(Di, beta):
     """
