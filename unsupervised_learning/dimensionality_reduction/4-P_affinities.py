@@ -9,6 +9,7 @@ this function calculates the symmetric p affinities for the entire dataset
 
 """
 
+
 def P_affinities(X, tol=1e-5, perplexity=30.0):
     n, d = X.shape
     D, P, betas, H = P_init(X, perplexity)
@@ -18,7 +19,6 @@ def P_affinities(X, tol=1e-5, perplexity=30.0):
         beta_min = None
         beta_max = None
         Hi, Pi = HP(Di, betas[i])
-        
         """Binary search for the correct beta"""
         while np.abs(Hi - H) > tol:
             if Hi > H:
@@ -34,7 +34,6 @@ def P_affinities(X, tol=1e-5, perplexity=30.0):
                 else:
                     betas[i] = (betas[i] + beta_min) / 2.0
             Hi, Pi = HP(Di, betas[i])
-        
         P[i, np.concatenate((np.r_[0:i], np.r_[i+1:n]))] = Pi
 
     P = (P + P.T) / (2 * n)
