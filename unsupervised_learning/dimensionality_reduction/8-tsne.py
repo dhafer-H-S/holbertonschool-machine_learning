@@ -1,71 +1,88 @@
 #!/usr/bin/env python3
 
+"""
+a full t-sne
+"""
 
 import numpy as np
 
+
 def tsne(X, ndims=2, idims=50, perplexity=30.0, iterations=1000, lr=500):
     """
-    Performs a t-SNE transformation on the dataset X.
-
-    Parameters:
-    - X: numpy.ndarray of shape (n, d), containing the dataset to be transformed by t-SNE.
-    - ndims: The new dimensional representation of X.
-    - idims: The intermediate dimensional representation of X after PCA.
-    - perplexity: The perplexity parameter for t-SNE.
-    - iterations: The number of iterations to run the t-SNE algorithm.
-    - lr: The learning rate for gradient descent.
-
-    Returns:
-    - Y: numpy.ndarray of shape (n, ndim), containing the optimized low-dimensional transformation of X.
+    Step 1: Reduce dimensions using PCA
     """
-
-    # Step 1: Reduce dimensionality of X using PCA
     pca = __import__('1-pca').pca
     P_affinities = __import__('4-P_affinities').P_affinities
     grads = __import__('6-grads').grads
-    cost = __import__('7-cost').cost
+    cost_fn = __import__('7-cost').cost
 
+    """
+    Reduce dimensions to idims using PCA
+    """
     X_reduced = pca(X, idims)
-    
-    # Step 2: Calculate the pairwise affinities P
-    P = P_affinities(X_reduced, perplexity)
-    
-    # Step 3: Initialize Y and other variables
+
+    """
+    Step 2: Calculate the P affinities
+    """
+    P = P_affinities(X_reduced, perplexity=perplexity)
+
+    """
+    Apply early exaggeration for the first 100 iterations
+    """
+    P *= 4
+
+    """
+    Initialize Y randomly
+    """
     n, d = X.shape
-    Y = np.random.randn(n, ndims) * 1e-4
-    dY = np.zeros_like(Y)
-    iY = np.zeros_like(Y)
-    gains = np.ones_like(Y)
-    
-    # Step 4: Early exaggeration phase
-    P *= 4.0
+    Y = np.random.randn(n, ndims)
+
+    """
+    Initialize variables for momentum and gradient descent
+    """
+    Y_momentum = np.zeros_like(Y)
+    a_t = 0.5  # Initial momentum factor
+
+    """
+    Step 3: Perform gradient descent for the number of iterations
+    """
     for i in range(1, iterations + 1):
-        # Set momentum based on the iteration
-        if i < 20:
-            momentum = 0.5
-        else:
-            momentum = 0.8
-        
-        # Compute the gradient
-        dY = grads(Y, P)
-        
-        # Update Y
-        gains = (gains + 0.2) * ((dY > 0) != (iY > 0)) + (gains * 0.8) * ((dY > 0) == (iY > 0))
-        gains[gains < 0.01] = 0.01  # Prevent too small gains
-        
-        iY = momentum * iY - lr * (gains * dY)
-        Y += iY
-        
-        # Re-center Y by subtracting the mean
+        """
+        Calculate gradients and Q affinities
+        """
+        dY, Q = grads(Y, P)
+
+        """
+        Update the positions in Y using gradient descent
+        """
+        Y_momentum = a_t * Y_momentum - lr * dY
+        Y += Y_momentum
+
+        """
+        Re-center Y by subtracting the mean
+        """
         Y -= np.mean(Y, axis=0)
-        
-        # Compute the cost and print every 100 iterations
+
+        """
+        Adjust momentum after 20 iterations
+        """
+        if i == 20:
+            a_t = 0.8
+
+        """
+        Print cost every 100 iterations
+        """
         if i % 100 == 0:
-            current_cost = cost(P, Y)
-            print(f"Cost at iteration {i}: {current_cost}")
-        
-        # End early exaggeration after 100 iterations
+            C = cost_fn(P, Q)
+            print(f"Cost at iteration {i}: {C}")
+
+        """
+        Reduce exaggeration factor after 100 iterations
+        """
         if i == 100:
-            P /= 4.0
-    
+            P /= 4
+
+    """
+    Return the final low-dimensional embedding Y
+    """
     return Y
