@@ -11,6 +11,7 @@ this function calculates the symmetric p affinities for the entire dataset
 
 
 def P_affinities(X, tol=1e-5, perplexity=30.0):
+    """p affinities"""
     n, d = X.shape
     D, P, betas, H = P_init(X, perplexity)
 
