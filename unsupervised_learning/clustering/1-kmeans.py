@@ -28,27 +28,19 @@ def kmeans(X, k, iterations=1000):
 
     n, d = X.shape
 
-    """Initialize centroids"""
-    min_vals = X.min(axis=0)
-    max_vals = X.max(axis=0)
-    centroids = np.random.uniform(min_vals, max_vals, size=(k, d))
+    # Initialize centroids using the first k points
+    centroids = X[np.random.choice(n, k, replace=False)]
 
-    for i in range(iterations):
-        """Compute distances and assign clusters"""
+    for _ in range(iterations):
+        # Compute distances and assign clusters
         distances = np.linalg.norm(X[:, np.newaxis] - centroids, axis=2)
         clss = np.argmin(distances, axis=1)
 
-        """Update centroids"""
-        new_centroids = np.zeros((k, d))
-        for j in range(k):
-            if np.any(clss == j):
-                new_centroids[j] = X[clss == j].mean(axis=0)
-            else:
-                # Handle empty clusters by reinitializing their centroids
-                new_centroids[j] = np.random.uniform(
-                    min_vals, max_vals, size=d)
+        # Update centroids
+        new_centroids = np.array([X[clss == j].mean(axis=0) if np.any(
+            clss == j) else centroids[j] for j in range(k)])
 
-        """Check for convergence"""
+        # Check for convergence
         if np.all(np.isclose(new_centroids, centroids, atol=1e-6)):
             break
 
