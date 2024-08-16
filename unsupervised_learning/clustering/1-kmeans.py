@@ -2,6 +2,7 @@
 
 import numpy as np
 
+
 def kmeans(X, k, iterations=1000):
     """
     Performs K-means clustering on a dataset.
@@ -33,17 +34,15 @@ def kmeans(X, k, iterations=1000):
         """Compute distances and assign clusters"""
         distances = np.linalg.norm(X[:, np.newaxis] - centroids, axis=2)
         clss = np.argmin(distances, axis=1)
-        
+
         """Update centroids"""
-        new_centroids = np.array([
-            X[clss == j].mean(axis=0) if np.any(clss == j) else np.random.uniform(min_vals, max_vals, size=d)
-            for j in range(k)
-        ])
-        
+        new_centroids = np.array([X[clss == j].mean(axis=0) if np.any(
+            clss == j) else np.random.uniform(min_vals, max_vals, size=d) for j in range(k)])
+
         """Check for convergence"""
         if np.all(np.isclose(new_centroids, centroids)):
             break
-        
+
         centroids = new_centroids
 
     return centroids, clss
