@@ -3,6 +3,7 @@
 """
 Function that performs k-means on a dataset.
 """
+
 import numpy as np
 
 
@@ -15,8 +16,7 @@ def initialize(X, k):
     - k: a positive integer, number of clusters.
 
     Returns:
-    - centroids: numpy.ndarray of shape (k, d), containing the initialized centroids.
-    """
+    - centroids: numpy.ndarray of shape (k, d), containing the initialized centroids."""
     try:
         if not isinstance(X, np.ndarray) or len(X.shape) != 2:
             raise ValueError("X must be a 2D numpy array.")
@@ -34,10 +34,7 @@ def initialize(X, k):
 
 
 def kmeans(X, k, iterations=1000):
-    """
-    Using the multivariate uniform
-    distribution to have the intial values
-    """
+    """Using the multivariate uniform distribution to have the intial values"""
     try:
         C = initialize(X, k)
         for _ in range(iterations):
