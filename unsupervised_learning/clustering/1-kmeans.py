@@ -30,26 +30,22 @@ def kmeans(X, k, iterations=1000):
     n, d = X.shape
 
     """Initialize centroids with a uniform distribution within the data range"""
-    X_min = X.min(axis=0)
-    X_max = X.max(axis=0)
+    X_min = np.amin(X, axis=0)
+    X_max = np.amax(X, axis=0)
     centroids = np.random.uniform(X_min, X_max, size=(k, d))
+    if centroids is None:
+        return None, None
 
     """Start iteration process"""
     for _ in range(iterations):
-        distances = np.linalg.norm(X[:, np.newaxis] - centroids, axis=2)
-        clss = np.argmin(distances, axis=1)
-        new_centroids = np.zeros_like(centroids)
-
+        new_centroids = np.copy(centroids)
+        distances = np.linalg.norm(X[:, np.newaxis] - new_centroids, axis=-1)
+        clss = np.argmin(distances, axis=-1)
         for j in range(k):
-            if np.any(clss == j):
-                new_centroids[j] = X[clss == j].mean(axis=0)
+            if X[clss == j].size == 0:
+                c[j] = np.random.uniform(np.amin(X, axis=0), np.amax(X, axis=0), (1, X.shape[1]))
             else:
-                new_centroids[j] = np.random.uniform(X_min, X_max, size=d)
-
-        """Check for convergence (if centroids haven't changed, exit early)"""
-        if np.all(np.isclose(centroids, new_centroids)):
+                clss[j] = np.mean(X[clss == j], axis=0)
+        if np.array_equal(clss, new_centroids):
             break
-
-        centroids = new_centroids
-
     return centroids, clss
