@@ -41,7 +41,12 @@ def kmeans(X, k, iterations=1000):
     - centroids: numpy.ndarray of shape (k, d), final cluster centroids.
     - clss: numpy.ndarray of shape (n,), index of the cluster each data point belongs to.
     """
-    if not isinstance(X, np.ndarray) or len(X.shape) != 2 or not isinstance(k, int) or k <= 0:
+    if not isinstance(
+            X,
+            np.ndarray) or len(
+            X.shape) != 2 or not isinstance(
+                k,
+            int) or k <= 0:
         return None, None
 
     # Initialize the centroids using the initialize function
@@ -52,7 +57,8 @@ def kmeans(X, k, iterations=1000):
     n, d = X.shape
 
     for i in range(iterations):
-        # Step 4: Calculate the Euclidean distance between each data point and each centroid
+        # Step 4: Calculate the Euclidean distance between each data point and
+        # each centroid
         distances = np.linalg.norm(X[:, np.newaxis] - centroids, axis=2)
 
         # Step 5: Assign each data point to the closest centroid
@@ -60,12 +66,13 @@ def kmeans(X, k, iterations=1000):
 
         # Step 6: Calculate new centroids
         new_centroids = np.array([
-            X[clss == j].mean(axis=0) if np.any(clss == j) 
+            X[clss == j].mean(axis=0) if np.any(clss == j)
             else np.random.uniform(np.min(X, axis=0), np.max(X, axis=0), size=d)
             for j in range(k)
         ])
 
-        # Step 7: Check for convergence (if centroids haven't changed, exit early)
+        # Step 7: Check for convergence (if centroids haven't changed, exit
+        # early)
         if np.all(centroids == new_centroids):
             break
 
