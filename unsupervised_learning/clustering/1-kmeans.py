@@ -4,7 +4,6 @@
 
 import numpy as np
 
-
 def kmeans(X, k, iterations=1000):
     """
     Performs K-means clustering on a dataset.
@@ -39,9 +38,12 @@ def kmeans(X, k, iterations=1000):
         clss = np.argmin(distances, axis=1)
 
         """Update centroids"""
-        new_centroids = np.array([X[clss == j].mean(axis=0) if np.any(
-            clss == j) else np.random.uniform
-                                  (min_vals, max_vals, size=d) for j in range(k)])
+        new_centroids = np.zeros((k, d))
+        for j in range(k):
+            if np.any(clss == j):
+                new_centroids[j] = X[clss == j].mean(axis=0)
+            else:
+                new_centroids[j] = np.random.uniform(min_vals, max_vals, size=d)
 
         """Check for convergence"""
         if np.all(np.isclose(new_centroids, centroids)):
