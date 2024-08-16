@@ -52,7 +52,7 @@ def kmeans(X, k, iterations=1000):
         if not isinstance(iterations, int) or iterations <= 0:
             raise ValueError("iterations must be a positive integer.")
         
-        # Initialize the centroids using the initialize function
+        """Initialize the centroids using the initialize function"""
         centroids = initialize(X, k)
         if centroids is None:
             return None, None
@@ -60,22 +60,22 @@ def kmeans(X, k, iterations=1000):
         n, d = X.shape
 
         for i in range(iterations):
-            # Step 4: Calculate the Euclidean distance between each data point and each centroid
+            """Step 4: Calculate the Euclidean distance between each data point and each centroid"""
             distances = np.linalg.norm(X[:, np.newaxis] - centroids, axis=2)
 
-            # Step 5: Assign each data point to the closest centroid
+            """Step 5: Assign each data point to the closest centroid"""
             clss = np.argmin(distances, axis=1)
 
-            # Step 6: Calculate new centroids
+            """Step 6: Calculate new centroids"""
             new_centroids = np.zeros_like(centroids)
             for j in range(k):
                 if np.any(clss == j):
                     new_centroids[j] = X[clss == j].mean(axis=0)
                 else:
-                    # Reinitialize the centroid if no points are assigned
+                    """Reinitialize the centroid if no points are assigned"""
                     new_centroids[j] = np.random.uniform(np.min(X, axis=0), np.max(X, axis=0), size=d)
 
-            # Step 7: Check for convergence (if centroids haven't changed, exit early)
+            """Step 7: Check for convergence (if centroids haven't changed, exit early)"""
             if np.all(np.isclose(centroids, new_centroids)):
                 break
 
