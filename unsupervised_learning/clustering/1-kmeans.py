@@ -61,10 +61,10 @@ def kmeans(X, k, iterations=1000):
 
         for i in range(iterations):
             """Step 4: Calculate the Euclidean distance between each data point and each centroid"""
-            distances = np.linalg.norm(X[:, np.newaxis] - centroids, axis=2)
+            distances = np.linalg.norm(X[:, np.newaxis] - centroids, axis=-1)
 
             """Step 5: Assign each data point to the closest centroid"""
-            clss = np.argmin(distances, axis=1)
+            clss = np.argmin(distances, axis=-1)
 
             """Step 6: Calculate new centroids"""
             new_centroids = np.zeros_like(centroids)
