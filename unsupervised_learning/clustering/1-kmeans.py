@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """
-a function def kmeans(X, k, iterations=1000): that performs K-means on a dataset
+a function def kmeans(X, k, iterations=1000): that performs K-means
+on a dataset
 """
 
 import numpy as np
