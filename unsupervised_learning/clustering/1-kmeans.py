@@ -11,8 +11,12 @@ def kmeans(X, k, iterations=1000):
         return None, None
     if not isinstance(iterations, int) or iterations <= 0:
         return None, None
-    C = np.random.uniform(np.amin(X, axis=0),
-                          np.amax(X, axis=0), (k, X.shape[1]))
+
+    np.random.seed(0)  # For reproducibility
+    C = np.random.uniform(
+        np.amin(
+            X, axis=0), np.amax(
+            X, axis=0), (k, X.shape[1]))
     if C is None:
         return None, None
 
@@ -23,15 +27,16 @@ def kmeans(X, k, iterations=1000):
         clusters = np.argmin(distances, axis=-1)
 
         for j in range(k):
-            # if no data points assigned to cluster j, leave it unchanged
-            if X[clusters == j].size == 0:
-                C[j] = np.random.uniform(np.amin(X, axis=0),
-                                         np.amax(X, axis=0), (1, X.shape[1]))
-            else:
-                # else, mean of all data points assigned to cluster j
+            # Handle empty clusters
+            if np.any(clusters == j):
                 C[j] = np.mean(X[clusters == j], axis=0)
+            else:
+                C[j] = np.random.uniform(
+                    np.amin(
+                        X, axis=0), np.amax(
+                        X, axis=0), (1, X.shape[1]))
 
-        if np.array_equal(C, C_copy):
+        if np.all(np.abs(C - C_copy) < 1e-6):
             break
 
     return C, clusters
