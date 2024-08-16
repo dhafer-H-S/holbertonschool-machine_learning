@@ -1,20 +1,24 @@
 #!/usr/bin/env python3
-"""_summary_
-
-    Returns:
-        _type_: _description_
+"""
+a function def kmeans(X, k, iterations=1000): that performs K-means on a dataset
 """
 
 import numpy as np
 
 
 def kmeans(X, k, iterations=1000):
-    """_summary_
+    """
+        Performs K-means clustering on a dataset.
 
-    Args:
-        X (_type_): _description_
-        k (_type_): _description_
-        iterations (int, optional): _description_. Defaults to 1000.
+        Parameters:
+        - X: numpy.ndarray of shape (n, d), the dataset.
+        - k: a positive integer, number of clusters.
+        - iterations: a positive integer, maximum number of iterations.
+
+        Returns:
+        - C: numpy.ndarray of shape (k, d), final cluster centroids.
+        - clss: numpy.ndarray of shape (n,), index of the cluster
+        each data point belongs to.
     """
     if not isinstance(X, np.ndarray) or len(X.shape) != 2:
         return None, None
