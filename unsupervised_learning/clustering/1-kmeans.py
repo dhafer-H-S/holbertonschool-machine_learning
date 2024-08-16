@@ -1,47 +1,51 @@
 #!/usr/bin/env python3
-"""a function that initializes cluster centroids for K-means"""
+"""_summary_
+
+    Returns:
+        _type_: _description_
+"""
+
 import numpy as np
 
 
-def initialize(X, k):
-    """Returns: a numpy.ndarray of shape (k, d)
-    containing the initialized centroids for each cluster,
-    or None on failure"""
-    try:
-        n, d = X.shape
-        if not isinstance(k, int) or k <= 0:
-            return None
-        centroids = np.random.uniform(
-            low=np.min(
-                X, axis=0), high=np.max(
-                X, axis=0), size=(
-                    k, d))
-        return centroids
-    except Exception:
-        return None
-
-
 def kmeans(X, k, iterations=1000):
-    """a function that performs K-means on a dataset"""
-    try:
-        n, d = X.shape
-        C = initialize(X, k)
-        for i in range(iterations):
-            dist = np.linalg.norm(X[:, None] - C, axis=2)
-            clss = np.argmin(dist, axis=1)
-            new_C = np.zeros((k, d))
-            for j in range(k):
-                cluster_pts = X[clss == j]
-                if cluster_pts.shape[0] > 0:
-                    new_C[j] = cluster_pts.mean(axis=0)
-                else:
-                    new_C[j] = np.random.uniform(
-                        np.min(
-                            X, axis=0), np.max(
-                            X, axis=0), d)
-            if np.all(C == new_C):
-                break
-            C = new_C
-        return C, clss
-    except BaseException:
+    """_summary_
+
+    Args:
+        X (_type_): _description_
+        k (_type_): _description_
+        iterations (int, optional): _description_. Defaults to 1000.
+    """
+    if not isinstance(X, np.ndarray) or len(X.shape) != 2:
         return None, None
+
+    n, d = X.shape
+
+    if not isinstance(k, int) or k <= 0:
+        return None, None
+
+    if not isinstance(iterations, int) or iterations <= 0:
+        return None, None
+
+    C = np.random.uniform(np.min(X, axis=0), np.max(X, axis=0), (k, d))
+
+    for _ in range(iterations):
+        C_copy = np.copy(C)
+
+        D = np.linalg.norm(X - C[:, np.newaxis], axis=2)
+
+        clss = np.argmin(D, axis=0)
+
+        for j in range(k):
+            if len(X[clss == j]) == 0:
+                C[j] = np.random.uniform(np.min(X, axis=0),
+                                         np.max(X, axis=0), (1, d))
+            else:
+                C[j] = np.mean(X[clss == j], axis=0)
+
+        if np.array_equal(C, C_copy):
+            return C, clss
+
+    D = np.linalg.norm(X - C[:, np.newaxis], axis=2)
+    clss = np.argmin(D, axis=0)
+    return C, clss
