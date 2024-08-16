@@ -1,48 +1,37 @@
 #!/usr/bin/env python3
-
+"""clustering"""
 import numpy as np
 
 
 def kmeans(X, k, iterations=1000):
-    """
-    Performs K-means clustering on a dataset.
-
-    Parameters:
-    - X: numpy.ndarray of shape (n, d), the dataset.
-    - k: a positive integer, number of clusters.
-    - iterations: a positive integer, maximum number of iterations.
-
-    Returns:
-    - C: numpy.ndarray of shape (k, d), final cluster centroids.
-    - clss: numpy.ndarray of shape (n,), index of the cluster each data point belongs to.
-    """
+    """performs K-means on a dataset"""
     if not isinstance(X, np.ndarray) or len(X.shape) != 2:
         return None, None
-    if not isinstance(k, int) or k <= 0 or k > X.shape[0]:
+    if not isinstance(k, int) or k <= 0:
         return None, None
     if not isinstance(iterations, int) or iterations <= 0:
         return None, None
-
-    n, d = X.shape
-
-    """Initialize centroids"""
-    min_vals = X.min(axis=0)
-    max_vals = X.max(axis=0)
-    centroids = np.random.uniform(min_vals, max_vals, size=(k, d))
+    C = np.random.uniform(np.amin(X, axis=0),
+                          np.amax(X, axis=0), (k, X.shape[1]))
+    if C is None:
+        return None, None
 
     for _ in range(iterations):
-        """Compute distances and assign clusters"""
-        distances = np.linalg.norm(X[:, np.newaxis] - centroids, axis=2)
-        clss = np.argmin(distances, axis=1)
+        C_copy = np.copy(C)
 
-        """Update centroids"""
-        new_centroids = np.array([X[clss == j].mean(axis=0) if np.any(
-            clss == j) else np.random.uniform(min_vals, max_vals, size=d) for j in range(k)])
+        distances = np.linalg.norm(X[:, None] - C_copy, axis=-1)
+        clusters = np.argmin(distances, axis=-1)
 
-        """Check for convergence"""
-        if np.all(np.isclose(new_centroids, centroids)):
+        for j in range(k):
+            # if no data points assigned to cluster j, leave it unchanged
+            if X[clusters == j].size == 0:
+                C[j] = np.random.uniform(np.amin(X, axis=0),
+                                         np.amax(X, axis=0), (1, X.shape[1]))
+            else:
+                # else, mean of all data points assigned to cluster j
+                C[j] = np.mean(X[clusters == j], axis=0)
+
+        if np.array_equal(C, C_copy):
             break
 
-        centroids = new_centroids
-
-    return centroids, clss
+    return C, clusters
