@@ -25,7 +25,7 @@ def initialize(X, k):
         n, d = X.shape
         min_val = np.min(X, axis=0)
         max_val = np.max(X, axis=0)
-        centroids = np.random.uniform(min_val, max_val, (k, d))
+        centroids = np.random.uniform(min_val, max_val, size=(k, X.shape[1]))
         return centroids
     except Exception as e:
         print(f"Error during initialization: {e}")
