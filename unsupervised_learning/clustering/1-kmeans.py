@@ -19,7 +19,7 @@ def kmeans(X, k, iterations=1000):
     - centroids: numpy.ndarray of shape (k, d), final cluster centroids.
     - clss: numpy.ndarray of shape (n,), index of the cluster each data point belongs to.
     """
-    # Step 1: Validate inputs
+    """Step 1: Validate inputs"""
     if not isinstance(X, np.ndarray) or len(X.shape) != 2:
         return None, None
     if not isinstance(k, int) or k <= 0 or k > X.shape[0]:
