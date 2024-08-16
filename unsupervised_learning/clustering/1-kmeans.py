@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+"""Performs K-means clustering on a dataset."""
+
 import numpy as np
 
 
@@ -14,7 +16,8 @@ def kmeans(X, k, iterations=1000):
 
     Returns:
     - C: numpy.ndarray of shape (k, d), final cluster centroids.
-    - clss: numpy.ndarray of shape (n,), index of the cluster each data point belongs to.
+    - clss: numpy.ndarray of shape (n,), index of the cluster
+    each data point belongs to.
     """
     if not isinstance(X, np.ndarray) or len(X.shape) != 2:
         return None, None
@@ -37,7 +40,8 @@ def kmeans(X, k, iterations=1000):
 
         """Update centroids"""
         new_centroids = np.array([X[clss == j].mean(axis=0) if np.any(
-            clss == j) else np.random.uniform(min_vals, max_vals, size=d) for j in range(k)])
+            clss == j) else np.random.uniform
+                                  (min_vals, max_vals, size=d) for j in range(k)])
 
         """Check for convergence"""
         if np.all(np.isclose(new_centroids, centroids)):
