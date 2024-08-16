@@ -35,22 +35,22 @@ def kmeans(X, k, iterations=1000):
     n, d = X.shape
 
     for i in range(iterations):
-    """Calculate the Euclidean distance between each data point and each centroid"""
+        """Calculate the Euclidean distance between each data point and each centroid"""
         distances = np.linalg.norm(X[:, np.newaxis] - centroids, axis=-1)
 
-    """Assign each data point to the closest centroid"""
+        """Assign each data point to the closest centroid"""
         clss = np.argmin(distances, axis=-1)
 
-    """Calculate new centroids"""
+        """Calculate new centroids"""
         new_centroids = np.zeros_like(centroids)
         for j in range(k):
             if np.any(clss == j):
                 new_centroids[j] = X[clss == j].mean(axis=0)
             else:
-            """Reinitialize the centroid if no points are assigned"""
+                """Reinitialize the centroid if no points are assigned"""
                 new_centroids[j] = np.random.uniform(np.min(X, axis=0), np.max(X, axis=0), size=d)
 
-    """Check for convergence (if centroids haven't changed, exit early)"""
+        """Check for convergence (if centroids haven't changed, exit early)"""
         if np.all(np.isclose(centroids, new_centroids)):
             break
 
