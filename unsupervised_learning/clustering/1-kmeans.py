@@ -44,5 +44,4 @@ def kmeans(X, k, iterations=1000):
             break
 
         centroids = new_centroids
-
     return centroids, clss
