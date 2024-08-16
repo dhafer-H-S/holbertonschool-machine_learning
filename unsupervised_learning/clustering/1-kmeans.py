@@ -12,7 +12,7 @@ def kmeans(X, k, iterations=1000):
     if not isinstance(iterations, int) or iterations <= 0:
         return None, None
 
-    np.random.seed(0)  # For reproducibility
+    np.random.seed(0)
     C = np.random.uniform(
         np.amin(
             X, axis=0), np.amax(
@@ -27,7 +27,6 @@ def kmeans(X, k, iterations=1000):
         clusters = np.argmin(distances, axis=-1)
 
         for j in range(k):
-            # Handle empty clusters
             if np.any(clusters == j):
                 C[j] = np.mean(X[clusters == j], axis=0)
             else:
