@@ -13,6 +13,8 @@ def kmeans(X, k, iterations=1000):
 
         Parameters:
         - X: numpy.ndarray of shape (n, d), the dataset.
+        n is the number of data points
+        d is the number of dimensions for each data point
         - k: a positive integer, number of clusters.
         - iterations: a positive integer, maximum number of iterations.
 
