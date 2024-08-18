@@ -12,7 +12,8 @@ def variance(X, C):
     X is a numpy.ndarray of shape (n, d) containing the data set
     n is the number of data points
     d is the number of dimensions for each data point
-    C is a numpy.ndarray of shape (k, d) containing the centroid means for each cluster
+    C is a numpy.ndarray of shape (k, d) containing the centroid
+    means for each cluster
     You are not allowed to use any loops
     Returns: var, or None on failure
     var is the total variance
