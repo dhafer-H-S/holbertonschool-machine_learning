@@ -1,37 +1,48 @@
 #!/usr/bin/env python3
 
 """
-initializes variablees for a gaussian mixture model
+initializes variables for a Gaussian mixture model
 """
 import numpy as np
 
-
 def pdf(X, m, S):
     """
-    function that calculated the probability density
-    function of gaussian distribution
+    function that calculates the probability density
+    function of a Gaussian distribution
     """
-    try:
-        n, d = X.shape
-        if not isinstance(X, np.ndarray) or len(X.shape) != 2:
-            return None
-        if not isinstance(m, np.ndarray) or m == None:
-            return None
-        if not isinstance(S, np.ndarray) or len(S.shape) != 2:
-            return None
-        diff = X - m
-        covariance_inv = np.linalg.inv(S)
-        covariance_det = np.linalg.det(S)
-        """
-        np.einsum is used here for efficient computation.
-        It performs the necessary matrix multiplication and
-        summation in one step
-        """
-        exp_component = np.einsum('ij,jk,ik->i', diff, covariance_inv, diff)
-        exp_component = -0.5 * exp_component
-        num = np.exp(exp_component)
-        denom = np.sqrt((2 ** np.pi) ** d * covariance_det)
-        p = num / denom
-        return np.maximum(p, 1e-300)
-    except:
+    n, d = X.shape
+
+    # Check if X is a valid 2D numpy array
+    if not isinstance(X, np.ndarray) or len(X.shape) != 2:
         return None
+
+    # Check if m is a valid 1D numpy array of length d
+    if not isinstance(m, np.ndarray) or m.shape != (d,):
+        return None
+
+    # Check if S is a valid 2D numpy array of shape (d, d)
+    if not isinstance(S, np.ndarray) or S.shape != (d, d):
+        return None
+
+    # Calculate the difference
+    diff = X - m
+
+    # Inverse and determinant of the covariance matrix
+    covariance_inv = np.linalg.inv(S)
+    covariance_det = np.linalg.det(S)
+
+    # Calculating the exponent component
+    exp_component = np.einsum('ij,jk,ik->i', diff, covariance_inv, diff)
+    exp_component = -0.5 * exp_component
+
+    # Numerator
+    num = np.exp(exp_component)
+
+    # Denominator
+    denom = np.sqrt(((2 * np.pi) ** d) * covariance_det)
+
+    # Probability Density Function
+    p = num / denom
+
+    # Ensure no value is below 1e-300
+    return np.maximum(p, 1e-300)
