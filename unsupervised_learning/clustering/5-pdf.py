@@ -12,9 +12,10 @@ def pdf(X, m, S):
     function that calculates the probability density
     function of a Gaussian distribution
     """
-    n, d = X.shape
+    
     if not isinstance(X, np.ndarray) or len(X.shape) != 2:
         return None
+    n, d = X.shape
     if not isinstance(m, np.ndarray) or m.shape != (d,):
         return None
     if not isinstance(S, np.ndarray) or S.shape != (d, d):
