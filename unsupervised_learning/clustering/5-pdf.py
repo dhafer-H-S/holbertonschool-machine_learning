@@ -30,7 +30,7 @@ def pdf(X, m, S):
         exp_component = np.einsum('ij,jk,ik->i', diff, covariance_inv, diff)
         exp_component = -0.5 * exp_component
         num = np.exp(exp_component)
-        denom = np.sqrt((2 ** pi) ** d * covariance_det)
+        denom = np.sqrt((2 ** np.pi) ** d * covariance_det)
         p = num / denom
         return np.maximum(p, 1e-300)
     except:
