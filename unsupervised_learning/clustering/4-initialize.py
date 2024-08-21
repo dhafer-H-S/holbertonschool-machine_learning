@@ -4,7 +4,6 @@
 initializes variablees for a gaussian mixture model
 """
 import numpy as np
-from sklearn.mixture import GaussianMixture
 kmeans = __import__('1-kmeans').kmeans
 
 
