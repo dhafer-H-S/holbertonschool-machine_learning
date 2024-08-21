@@ -31,9 +31,9 @@ def initialize(X, k):
             return None, None, None
         if not isinstance(k, int) or k <= 0:
             return None, None, None
-        pi = np.full(shape=(k,), fill_value=1 / k)
-        m, _ = kmeans(X, k)
-        S = np.array([np.identity(d) for _ in range(k)])
-        return pi, m, S
+        priors = np.full(shape=(k,), fill_value=1 / k)
+        mean, _ = kmeans(X, k)
+        covariance = np.full(shape=(k, d, d), fill_value=np.identity(d))
+        return priors, mean, covariance
     except BaseException:
         return None, None, None
