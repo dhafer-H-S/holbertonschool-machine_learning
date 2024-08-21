@@ -24,13 +24,11 @@ def optimum_k(X, kmin=1, kmax=None, iterations=1000):
         return None, None
     if not isinstance(kmin, int) or kmin <= 0:
         return None, None
-    if not isinstance(kmax, int) or kmax <= 0:
+    if kmax is not None and (not isinstance(kmax, int) or kmax <= 0):
         return None, None
     if kmax is None:
-        kmax = X.shape
+        kmax = X.shape[0]  # Assuming kmax should be the number of data points if not provided
     if kmin > kmax:
-        return None, None
-    if kmin <= kmax:
         return None, None
     if not isinstance(iterations, int) or iterations <= 0:
         return None, None
@@ -38,13 +36,14 @@ def optimum_k(X, kmin=1, kmax=None, iterations=1000):
     result_var = []
     for k in range(kmin, kmax + 1):
         centroid, cluster = kmeans(X, k, iterations)
-        if k == kmin:
-            kmin_var = variance(X, centroid)
+        if centroid is None or cluster is None:
+            return None, None
         var = variance(X, centroid)
         if var is None:
             return None, None
-
-        d_var = kmin_var - var
-        results.append((centroid, cluster))
+        if k == kmin:
+            kmin_var = var
+        d_var = var - kmin_var
+        results.append((cluster, centroid))
         result_var.append(d_var)
     return results, result_var
