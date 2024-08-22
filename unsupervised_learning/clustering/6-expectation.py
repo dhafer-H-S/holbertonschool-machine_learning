@@ -26,7 +26,19 @@ def expectation(X, pi, m, S):
     if not isinstance(S, np.ndarray) or len(S.shape) != 3:
         return None, None
     k = pi.shape
-    if not isinstance(pi, np.ndarray) or pi.shape !=  (len(m),):
+    if not isinstance(pi, np.ndarray) or len(pi.shape) != 1:
+        return None, None
+    if X.shape[1] != m.shape[1] or X.shape[1] != S.shape[1]:
+        return None, None
+    if X.shape[1] != S.shape[2]:
+        return None, None
+    if pi.shape[0] != m.shape[0] or pi.shape[0] != S.shape[0]:
+        return None, None
+    if np.abs(np.sum(pi) - 1) > 1e-5:
+        return None, None
+    if np.abs(np.sum(pi) - 1) > 1e-5:
+        return None, None
+    if np.abs(np.sum(pi) - 1) > 1e-5:
         return None, None
     k = pi.shape[0]
     """initialize g that will store the responsabilities"""
