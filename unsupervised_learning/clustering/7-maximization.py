@@ -29,6 +29,6 @@ def maximization(X, g):
     for i in range(k):
         sub = X - m[i]
         sub_T = sub.T
-        S = (np.sum(g[i]) * sub * sub_T)/ np.sum(g[i])
+        S[i] = np.dot((np.sum(g[i]) * sub * sub_T))/ np.sum(g[i])
     return pi, m, S
     
