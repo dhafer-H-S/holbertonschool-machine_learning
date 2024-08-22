@@ -1,4 +1,4 @@
-#usr/bin/env python3
+#!usr/bin/env python3
 
 """
 function that calculates maximization step
@@ -25,9 +25,9 @@ def maximization(X, g):
     pi = (np.sum(g, axis=1)) / n
     m = np.dot(g, X) / np.sum(g, axis=1)[:, np.newaxis]
     S = np.zeros((k, d, d))
-    sub = X - m[1]
-    sub_T = sub.T
-    sum_g = np.sum(g, axis=1)
-    S = (sum_g * sub * sub_T)/ sum_g
-    return pi, m, s
+    for i in range(k):
+        sub = X - m[i]
+        sub_T = sub.T
+        S = (np.sum(g[i]) * sub * sub_T)/ np.sum(g[i])
+    return pi, m, S
     
