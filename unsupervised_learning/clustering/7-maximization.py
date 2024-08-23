@@ -32,11 +32,14 @@ def maximization(X, g):
     if X.shape[0] != g.shape[1]:
         return None, None, None
     n, d = X.shape
-    k, _ = g.shape
+    k, n_g = g.shape
+    if not np.allclose(np.sum(g, axis=0), np.ones(n)):
+        return None, None, None
     pi = np.sum(g, axis=1) / n
     m = np.dot(g, X) / np.sum(g, axis=1)[:, np.newaxis]
     S = np.zeros((k, d, d))
     for i in range(k):
         X_centered = X - m[i]
         S[i] = np.dot(g[i] * X_centered.T, X_centered) / np.sum(g[i])
+
     return pi, m, S
