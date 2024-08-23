@@ -10,7 +10,8 @@ import numpy as np
 
 def maximization(X, g):
     """
-    Performs the maximization step in the Expectation-Maximization (EM) algorithm for a Gaussian Mixture Model (GMM).
+    Performs the maximization step in the Expectation-Maximization (EM)
+    algorithm for a Gaussian Mixture Model (GMM).
 
     Parameters:
     - X: numpy.ndarray of shape (n, d) containing the data set
@@ -21,9 +22,12 @@ def maximization(X, g):
          k is the number of clusters
 
     Returns:
-    - pi: numpy.ndarray of shape (k,) containing the updated priors for each cluster
-    - m: numpy.ndarray of shape (k, d) containing the updated means for each cluster
-    - S: numpy.ndarray of shape (k, d, d) containing the updated covariance matrices for each cluster
+    - pi: numpy.ndarray of shape (k,) containing the updated priors
+    for each cluster
+    - m: numpy.ndarray of shape (k, d) containing the updated means
+    for each cluster
+    - S: numpy.ndarray of shape (k, d, d) containing the updated
+    covariance matrices for each cluster
     """
     if not isinstance(X, np.ndarray) or len(X.shape) != 2:
         return None, None, None
