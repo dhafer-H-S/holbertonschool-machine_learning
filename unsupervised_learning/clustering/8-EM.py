@@ -26,6 +26,14 @@ def expectation_maximization(X, k, iterations=1000, tol=1e-5, verbose=False):
     - None, None, None, None, None on failure
     """
 
+    # Validate inputs
+    if (not isinstance(X, np.ndarray) or len(X.shape) != 2 or
+        not isinstance(k, int) or k <= 0 or k >= X.shape[0] or
+        not isinstance(iterations, int) or iterations <= 0 or
+        not isinstance(tol, float) or tol < 0 or
+        not isinstance(verbose, bool)):
+        return None, None, None, None, None
+
     # Import the required functions
     initialize = __import__('4-initialize').initialize
     expectation = __import__('6-expectation').expectation
@@ -38,7 +46,8 @@ def expectation_maximization(X, k, iterations=1000, tol=1e-5, verbose=False):
 
     # Step 2: Expectation-Maximization loop
     prev_log_likelihood = 0
-    for i in range(iterations):
+    i = 0  # Instead of using a loop counter
+    while i < iterations:
         # Expectation step
         g, log_likelihood = expectation(X, pi, m, S)
         if g is None or log_likelihood is None:
@@ -59,6 +68,8 @@ def expectation_maximization(X, k, iterations=1000, tol=1e-5, verbose=False):
 
         if verbose and (i % 10 == 0 or i == iterations - 1):
             print(f"Log Likelihood after {i} iterations: {log_likelihood:.5f}")
+
+        i += 1  # Increment loop counter
 
     # Step 3: Return the results
     return pi, m, S, g, log_likelihood
