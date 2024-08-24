@@ -6,9 +6,7 @@ Performs the expectation maximization for a GMM.
 
 import numpy as np
 
-
-def expectation_maximization(X, k, iterations=1000,
-    tol=1e-5, verbose=False):
+def expectation_maximization(X, k, iterations=1000, tol=1e-5, verbose=False):
     """
     Performs the expectation maximization for a GMM.
     
@@ -16,11 +14,11 @@ def expectation_maximization(X, k, iterations=1000,
     - X: numpy.ndarray of shape (n, d) containing the data set
     - k: positive integer containing the number of clusters
     - iterations: positive integer containing the maximum number
-    of iterations for the algorithm
+      of iterations for the algorithm
     - tol: non-negative float containing tolerance of the
-    log likelihood, used to determine early stopping
+      log likelihood, used to determine early stopping
     - verbose: boolean that determines if information about
-    the algorithm should be printed
+      the algorithm should be printed
 
     Returns:
     - pi, m, S, g, l on success
@@ -53,15 +51,13 @@ def expectation_maximization(X, k, iterations=1000,
         # Check for convergence
         if abs(log_likelihood - prev_log_likelihood) <= tol:
             if verbose:
-                print(f"Log Likelihood after {i}
-                iterations: {log_likelihood:.5f}")
+                print(f"Log Likelihood after {i} iterations: {log_likelihood:.5f}")
             break
 
         prev_log_likelihood = log_likelihood
 
         if verbose and (i % 10 == 0 or i == iterations - 1):
-            print(f"Log Likelihood after {i}
-            iterations: {log_likelihood:.5f}")
+            print(f"Log Likelihood after {i} iterations: {log_likelihood:.5f}")
 
     # Step 3: Return the results
     return pi, m, S, g, log_likelihood
