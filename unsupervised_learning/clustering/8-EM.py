@@ -1,48 +1,72 @@
 #!/usr/bin/env python3
+
 """
-function that performs the expectation maximization for a GMM
+Function that finds the best number of clusters for a GMM
+using the Bayesian Information Criterion (BIC).
 """
 import numpy as np
-initialize = __import__('4-initialize').initialize
-expectation = __import__('6-expectation').expectation
-maximization = __import__('7-maximization').maximization
+expectation_maximization = __import__('8-EM').expectation_maximization
 
-
-def expectation_maximization(X, k, iterations=1000, tol=1e-5, verbose=False):
+def BIC(X, kmin=1, kmax=None, iterations=1000, tol=1e-5, verbose=False):
     """
-    function that performs the expectation maximization for a GMM
+    Function that finds the best number of clusters for a GMM
+    using the Bayesian Information Criterion (BIC).
     """
+    if (
+        not isinstance(X, np.ndarray) or X.ndim != 2
+        or not isinstance(kmin, int) or kmin <= 0
+        or kmax is not None and (not isinstance(kmax, int) or kmax <= kmin)
+        or not isinstance(iterations, int) or iterations <= 0
+        or isinstance(kmax, int) and kmax <= kmin
+        or not isinstance(tol, float) or tol < 0
+        or not isinstance(verbose, bool)
+    ):
+        return None, None, None, None
 
-    if not isinstance(X, np.ndarray) or X.ndim != 2:
-        return None, None, None, None, None
-    if not isinstance(k, int) or k <= 0 or X.shape[0] < k:
-        return None, None, None, None, None
-    if not isinstance(iterations, int) or iterations <= 0:
-        return None, None, None, None, None
-    if not isinstance(tol, float) or tol < 0:
-        return None, None, None, None, None
-    if not isinstance(verbose, bool):
-        return None, None, None, None, None
-
-    # X: array of shape (n, d) containing the data set
     n, d = X.shape
+    if kmax is None:
+        """Undefined, set to maximum possible """
+        kmax = n
+    if not isinstance(kmax, int) or kmax < 1 or kmax < kmin or kmax > n:
+        return None, None, None, None
 
-    # Initialize the log likelihood of the model
-    lkhd_prev = 0
-    pi, m, S = initialize(X, k)
+    b = []
+    likelihoods = []
+    best_bic = None
+    best_results = None
+    best_k = None
 
-    # Iterate over iterations
-    for i in range(iterations + 1):
-        if i != 0:
-            lkhd_prev = lkhd
-            pi, m, S = maximization(X, g)
-        # Update g and lkhd
-        g, lkhd = expectation(X, pi, m, S)
-        if verbose:
-            if i % 10 == 0 or i == iterations or abs(lkhd - lkhd_prev) <= tol:
-                print("Log Likelihood after {} iterations: {}".
-                      format(i, lkhd.round(5)))
-        if abs(lkhd - lkhd_prev) <= tol:
-            break
+    """ With each cluster size from kmin to kmax""" 
+    for k in range(kmin, kmax + 1):
+        """ Find the best fit with the GMM and current cluster size k"""
+        
+        # Run expectation maximization
+        pi, m, S, g, li = expectation_maximization(X, k, iterations, tol, verbose)
+        
+        # Ensure no covariance matrix is singular by adding regularization if necessary
+        for cluster in range(k):
+            if np.linalg.det(S[cluster]) == 0:
+                S[cluster] += np.eye(S[cluster].shape[0]) * 1e-6  # Add regularization directly
 
-    return pi, m, S, g, lkhd
+        if pi is None or m is None or S is None or g is None:
+            return None, None, None, None
+
+        """ NOTE p is the number of parameters, so k * d with the means,"""
+        """k * d * (d + 1) with the covariance matrix, and k - 1 with the priors """
+        p = (k * d) + (k * d * (d + 1) // 2) + (k - 1)
+        bic = p * np.log(n) - 2 * li
+
+        """ Save log likelihood and BIC value with current cluster size"""
+        likelihoods.append(li)
+        b.append(bic)
+
+        """ Compare current BIC to best observed BIC"""
+        if best_bic is None or bic < best_bic:
+            """ Update the return values"""
+            best_bic = bic
+            best_results = (pi, m, S)
+            best_k = k
+
+    likelihoods = np.array(likelihoods)
+    b = np.array(b)
+    return best_k, best_results, likelihoods, b
