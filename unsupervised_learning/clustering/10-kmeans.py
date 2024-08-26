@@ -14,6 +14,6 @@ def kmeans(X, k):
         return None, None
     KMeans = sk.KMeans(n_clusters = K)
     sk.KMeans.fit(X)
-    C = sk.KMeans.cluster_centers
+    C = sk.KMeans.cluster_centers_
     clss = sk.KMeans.labels
     return C, clss
