@@ -13,24 +13,26 @@ def BIC(X, kmin=1, kmax=None, iterations=1000, tol=1e-5, verbose=False):
     """
     if not isinstance(X, np.ndarray) or len(X.shape) != 2:
         return None, None, None, None
+    if type(kmin) != int or kmin <= 0 or kmin >= X.shape[0]:
+        return None, None, None, None
+    if type(kmax) != int or kmax <= 0 or kmax >= X.shape[0]:
+        return None, None, None, None
+    if kmin >= kmax:
+        return None, None, None, None
+    if type(iterations) != int or iterations <= 0:
+        return None, None, None, None
+    if type(tol) != float or tol <= 0:
+        return None, None, None, None
+    if type(verbose) != bool:
+        return None, None, None, None
 
-
-if not isinstance(kmin,     if )        return None, None, None, None
-if not isinstance(kmax,     if )        return None, None, None, None
-if kmin >= kmax:
-    return None, None, None, None
-if not isinstance(iterations,     if )        return None, None, None, None
-if not isinstance(tol,     if )        return None, None, None, None
-if not isinstance(verbose,     if )        return None, None, None, None
-
-k_best = []
-best_res = []
-logl_val = []
- bic_val = []
-  n, d = X.shape
-   for k in range(kmin, kmax + 1):
-        pi, m, S, _, log_l = expectation_maximization(
-            X, k, iterations, tol, verbose)
+    k_best = []
+    best_res = []
+    logl_val = []
+    bic_val = []
+    n, d = X.shape
+    for k in range(kmin, kmax + 1):
+        pi, m, S,  _, log_l = expectation_maximization(X, k, iterations, tol, verbose)
         k_best.append(k)
         best_res.append((pi, m, S))
         logl_val.append(log_l)
