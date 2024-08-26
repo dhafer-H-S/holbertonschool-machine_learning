@@ -38,8 +38,7 @@ def BIC(X, kmin=1, kmax=None, iterations=1000, tol=1e-5, verbose=False):
 
     # Iterate over the ((kmax + 1) - kmin) clusters
     for k in range(kmin, kmax + 1):
-        pi, m, S, g, lkhd = expectation_maximization(X, k, iterations,
-                                                     tol, verbose)
+        pi, m, S, g, lkhd = expectation_maximization(X, k, iterations, tol, verbose)
         all_pis.append(pi)
         all_ms.append(m)
         all_Ss.append(S)
