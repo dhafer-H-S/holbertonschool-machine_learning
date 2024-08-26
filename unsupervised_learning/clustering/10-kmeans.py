@@ -10,10 +10,10 @@ def kmeans(X, k):
     """performs kmeans on a data set """
     if len(X.shape) != 2:
         return None, None
-    if not isinstance(k, int) or k >= 0:
+    if not isinstance(k, int) or k <= 0:
         return None, None
-    KMeans = sk.KMeans(n_clusters = K)
-    sk.KMeans.fit(X)
-    C = sk.KMeans.cluster_centers_
-    clss = sk.KMeans.labels
+    kmeans = sk.KMeans(n_clusters = k)
+    kmeans.fit(X)
+    C = kmeans.cluster_centers_
+    clss = kmeans.labels_
     return C, clss
