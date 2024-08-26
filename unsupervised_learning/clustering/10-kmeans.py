@@ -17,6 +17,3 @@ def kmeans(X, k):
     C = sk.KMeans.cluster_centers
     clss = sk.KMeans.labels
     return C, clss
-
-
-    
