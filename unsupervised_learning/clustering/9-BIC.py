@@ -13,17 +13,16 @@ def BIC(X, kmin=1, kmax=None, iterations=1000, tol=1e-5, verbose=False):
     function that finds the best number of clusters for a GMM
     using the bayesian information criterion
     """
-    if (
-    not isinstance(X, np.ndarray) or X.ndim != 2
-    or not isinstance(kmin, int) or kmin <= 0
-    or kmax is not None and (not isinstance(kmax, int) or kmax < kmin)
-    or not isinstance(iterations, int) or iterations <= 0
-    or isinstance(kmax, int) and kmax <= kmin
-    or not isinstance(iterations, int) or iterations <= 0
-    or not isinstance(tol, float) or tol < 0
-    or not isinstance(verbose, bool)
-    ):
-        return None, None, None, None
+    if not isinstance(X, np.ndarray) or X.ndim != 2:
+        return None, None, None, None, None
+    if not isinstance(k, int) or k <= 0 or X.shape[0] < k:
+        return None, None, None, None, None
+    if not isinstance(iterations, int) or iterations <= 0:
+        return None, None, None, None, None
+    if not isinstance(tol, float) or tol < 0:
+        return None, None, None, None, None
+    if not isinstance(verbose, bool):
+        return None, None, None, None, None
 
     n, d = X.shape
     if kmax is None:
