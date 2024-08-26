@@ -19,13 +19,11 @@ def agglomerative(X, dist):
     """
     # Perform hierarchical/agglomerative clustering using Ward linkage
     linkage_matrix = sch.linkage(X, method='ward')
-    # Plot the dendrogram
-    plt.figure(figsize=(10, 7))
-    sch.dendrogram(linkage_matrix, color_threshold=dist)
-    plt.title('Agglomerative Clustering Dendrogram')
-    plt.xlabel('Sample index')
-    plt.ylabel('Distance')
-    plt.show()
     # Determine the clusters using the maximum cophenetic distance
     clss = sch.fcluster(linkage_matrix, t=dist, criterion='distance')
+    # Plot the dendrogram
+    plt.figure()
+    sch.dendrogram(linkage_matrix, color_threshold=dist)
+    plt.show()
+
     return clss
