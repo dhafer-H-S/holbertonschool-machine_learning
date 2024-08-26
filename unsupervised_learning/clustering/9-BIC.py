@@ -13,17 +13,17 @@ def BIC(X, kmin=1, kmax=None, iterations=1000, tol=1e-5, verbose=False):
     """
     if not isinstance(X, np.ndarray) or len(X.shape) != 2:
         return None, None, None, None
-    if type(kmin) != int or kmin <= 0 or kmin >= X.shape[0]:
+    if not isinstance(kmin, int) or kmin <= 0 or kmin >= X.shape[0]:
         return None, None, None, None
-    if type(kmax) != int or kmax <= 0 or kmax >= X.shape[0]:
+    if not isinstance(kmax, int) or kmax <= 0 or kmax >= X.shape[0]:
         return None, None, None, None
     if kmin >= kmax:
         return None, None, None, None
-    if type(iterations) != int or iterations <= 0:
+    if not isinstance(iterations, int) or iterations <= 0:
         return None, None, None, None
-    if type(tol) != float or tol <= 0:
+    if not isinstance(tol, float) or tol <= 0:
         return None, None, None, None
-    if type(verbose) != bool:
+    if not isinstance(verbose, bool):
         return None, None, None, None
 
     k_best = []
