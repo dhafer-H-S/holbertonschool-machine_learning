@@ -4,12 +4,11 @@
 sklearn kmeans
 """
 import sklearn.cluster as sk
-import numpy as np
 
 
 def kmeans(X, k):
     """performs kmeans on a data set """
-    if not isinstance(X, np.ndarray) or len(X.shape) != 2:
+    if len(X.shape) != 2:
         return None, None
     if not isinstance(k, int) or k >= 0:
         return None, None
