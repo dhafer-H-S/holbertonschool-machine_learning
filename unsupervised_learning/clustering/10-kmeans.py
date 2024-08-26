@@ -12,7 +12,7 @@ def kmeans(X, k):
         return None, None
     if not isinstance(k, int) or k >= 0:
         return None, None
-    sk.KMeans(n_clusters = K)
+    KMeans = sk.KMeans(n_clusters = K)
     sk.KMeans.fit(X)
     C = sk.KMeans.cluster_centers
     clss = sk.KMeans.labels
