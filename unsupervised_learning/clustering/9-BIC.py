@@ -30,6 +30,9 @@ def BIC(X, kmin=1, kmax=None, iterations=1000, tol=1e-5, verbose=False):
     if kmax is None:
         kmax = n
 
+    if kmin > n:
+        return None, None, None, None
+
     l = np.zeros(kmax - kmin + 1)
     b = np.zeros(kmax - kmin + 1)
     best_k = None
@@ -37,8 +40,9 @@ def BIC(X, kmin=1, kmax=None, iterations=1000, tol=1e-5, verbose=False):
     best_bic = np.inf
 
     for k in range(kmin, kmax + 1):
-        pi, m, S, g, lkhd = expectation_maximization(
-            X, k, iterations, tol, verbose)
+        pi, m, S, g, lkhd = expectation_maximization(X, k, iterations, tol, verbose)
+        if lkhd is None:
+            continue
         p = k * (d + d * (d + 1) / 2) + k - 1
         bic = p * np.log(n) - 2 * lkhd
         l[k - kmin] = lkhd
