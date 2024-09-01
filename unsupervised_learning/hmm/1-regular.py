@@ -31,8 +31,8 @@ def regular(P):
     state to any other state with non zero probability
     """
     """if the matrix is regular if there exisit a k for all i and j """
-    I = np.eye(n)
-    A = P.T - I
+    identity_matrix = np.eye(n)
+    A = P.T - identity_matrix
     A = np.vstack([A, np.ones(n)])
     b = np.zeros(n+1)
     b[-1] = 1
