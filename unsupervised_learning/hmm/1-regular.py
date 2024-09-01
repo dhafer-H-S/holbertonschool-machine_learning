@@ -7,6 +7,7 @@ markov chain
 
 import numpy as np
 
+
 def regular(P):
     """
     P of shape (n, n) P[i, j] is the probability of transitioning
