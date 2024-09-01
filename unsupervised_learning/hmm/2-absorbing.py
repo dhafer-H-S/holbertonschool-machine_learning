@@ -32,11 +32,11 @@ def absorbing(P):
         return True
 
     Q = P[np.ix_(non_absorbing_states, non_absorbing_states)]
-    I = np.eye(Q.shape[0])
+    identity_matrix = np.eye(Q.shape[0])
 
     try:
         # Check if I - Q is invertible
-        np.linalg.inv(I - Q)
+        np.linalg.inv(identity_matrix - Q)
     except np.linalg.LinAlgError:
         return False
 
