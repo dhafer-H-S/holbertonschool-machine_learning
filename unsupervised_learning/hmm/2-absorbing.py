@@ -29,7 +29,7 @@ def absorbing(P):
     non_absorbing_states = np.setdiff1d(np.arange(n), absorbing_states)
     
     if len(non_absorbing_states) == 0:
-        return True, absorbing_states
+        return True
     
     Q = P[np.ix_(non_absorbing_states, non_absorbing_states)]
     I = np.eye(Q.shape[0])
@@ -40,5 +40,5 @@ def absorbing(P):
     except np.linalg.LinAlgError:
         return False
     
-    return True, absorbing_states
+    return True
 
