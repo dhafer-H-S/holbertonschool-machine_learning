@@ -53,7 +53,13 @@ def forward(Observation, Emission, Transition, Initial):
     T : number of observations
     N : number of hidden states
     """
-    """loop through hidden states """
+    """
+    loop through hidden states
+    the loop initialize the first column of forward matrix F
+    this column corresponds to the probability of starting
+    in each hidden state and immediately observing the first
+    observation in the sequence
+    """
     for H in range(N):
         F[H, 0] = Initial[H, 0] * Emission[H, Observation[0]]
     """loop through observations """
