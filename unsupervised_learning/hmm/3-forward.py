@@ -1,4 +1,4 @@
-#!/sur/bin/env python3
+#!/usr/bin/env python3
 
 """
 performs the forward algorithm for a hidden markov model
