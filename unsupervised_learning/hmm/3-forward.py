@@ -11,14 +11,19 @@ def forward(Observation, Emission, Transition, Initial):
     Perform the forward algorithm for a Hidden Markov Model.
 
     Parameters:
-    - Observation: numpy.ndarray of shape (T,) containing the index of the observation
-    - Emission: numpy.ndarray of shape (N, M) containing the emission probabilities
-    - Transition: numpy.ndarray of shape (N, N) containing the transition probabilities
-    - Initial: numpy.ndarray of shape (N, 1) containing the initial state probabilities
+    - Observation: numpy.ndarray of shape (T,) containing
+    the index of the observation
+    - Emission: numpy.ndarray of shape (N, M) containing
+    the emission probabilities
+    - Transition: numpy.ndarray of shape (N, N) containing
+    the transition probabilities
+    - Initial: numpy.ndarray of shape (N, 1) containing the
+    initial state probabilities
 
     Returns:
     - P: The likelihood of the observations given the model
-    - F: numpy.ndarray of shape (N, T) containing the forward path probabilities
+    - F: numpy.ndarray of shape (N, T) containing the forward
+    path probabilities
     """
 
     if (not isinstance(Observation, np.ndarray) or
