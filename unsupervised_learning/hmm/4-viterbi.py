@@ -26,28 +26,29 @@ def viterbi(Observation, Emission, Transition, Initial):
     - P: The probability of obtaining the path sequence
     """
 
-    """Check if the inputs are valid"""
+    # Check if the inputs are valid
     if (not isinstance(Observation, np.ndarray) or
-        not isinstance(Emission, np.ndarray) or
-        not isinstance(Transition, np.ndarray) or
-        not isinstance(Initial, np.ndarray)):
+            not isinstance(Emission, np.ndarray) or
+            not isinstance(Transition, np.ndarray) or
+            not isinstance(Initial, np.ndarray)):
         return None, None
 
     if (len(Observation.shape) != 1 or
-        len(Emission.shape) != 2 or
-        len(Transition.shape) != 2 or
-        len(Initial.shape) != 2):
+            len(Emission.shape) != 2 or
+            len(Transition.shape) != 2 or
+            len(Initial.shape) != 2):
         return None, None
-    """Number of observations"""
+
+    # Number of observations
     T = Observation.shape[0]
-    """N hidden states, M possible observations"""
+    # N hidden states, M possible observations
     N, M = Emission.shape
 
     if (Emission.shape[1] != np.max(Observation) + 1 or
-        Transition.shape[0] != N or
-        Transition.shape[1] != N or
-        Initial.shape[0] != N or
-        Initial.shape[1] != 1):
+            Transition.shape[0] != N or
+            Transition.shape[1] != N or
+            Initial.shape[0] != N or
+            Initial.shape[1] != 1):
         return None, None
 
     """Initialize variables"""
@@ -62,11 +63,11 @@ def viterbi(Observation, Emission, Transition, Initial):
     """Recursion: Fill the Viterbi and Backpointer tables"""
     for t in range(1, T):
         for h in range(N):
-            """Calculate probability for each previous state"""
+            # Calculate probability for each previous state
             prob = V[:, t-1] * Transition[:, h]
-            """Store the index of the best previous state"""
+            # Store the index of the best previous state
             B[h, t] = np.argmax(prob)
-            """Choose the max probability path"""
+            # Choose the max probability path
             V[h, t] = np.max(prob) * Emission[h, Observation[t]]
 
     """Termination: Find the most probable final state"""
