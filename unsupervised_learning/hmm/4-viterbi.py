@@ -55,7 +55,9 @@ def viterbi(Observation, Emission, Transition, Initial):
     V = np.zeros((N, T))  # Viterbi table
     B = np.zeros((N, T), dtype=int)  # Backpointer table
 
-    """Initial probabilities: V[h, 0] = Initial[h] * Emission[h, Observation[0]]"""
+    """
+    Initial probabilities: V[h, 0] = Initial[h] * Emission[h, Observation[0]]
+    """
     for h in range(N):
         V[h, 0] = Initial[h, 0] * Emission[h, Observation[0]]
         B[h, 0] = 0  # No backpointer for the first observation
