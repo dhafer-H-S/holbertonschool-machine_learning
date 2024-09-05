@@ -11,13 +11,18 @@ def viterbi(Observation, Emission, Transition, Initial):
     Performs the Viterbi algorithm for a Hidden Markov Model.
 
     Parameters:
-    - Observation: numpy.ndarray of shape (T,) containing the index of the observation
-    - Emission: numpy.ndarray of shape (N, M) containing the emission probabilities
-    - Transition: numpy.ndarray of shape (N, N) containing the transition probabilities
-    - Initial: numpy.ndarray of shape (N, 1) containing the initial state probabilities
+    - Observation: numpy.ndarray of shape (T,) containing
+    the index of the observation
+    - Emission: numpy.ndarray of shape (N, M) containing
+    the emission probabilities
+    - Transition: numpy.ndarray of shape (N, N) containing
+    the transition probabilities
+    - Initial: numpy.ndarray of shape (N, 1) containing
+    the initial state probabilities
 
     Returns:
-    - path: List of length T containing the most likely sequence of hidden states
+    - path: List of length T containing the most likely
+    sequence of hidden states
     - P: The probability of obtaining the path sequence
     """
 
