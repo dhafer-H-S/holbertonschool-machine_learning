@@ -52,21 +52,21 @@ def backward(Observation, Emission, Transition, Initial):
             Initial.shape[1] != 1):
         return None, None
 
-    # Initialize the backward probabilities matrix B with shape (N, T)
-    B = np.zeros((N, T))
 
-    # Step 1: Initialize B at the last observation to 1 (Base case for
-    # recursion)
-    B[:, T - 1] = 1
+# Initialize the backward probabilities matrix B with shape (N, T)
+B = np.zeros((N, T))
 
-    # Step 2: Recursively calculate backward probabilities
-    for t in range(
-            T - 2, -1, -1):#Iterate backwards from the second last observation
-        for i in range(N):  # Iterate over each hidden state
-            B[i, t] = np.sum(B[:, t + 1] * Transition[i, :]
-                             * Emission[:, Observation[t + 1]])
+# Step 1: Initialize B at the last observation to 1 (Base case for recursion)
+B[:, T - 1] = 1
 
-    # Step 3: Calculate the total probability of the observation sequence
-    P = np.sum(Initial[:, 0] * Emission[:, Observation[0]] * B[:, 0])
+# Step 2: Recursively calculate backward probabilities
+for t in range(
+        T - 2, -1, -1):  # Iterate backwards from the second last observation
+    for i in range(N):  # Iterate over each hidden state
+        B[i, t] = np.sum(B[:, t + 1] * Transition[i, :] *
+                         Emission[:, Observation[t + 1]])
 
-    return P, B
+# Step 3: Calculate the total probability of the observation sequence
+P = np.sum(Initial[:, 0] * Emission[:, Observation[0]] * B[:, 0])
+
+return P, B
