@@ -61,7 +61,8 @@ def backward(Observation, Emission, Transition, Initial):
 
     # Step 2: Recursively calculate backward probabilities
     for t in range(
-            T - 2, -1, -1):#Iterate backwards from the second last observation
+            # Iterate backwards from the second last observation
+            T - 2, -1, -1):
         for i in range(N):  # Iterate over each hidden state
             B[i, t] = np.sum(B[:, t + 1] * Transition[i, :]
                              * Emission[:, Observation[t + 1]])
