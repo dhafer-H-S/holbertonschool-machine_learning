@@ -51,10 +51,14 @@ def baum_welch(Observations, Transition, Emission, Initial, iterations=1000):
     Performs the Baum-Welch algorithm for a Hidden Markov Model.
 
     Parameters:
-    - Observations: numpy.ndarray of shape (T,) that contains the index of the observation
-    - Transition: numpy.ndarray of shape (M, M) containing the initialized transition probabilities
-    - Emission: numpy.ndarray of shape (M, N) containing the initialized emission probabilities
-    - Initial: numpy.ndarray of shape (M, 1) containing the initialized starting probabilities
+    - Observations: numpy.ndarray of shape (T,) that contains
+    the index of the observation
+    - Transition: numpy.ndarray of shape (M, M) containing
+    the initialized transition probabilities
+    - Emission: numpy.ndarray of shape (M, N) containing
+    the initialized emission probabilities
+    - Initial: numpy.ndarray of shape (M, 1) containing
+    the initialized starting probabilities
     - iterations: number of iterations for expectation-maximization
 
     Returns:
@@ -74,7 +78,8 @@ def baum_welch(Observations, Transition, Emission, Initial, iterations=1000):
 
         for t in range(T - 1):
             denom = np.dot(np.dot(
-                alpha[:, t].T, Transition) * Emission[:, Observations[t + 1]].T, beta[:, t + 1])
+                alpha[:, t].T, Transition)
+                * Emission[:, Observations[t + 1]].T, beta[:, t + 1])
             for i in range(M):
                 numer = alpha[i, t] * Transition[i, :] * \
                     Emission[:, Observations[t + 1]].T * beta[:, t + 1].T
