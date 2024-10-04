@@ -74,15 +74,20 @@ class GaussianProcess:
     def update(self, X_new, Y_new):
         """function that updates a gaussian process"""
         """
-        X_new is numpy ndarray of shape (1,) that represent the new sample point
-        Y_new is numpy ndarray of shape (1,) that represent the new sample function
+        X_new is numpy ndarray of shape (1,) that represent
+        the new sample point
+        Y_new is numpy ndarray of shape (1,) that represent
+        the new sample function
         """
-        """ the mean function is to update the public attributes X, Y ,K"""
-        """the way this task i did is by appending the old points to the new
+        """ the mean function is to update the public
+        attributes X, Y ,K"""
+        """the way this task i did is by appending the old
+        points to the new
         and then update the covariance"""
         """append the simple points to the existing sample points"""
         self.X = np.vstack((self.X, X_new))
-        """append the new sample function value to the existing sample function"""
+        """append the new sample function value to the existing
+        sample function"""
         self.Y = np.vstack((self.Y, Y_new))
         """compute the new covariance matrix"""
         K_new = self.kernel(self.X, self.X)
