@@ -90,4 +90,5 @@ class BayesianOptimization:
             idx_opt = np.argmax(self.gp.Y)
         X_opt = self.gp.X[idx_opt]
         Y_opt = self.gp.Y[idx_opt]
+
         return X_opt, Y_opt
