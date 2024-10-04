@@ -1,13 +1,11 @@
 #!/usr/bin/env python3
 
-
-import numpy as np
-GP = __import__('2-gp').GaussianProcess
-
-
 """
 initialize bayesian optimization
 """
+
+import numpy as np
+GP = __import__('2-gp').GaussianProcess
 
 
 class BayesianOptimization:
