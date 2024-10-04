@@ -68,7 +68,9 @@ class BayesianOptimization:
             EI = imp * norm.cdf(Z) + sigma * norm.pdf(Z)
             """this is to handel the case when the standard deviation is zero"""
             EI[sigma == 0.0] = 0.0
-        """identifies the next best sample point based on
-        the maximum expected improvements"""
+        """
+        identifies the next best sample point based on
+        the maximum expected improvements
+        """
         X_next = self.X_s[np.argmax(EI)]
         return X_next, EI
