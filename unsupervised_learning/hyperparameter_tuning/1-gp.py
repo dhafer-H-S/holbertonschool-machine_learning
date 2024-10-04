@@ -58,7 +58,7 @@ class GaussianProcess:
         """compute the inverse of the covariance matrix of the initial points"""
         k_inv = np.linalg.inv(self.K)
         """compute the mean prediction"""
-        mu = K_s.T.dot(k_inv).dot(self.Y)
+        mu = K_s.T.dot(k_inv).dot(self.Y).flatten()
         """compute the covariance of the prediction (variance)"""
         sigma = K_ss - K_s.T.dot(k_inv).dot(K_s)
         """extract the diagonal elements for the variance"""
