@@ -66,7 +66,8 @@ class BayesianOptimization:
             Z = imp / sigma
             """computes the expected improvement"""
             EI = imp * norm.cdf(Z) + sigma * norm.pdf(Z)
-            """this is to handel the case when the standard deviation is zero"""
+            """this is to handel the case when
+            the standard deviation is zero"""
             EI[sigma == 0.0] = 0.0
         """
         identifies the next best sample point based on
