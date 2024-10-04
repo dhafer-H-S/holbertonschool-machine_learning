@@ -44,21 +44,26 @@ class GaussianProcess:
         the mean and standard deviation
         of points in a gaussian process
         X_s : is a numpy.ndarray of shape (s, 1)
-        containing the point whose mean and standard deviation should be calculated
+        containing the point whose mean and standard deviation
+        should be calculated
         Return : mu, sigma
         mu : containing the mean for each point in X_s respectively
         sigma : numpy.ndarray of shape (s,) containing the variance for
         each point in X_s respectively
         """
-        """covariance between the new points X_s and existing points X"""
+        """covariance between the new points X_s and
+        existing points X"""
         """compute the covariance between the initial points x and X_s """
         K_s = self.kernel(self.X, X_s)
-        """compute the covariance matrix of the new points X_s with themselves"""
+        """compute the covariance matrix of the new
+        points X_s with themselves"""
         K_ss = self.kernel(X_s, X_s)
-        """compute the inverse of the covariance matrix of the initial points"""
+        """compute the inverse of the covariance matrix of
+        the initial points"""
         k_inv = np.linalg.inv(self.K)
         """compute the mean prediction"""
-        """flaaten is used to make the result 1D array like checker wants it """
+        """flaaten is used to make the result 1D array like
+        checker wants it"""
         mu = K_s.T.dot(k_inv).dot(self.Y).flatten()
         """compute the covariance of the prediction (variance)"""
         sigma = K_ss - K_s.T.dot(k_inv).dot(K_s)
