@@ -91,18 +91,4 @@ class BayesianOptimization:
         X_opt = self.gp.X[idx_opt]
         Y_opt = self.gp.Y[idx_opt]
 
-        """Remove duplicates from self.gp.X and self.gp.Y
-        """     
-        unique_X = []
-        unique_Y = []
-        seen = set()
-        for x, y in zip(self.gp.X, self.gp.Y):
-            if x[0] not in seen:
-                unique_X.append(x)
-                unique_Y.append(y)
-                seen.add(x[0])
-
-        self.gp.X = np.array(unique_X)
-        self.gp.Y = np.array(unique_Y)
-
         return X_opt, Y_opt
