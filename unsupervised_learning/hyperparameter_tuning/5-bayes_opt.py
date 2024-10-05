@@ -91,4 +91,16 @@ class BayesianOptimization:
         X_opt = self.gp.X[idx_opt]
         Y_opt = self.gp.Y[idx_opt]
 
+        unique_X_opt = []
+        unique_Y_opt = []
+        seen = set()
+        for x, y in zip(self.gp.X, self.gp.Y):
+            if x[0] not in seen:
+                unique_X_opt.append(x)
+                unique_Y_opt.append(y)
+                seen.add(x[0])
+
+        X_opt = np.array(unique_X_opt)
+        Y_opt = np.array(unique_Y_opt)
+
         return X_opt, Y_opt
