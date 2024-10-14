@@ -20,7 +20,7 @@ def autoencoder(input_dims, hidden_layers, latent_dims, lambtha):
     Returns: encoder, decoder, autoencoder
     """
     """ Input layer"""
-    inputs = keras.Input(shape=(input_dims,))
+    inputs = keras.Input(shape=input_dims)
 
     """ Encoder"""
     encoded = inputs
