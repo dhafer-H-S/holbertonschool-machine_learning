@@ -25,7 +25,6 @@ x_train = np.expand_dims(x_train, axis=3)
 x_test = np.expand_dims(x_test, axis=3)
 print(x_train.shape)
 print(x_test.shape)
-
 encoder, decoder, auto = autoencoder((28, 28, 1), [16, 8, 8], (4, 4, 8))
 auto.fit(x_train, x_train, epochs=50, batch_size=256, shuffle=True,
                 validation_data=(x_test, x_test))
