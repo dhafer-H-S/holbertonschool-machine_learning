@@ -31,7 +31,10 @@ def autoencoder(input_dims, filters, latent_dims):
     encoder_out = x
     encoder = keras.models.Model(input_lay, encoder_out, name='encoder')
 
-    """Define the input for the decoder with the shape of the encoder's output"""
+    """
+    Define the input for the decoder with
+    the shape of the encoder's output
+    """
     decoder_inp = keras.layers.Input(shape=encoder_out.shape[1:])
     x = decoder_inp
 
@@ -49,7 +52,8 @@ def autoencoder(input_dims, filters, latent_dims):
 
     """Final convolutional layer to match the input dimensions"""
     x = keras.layers.Conv2D(
-        filters=input_dims[-1], kernel_size=(3, 3), padding='same', activation='sigmoid')(x)
+        filters=input_dims[-1], kernel_size=(3, 3),
+        padding='same', activation='sigmoid')(x)
 
     """Output of the decoder"""
     decoder_output = x
