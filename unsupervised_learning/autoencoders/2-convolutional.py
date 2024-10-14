@@ -20,13 +20,12 @@ def autoencoder(input_dims, hidden_layers, latent_dims, lambtha):
     """
     inputs = keras.Input(shape=(input_dims,))
     encoded = inputs
-    regularizers = keras.regularizers
     for nodes in hidden_layers:
         encoded = keras.layers.Dense(nodes, activation='relu')(encoded)
     latent = keras.layers.Dense(
         latent_dims,
         activation='relu',
-        activity_regularizer=regularizers.l1(lambtha))(encoded)
+        activity_regularizer=keras.regularizers.l1(lambtha))(encoded)
 
     decoded = latent
     for nodes in reversed(hidden_layers):
@@ -40,3 +39,4 @@ def autoencoder(input_dims, hidden_layers, latent_dims, lambtha):
     autoencoder.compile(optimizer='adam', loss='binary_crossentropy')
 
     return encoder, decoder, autoencoder
+
