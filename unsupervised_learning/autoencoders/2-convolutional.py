@@ -32,8 +32,11 @@ def autoencoder(input_dims, hidden_layers, latent_dims, lambtha):
     for nodes in reversed(hidden_layers):
         decoded = keras.layers.Dense(nodes, activation='relu')(decoded)
     output_img = keras.layers.Dense(input_dims, activation='sigmoid')(decoded)
+
     encoder = keras.Model(inputs, latent)
     decoder = keras.Model(latent, output_img)
     autoencoder = keras.Model(inputs, decoder(encoder(inputs)))
+
     autoencoder.compile(optimizer='adam', loss='binary_crossentropy')
+
     return encoder, decoder, autoencoder
