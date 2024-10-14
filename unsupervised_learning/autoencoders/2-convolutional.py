@@ -1,48 +1,62 @@
 #!/usr/bin/env python3
-
 """A function that creates a convolutional autoencoder"""
-
 import tensorflow.keras as keras
 
 def autoencoder(input_dims, filters, latent_dims):
     """
-    - input_dims is a tuple of integers containing the dimensions of the model input
-    - filters is a list containing the number of filters for each convolutional layer in the encoder, respectively
-    - latent_dims is a tuple of integers containing the dimensions of the latent space representation
+    Creates a convolutional autoencoder.
 
-    Returns: encoder, decoder, autoencoder
+    Args:
+        input_dims (tuple): Dimensions of the model input.
+        filters (list): List containing the number of filters for each convolutional layer in the encoder.
+        latent_dims (tuple): Dimensions of the latent space representation.
+
+    Returns:
+        tuple: encoder, decoder, autoencoder models.
     """
-    """Input layer"""
-    inputs = keras.Input(shape=input_dims)
-    
-    """Encoder"""
-    encoded = inputs
-    for f in filters:
-        encoded = keras.layers.Conv2D(f, (3, 3), padding='same', activation='relu')(encoded)
-        encoded = keras.layers.MaxPooling2D((2, 2), padding='same')(encoded)
-    
-    """Latent space representation"""
-    latent = keras.layers.Conv2D(latent_dims[2], (3, 3), padding='same', activation='relu')(encoded)
-    
-    """Decoder"""
-    decoded = latent
-    for f in reversed(filters):
-        decoded = keras.layers.Conv2D(f, (3, 3), padding='same', activation='relu')(decoded)
-        decoded = keras.layers.UpSampling2D((2, 2))(decoded)
-    
-    """Adjust the final upsampling to match the input dimensions"""
-    decoded = keras.layers.Conv2D(filters[0], (3, 3), padding='same', activation='relu')(decoded)
-    decoded = keras.layers.Conv2D(input_dims[-1], (3, 3), padding='same', activation='sigmoid')(decoded)
-    
-    """Ensure the output dimensions match the input dimensions"""
-    output_img = keras.layers.Cropping2D(((2, 2), (2, 2)))(decoded)
+    """Define the input layer with the specified input dimensions"""
+    input_lay = keras.Input(shape=input_dims)
+    x = input_lay
 
-    """Models"""
-    encoder = keras.Model(inputs, latent)
-    decoder = keras.Model(latent, output_img)
-    autoencoder = keras.Model(inputs, decoder(encoder(inputs)))
+    """Build the encoder"""
+    for filter in filters:
+        x = keras.layers.Conv2D(
+            filters=filter, kernel_size=(3, 3), padding='same', activation='relu')(x)
+        x = keras.layers.MaxPooling2D(pool_size=(2, 2), padding='same')(x)
+    
+    """Output of the encoder"""
+    encoder_out = x
+    encoder = keras.models.Model(input_lay, encoder_out, name='encoder')
 
-    """Compile the autoencoder"""
-    autoencoder.compile(optimizer='adam', loss='binary_crossentropy')
+    """Define the input for the decoder with the shape of the encoder's output"""
+    decoder_inp = keras.layers.Input(shape=encoder_out.shape[1:])
+    x = decoder_inp
+
+    """Build the decoder"""
+    for i, filter in enumerate(reversed(filters)):
+        if i == len(filters) - 1:
+            x = keras.layers.Conv2D(
+                filters=filter, kernel_size=(3, 3), padding='valid', activation='relu')(x)
+        else:
+            x = keras.layers.Conv2D(
+                filters=filter, kernel_size=(3, 3), padding='same', activation='relu')(x)
+        x = keras.layers.UpSampling2D(size=(2, 2))(x)
+    
+    """Final convolutional layer to match the input dimensions"""
+    x = keras.layers.Conv2D(
+        filters=input_dims[-1], kernel_size=(3, 3), padding='same', activation='sigmoid')(x)
+    
+    """Output of the decoder"""
+    decoder_output = x
+    decoder = keras.models.Model(decoder_inp, decoder_output, name='decoder')
+
+    """Combine the encoder and decoder into the autoencoder model"""
+    autoencoder = keras.models.Model(
+        inputs=input_lay,
+        outputs=decoder(encoder(input_lay)),
+        name='autoencoder')
+
+    """Compile the autoencoder model"""
+    autoencoder.compile(optimizer='adam', loss="binary_crossentropy")
 
     return encoder, decoder, autoencoder
