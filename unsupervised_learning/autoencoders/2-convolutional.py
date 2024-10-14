@@ -2,13 +2,15 @@
 """A function that creates a convolutional autoencoder"""
 import tensorflow.keras as keras
 
+
 def autoencoder(input_dims, filters, latent_dims):
     """
     Creates a convolutional autoencoder.
 
     Args:
         input_dims (tuple): Dimensions of the model input.
-        filters (list): List containing the number of filters for each convolutional layer in the encoder.
+        filters (list): List containing the number of filters for each
+        convolutional layer in the encoder.
         latent_dims (tuple): Dimensions of the latent space representation.
 
     Returns:
@@ -21,9 +23,10 @@ def autoencoder(input_dims, filters, latent_dims):
     """Build the encoder"""
     for filter in filters:
         x = keras.layers.Conv2D(
-            filters=filter, kernel_size=(3, 3), padding='same', activation='relu')(x)
+            filters=filter, kernel_size=(
+                3, 3), padding='same', activation='relu')(x)
         x = keras.layers.MaxPooling2D(pool_size=(2, 2), padding='same')(x)
-    
+
     """Output of the encoder"""
     encoder_out = x
     encoder = keras.models.Model(input_lay, encoder_out, name='encoder')
@@ -36,16 +39,18 @@ def autoencoder(input_dims, filters, latent_dims):
     for i, filter in enumerate(reversed(filters)):
         if i == len(filters) - 1:
             x = keras.layers.Conv2D(
-                filters=filter, kernel_size=(3, 3), padding='valid', activation='relu')(x)
+                filters=filter, kernel_size=(
+                    3, 3), padding='valid', activation='relu')(x)
         else:
             x = keras.layers.Conv2D(
-                filters=filter, kernel_size=(3, 3), padding='same', activation='relu')(x)
+                filters=filter, kernel_size=(
+                    3, 3), padding='same', activation='relu')(x)
         x = keras.layers.UpSampling2D(size=(2, 2))(x)
-    
+
     """Final convolutional layer to match the input dimensions"""
     x = keras.layers.Conv2D(
         filters=input_dims[-1], kernel_size=(3, 3), padding='same', activation='sigmoid')(x)
-    
+
     """Output of the decoder"""
     decoder_output = x
     decoder = keras.models.Model(decoder_inp, decoder_output, name='decoder')
