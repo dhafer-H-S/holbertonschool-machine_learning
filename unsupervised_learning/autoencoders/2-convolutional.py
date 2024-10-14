@@ -5,6 +5,7 @@
 
 import tensorflow.keras as keras
 
+
 def autoencoder(input_dims, hidden_layers, latent_dims, lambtha):
     """
     - input_dims is an integer containing the dimensions of
@@ -20,12 +21,12 @@ def autoencoder(input_dims, hidden_layers, latent_dims, lambtha):
     """
     """ Input layer"""
     inputs = keras.Input(shape=(input_dims,))
-    
+
     """ Encoder"""
     encoded = inputs
     for nodes in hidden_layers:
         encoded = keras.layers.Dense(nodes, activation='relu')(encoded)
-    
+
     """ Latent space representation with L1 regularization"""
     latent = keras.layers.Dense(
         latent_dims,
@@ -37,7 +38,7 @@ def autoencoder(input_dims, hidden_layers, latent_dims, lambtha):
     decoded = latent
     for nodes in reversed(hidden_layers):
         decoded = keras.layers.Dense(nodes, activation='relu')(decoded)
-    
+
     """ Output layer with sigmoid activation"""
     output_img = keras.layers.Dense(input_dims, activation='sigmoid')(decoded)
 
