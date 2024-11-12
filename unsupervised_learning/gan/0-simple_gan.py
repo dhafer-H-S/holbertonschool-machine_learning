@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-simple gan 
+simple gan
 """
 import tensorflow as tf
 from tensorflow import keras
@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 
 class Simple_GAN(keras.Model):
     """
-    simple gan 
+    simple gan
     """
     def __init__(self, generator, discriminator,
                  latent_generator, real_examples,
