@@ -74,35 +74,38 @@ class WGAN_clip(keras.Model):
         random_indices = tf.random.shuffle(sorted_indices)[:size]
         return tf.gather(self.real_examples, random_indices)
 
-    def train_step(self, useless_argument):
-        """train function"""
-        for _ in range(self.disc_iter):
-            with tf.GradientTape() as disc_tape:
-                """Get real and fake samples"""
-                real_samples = self.get_real_sample()
-                fake_samples = self.get_fake_sample(training=True)
-
-                """Calculate discriminator loss"""
-                discr_loss = self.discriminator.loss(real_samples, fake_samples)
-
-            """Apply gradients to discriminator"""
-            gradients_of_discriminator = disc_tape.gradient(discr_loss, self.discriminator.trainable_variables)
-            self.discriminator.optimizer.apply_gradients(zip(gradients_of_discriminator, self.discriminator.trainable_variables))
-
-            """Clip discriminator weights"""
-            for weight in self.discriminator.trainable_variables:
-                weight.assign(tf.clip_by_value(weight, -self.clip_value, self.clip_value))
-
-        """Train Generator"""
-        with tf.GradientTape() as gen_tape:
-            """Get fake samples"""
+def train_step(self, useless_argument):
+    for _ in range(self.disc_iter):
+        with tf.GradientTape() as disc_tape:
+            """Get real and fake samples"""
+            real_samples = self.get_real_sample()
             fake_samples = self.get_fake_sample(training=True)
 
-            """Calculate generator loss"""
-            gen_loss = self.generator.loss(fake_samples)
+            """Calculate discriminator loss"""
+            discr_loss = self.discriminator.loss(real_samples, fake_samples)
 
-        """Apply gradients for generator"""
-        gradients_of_generator = gen_tape.gradient(gen_loss, self.generator.trainable_variables)
-        self.generator.optimizer.apply_gradients(zip(gradients_of_generator, self.generator.trainable_variables))
+        """Apply gradients to discriminator"""
+        gradients_of_discriminator = disc_tape.gradient(discr_loss, self.discriminator.trainable_variables)
+        self.discriminator.optimizer.apply_gradients(zip(gradients_of_discriminator, self.discriminator.trainable_variables))
 
-        return {"discr_loss": discr_loss, "gen_loss": gen_loss}
+        """Clip discriminator weights"""
+        for weight in self.discriminator.trainable_variables:
+            weight.assign(tf.clip_by_value(weight, -self.clip_value, self.clip_value))
+
+    """Train Generator"""
+    with tf.GradientTape() as gen_tape:
+        """Get fake samples"""
+        fake_samples = self.get_fake_sample(training=True)
+
+        """Calculate generator loss"""
+        gen_loss = self.generator.loss(fake_samples)
+
+    """Apply gradients for generator"""
+    gradients_of_generator = gen_tape.gradient(gen_loss, self.generator.trainable_variables)
+    self.generator.optimizer.apply_gradients(zip(gradients_of_generator, self.generator.trainable_variables))
+
+    """Debugging statements"""
+    print(f"Discriminator loss: {discr_loss.numpy()}")
+    print(f"Generator loss: {gen_loss.numpy()}")
+
+    return {"discr_loss": discr_loss, "gen_loss": gen_loss}
