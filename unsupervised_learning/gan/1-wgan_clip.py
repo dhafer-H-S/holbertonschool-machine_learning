@@ -34,8 +34,9 @@ class WGAN_clip(keras.Model):
         self.generator.loss = lambda x: - \
             tf.math.reduce_mean(self.discriminator(x))
         self.generator.optimizer = keras.optimizers.Adam(
-            learning_rate=
-            self.learning_rate, beta_1=self.beta_1, beta_2=self.beta_2)
+            learning_rate=self.learning_rate
+            , beta_1=self.beta_1
+            , beta_2=self.beta_2)
         self.generator.compile(
             optimizer=self.generator.optimizer,
             loss=self.generator.loss)
@@ -60,6 +61,7 @@ class WGAN_clip(keras.Model):
     """Generator of real samples of size batch_size"""
 
     def get_real_sample(self, size=None):
+        """real sample function"""
         if not size:
             size = self.batch_size
         sorted_indices = tf.range(tf.shape(self.real_examples)[0])
@@ -69,6 +71,7 @@ class WGAN_clip(keras.Model):
     """Overloading train_step()"""
 
     def train_step(self, useless_argument):
+        """train function"""
         for _ in range(self.disc_iter):
             with tf.GradientTape() as disc_tape:
                 """Get real and fake samples"""
@@ -81,7 +84,8 @@ class WGAN_clip(keras.Model):
 
             """Apply gradient descent to the discriminator"""
             gradients_of_discriminator = disc_tape.gradient(
-                discr_loss, self.discriminator.trainable_variables)
+                discr_loss
+                , self.discriminator.trainable_variables)
             self.discriminator.optimizer.apply_gradients(
             zip
             (gradients_of_discriminator
