@@ -4,6 +4,7 @@
 This module defines the WGAN_clip class for Wasserstein
 GANs with weight clipping.
 """
+
 import tensorflow as tf
 from tensorflow import keras
 import numpy as np
@@ -22,7 +23,18 @@ class WGAN_clip(keras.Model):
             batch_size=200,
             disc_iter=2,
             learning_rate=.005):
-        """ initiation function"""
+        """
+        Initialize the WGAN_clip model.
+
+        Args:
+            generator (keras.Model): The generator model.
+            discriminator (keras.Model): The discriminator model.
+            latent_generator (function): Function to generate latent vectors.
+            real_examples (np.array): Array of real examples.
+            batch_size (int): Batch size for training.
+            disc_iter (int): Number of discriminator iterations per generator iteration.
+            learning_rate (float): Learning rate for the optimizers.
+        """
         super().__init__()
         self.latent_generator = latent_generator
         self.real_examples = real_examples
@@ -60,26 +72,48 @@ class WGAN_clip(keras.Model):
     """Generator of fake samples of size batch_size"""
 
     def get_fake_sample(self, size=None, training=False):
+        """
+        Generate fake samples of the specified size.
+
+        Args:
+            size (int, optional): Number of samples to generate. Defaults to batch_size.
+            training (bool, optional): Whether the model is in training mode. Defaults to False.
+
+        Returns:
+            np.array: Array of generated fake samples.
+        """
         if not size:
             size = self.batch_size
         return self.generator(
             self.latent_generator(size),
             training=training)
 
-    """Generator of real samples of size batch_size"""
-
     def get_real_sample(self, size=None):
-        """real sample function"""
+        """
+        Generate real samples of the specified size.
+
+        Args:
+            size (int): Number of samples to generate. Defaults to batch_size.
+
+        Returns:
+            np.array: Array of real samples.
+        """
         if not size:
             size = self.batch_size
         sorted_indices = tf.range(tf.shape(self.real_examples)[0])
         random_indices = tf.random.shuffle(sorted_indices)[:size]
         return tf.gather(self.real_examples, random_indices)
 
-    """Overloading train_step()"""
-
     def train_step(self, useless_argument):
-        """train function"""
+        """
+        Perform one training step.
+
+        Args:
+            useless_argument: Placeholder argument for compatibility.
+
+        Returns:
+            dict: Dictionary containing discriminator and generator losses.
+        """
         for _ in range(self.disc_iter):
             with tf.GradientTape() as disc_tape:
                 """Get real and fake samples"""
