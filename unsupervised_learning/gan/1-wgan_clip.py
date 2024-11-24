@@ -34,19 +34,21 @@ class WGAN_clip(keras.Model):
         self.generator.loss = lambda x: - \
             tf.math.reduce_mean(self.discriminator(x))
         self.generator.optimizer = keras.optimizers.Adam(
-            learning_rate=self.learning_rate
-            , beta_1=self.beta_1
-            , beta_2=self.beta_2)
+            learning_rate=self.learning_rate,
+            beta_1=self.beta_1,
+            beta_2=self.beta_2)
         self.generator.compile(
             optimizer=self.generator.optimizer,
             loss=self.generator.loss)
 
         """Define the discriminator loss and optimizer"""
         self.discriminator.loss = lambda x, y: tf.math.reduce_mean(
-            self.discriminator(y)) - tf.math.reduce_mean(self.discriminator(x))
+            self.discriminator(y)) - tf.math.reduce_mean(
+                self.discriminator(x))
         self.discriminator.optimizer = keras.optimizers.Adam(
-            learning_rate=
-            self.learning_rate, beta_1=self.beta_1, beta_2=self.beta_2)
+            learning_rate=self.learning_rate,
+            beta_1=self.beta_1,
+            beta_2=self.beta_2)
         self.discriminator.compile(
             optimizer=self.discriminator.optimizer,
             loss=self.discriminator.loss)
@@ -56,7 +58,9 @@ class WGAN_clip(keras.Model):
     def get_fake_sample(self, size=None, training=False):
         if not size:
             size = self.batch_size
-        return self.generator(self.latent_generator(size), training=training)
+        return self.generator(
+            self.latent_generator(size),
+            training=training)
 
     """Generator of real samples of size batch_size"""
 
@@ -84,13 +88,11 @@ class WGAN_clip(keras.Model):
 
             """Apply gradient descent to the discriminator"""
             gradients_of_discriminator = disc_tape.gradient(
-                discr_loss
-                , self.discriminator.trainable_variables)
+                discr_loss,
+                self.discriminator.trainable_variables)
             self.discriminator.optimizer.apply_gradients(
-            zip
-            (gradients_of_discriminator
-            , self.discriminator.trainable_variables)
-            )
+                zip(gradients_of_discriminator,
+                    self.discriminator.trainable_variables))
 
             """Clip the weights of the discriminator between -1 and 1"""
             for weight in self.discriminator.trainable_variables:
@@ -105,6 +107,7 @@ class WGAN_clip(keras.Model):
         gradients_of_generator = gen_tape.gradient(
             gen_loss, self.generator.trainable_variables)
         self.generator.optimizer.apply_gradients(
-            zip(gradients_of_generator, self.generator.trainable_variables))
+            zip(gradients_of_generator,
+                self.generator.trainable_variables))
 
         return {"discr_loss": discr_loss, "gen_loss": gen_loss}
