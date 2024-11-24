@@ -31,7 +31,8 @@ class WGAN_clip(keras.Model):
             latent_generator (function): Function to generate latent vectors.
             real_examples (np.array): Array of real examples.
             batch_size (int): Batch size for training.
-            disc_iter (int): Number of discriminator iterations per generator iteration.
+            disc_iter (int): Number of discriminator iterations per
+            generator iteration.
             learning_rate (float): Learning rate for the optimizers.
         """
         super().__init__()
@@ -71,8 +72,10 @@ class WGAN_clip(keras.Model):
         Generate fake samples of the specified size.
 
         Args:
-            size (int, optional): Number of samples to generate. Defaults to batch_size.
-            training (bool, optional): Whether the model is in training mode. Defaults to False.
+            size (int, optional): Number of samples to generate.
+            Defaults to batch_size.
+            training (bool, optional): Whether the model is in training mode.
+            Defaults to False.
 
         Returns:
             np.array: Array of generated fake samples.
