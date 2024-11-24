@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 
+"""
+This module defines the WGAN_clip class for Wasserstein GANs with weight clipping.
+"""
 import tensorflow as tf
 from tensorflow import keras
 import numpy as np
@@ -7,7 +10,7 @@ import matplotlib.pyplot as plt
 
 
 class WGAN_clip(keras.Model):
-    """class Wasserstein GANs"""
+    """Class for Wasserstein GANs with weight clipping."""
 
     def __init__(
             self,
