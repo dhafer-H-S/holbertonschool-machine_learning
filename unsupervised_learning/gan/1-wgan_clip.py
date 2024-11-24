@@ -13,7 +13,6 @@ import matplotlib.pyplot as plt
 
 class WGAN_clip(keras.Model):
     """Class for Wasserstein GANs with weight clipping."""
-
     def __init__(
             self,
             generator,
@@ -45,7 +44,6 @@ class WGAN_clip(keras.Model):
         self.learning_rate = learning_rate
         self.beta_1 = .5
         self.beta_2 = .9
-
         """Define the generator loss and optimizer"""
         self.generator.loss = lambda x: - \
             tf.math.reduce_mean(self.discriminator(x))
@@ -56,7 +54,6 @@ class WGAN_clip(keras.Model):
         self.generator.compile(
             optimizer=self.generator.optimizer,
             loss=self.generator.loss)
-
         """Define the discriminator loss and optimizer"""
         self.discriminator.loss = lambda x, y: tf.math.reduce_mean(
             self.discriminator(y)) - tf.math.reduce_mean(
@@ -68,8 +65,6 @@ class WGAN_clip(keras.Model):
         self.discriminator.compile(
             optimizer=self.discriminator.optimizer,
             loss=self.discriminator.loss)
-
-    """Generator of fake samples of size batch_size"""
 
     def get_fake_sample(self, size=None, training=False):
         """
@@ -91,10 +86,8 @@ class WGAN_clip(keras.Model):
     def get_real_sample(self, size=None):
         """
         Generate real samples of the specified size.
-
         Args:
             size (int): Number of samples to generate. Defaults to batch_size.
-
         Returns:
             np.array: Array of real samples.
         """
@@ -103,14 +96,11 @@ class WGAN_clip(keras.Model):
         sorted_indices = tf.range(tf.shape(self.real_examples)[0])
         random_indices = tf.random.shuffle(sorted_indices)[:size]
         return tf.gather(self.real_examples, random_indices)
-
     def train_step(self, useless_argument):
         """
         Perform one training step.
-
         Args:
             useless_argument: Placeholder argument for compatibility.
-
         Returns:
             dict: Dictionary containing discriminator and generator losses.
         """
@@ -119,11 +109,9 @@ class WGAN_clip(keras.Model):
                 """Get real and fake samples"""
                 real_samples = self.get_real_sample()
                 fake_samples = self.get_fake_sample(training=True)
-
                 """Compute the loss for the discriminator"""
                 discr_loss = self.discriminator.loss(
                     real_samples, fake_samples)
-
             """Apply gradient descent to the discriminator"""
             gradients_of_discriminator = disc_tape.gradient(
                 discr_loss,
@@ -131,21 +119,17 @@ class WGAN_clip(keras.Model):
             self.discriminator.optimizer.apply_gradients(
                 zip(gradients_of_discriminator,
                     self.discriminator.trainable_variables))
-
             """Clip the weights of the discriminator between -1 and 1"""
             for weight in self.discriminator.trainable_variables:
                 weight.assign(tf.clip_by_value(weight, -1.0, 1.0))
-
         """Compute the loss for the generator"""
         with tf.GradientTape() as gen_tape:
             fake_samples = self.get_fake_sample(training=True)
             gen_loss = self.generator.loss(fake_samples)
-
         """Apply gradient descent to the generator"""
         gradients_of_generator = gen_tape.gradient(
             gen_loss, self.generator.trainable_variables)
         self.generator.optimizer.apply_gradients(
             zip(gradients_of_generator,
                 self.generator.trainable_variables))
-
         return {"discr_loss": discr_loss, "gen_loss": gen_loss}
