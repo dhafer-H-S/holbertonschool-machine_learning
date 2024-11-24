@@ -99,6 +99,7 @@ class WGAN_clip(keras.Model):
         sorted_indices = tf.range(tf.shape(self.real_examples)[0])
         random_indices = tf.random.shuffle(sorted_indices)[:size]
         return tf.gather(self.real_examples, random_indices)
+
     def train_step(self, useless_argument):
         """
         Perform one training step.
