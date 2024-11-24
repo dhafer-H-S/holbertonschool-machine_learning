@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 
 """
-This module defines the WGAN_clip class for Wasserstein GANs with weight clipping.
+This module defines the WGAN_clip class for Wasserstein
+GANs with weight clipping.
 """
 import tensorflow as tf
 from tensorflow import keras
