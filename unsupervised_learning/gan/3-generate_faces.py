@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-generate faces functions 
+generate faces functions
 """
 
 import tensorflow as tf
@@ -9,11 +9,9 @@ from tensorflow import keras
 def convolutional_GenDiscr():
     """
     Build a convolutional generator and discriminator.
-
     Returns:
         tuple: The generator and discriminator models.
     """
-
     def get_generator():
         """
         Build the generator model.
@@ -42,7 +40,6 @@ def convolutional_GenDiscr():
     def get_discriminator():
         """
         Build the discriminator model.
-
         Returns:
             keras.Model: The discriminator model.
         """
@@ -63,5 +60,4 @@ def convolutional_GenDiscr():
         outputs = keras.layers.Dense(1)(x)
         discriminator = keras.Model(inputs, outputs, name="discriminator")
         return discriminator
-
     return get_generator(), get_discriminator()
