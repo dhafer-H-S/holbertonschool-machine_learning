@@ -55,7 +55,8 @@ class WGAN_GP(keras.Model):
         self.generator.loss = lambda x: - \
             tf.math.reduce_mean(self.discriminator(x))
         self.generator.optimizer = keras.optimizers.Adam(
-            learning_rate=self.learning_rate, beta_1=self.beta_1, beta_2=self.beta_2)
+            learning_rate=self.learning_rate, beta_1=self.beta_1,
+            beta_2=self.beta_2)
         self.generator.compile(
             optimizer=self.generator.optimizer,
             loss=self.generator.loss)
@@ -64,7 +65,8 @@ class WGAN_GP(keras.Model):
         self.discriminator.loss = lambda x, y: tf.math.reduce_mean(
             self.discriminator(y)) - tf.math.reduce_mean(self.discriminator(x))
         self.discriminator.optimizer = keras.optimizers.Adam(
-            learning_rate=self.learning_rate, beta_1=self.beta_1, beta_2=self.beta_2)
+            learning_rate=self.learning_rate, beta_1=self.beta_1,
+            beta_2=self.beta_2)
         self.discriminator.compile(
             optimizer=self.discriminator.optimizer,
             loss=self.discriminator.loss)
@@ -74,23 +76,26 @@ class WGAN_GP(keras.Model):
         Generate fake samples of the specified size.
 
         Args:
-            size (int, optional): Number of samples to generate. Defaults to batch_size.
-            training (bool, optional): Whether the model is in training mode. Defaults to False.
+            size (int, optional): Number of samples to generate.
+            Defaults to batch_size.
+            training (bool, optional): Whether the model is in training mode.
+            Defaults to False.
 
         Returns:
             np.array: Array of generated fake samples.
         """
         if not size:
             size = self.batch_size
-        return self.generator(self.latent_generator(size), training=training)
+        return self.generator(self.latent_generator(size),
+                training=training)
 
     def get_real_sample(self, size=None):
         """
         Generate real samples of the specified size.
 
         Args:
-            size (int): Number of samples to generate. Defaults to batch_size.
-
+            size (int): Number of samples to generate.
+            Defaults to batch_size.
         Returns:
             np.array: Array of real samples.
         """
@@ -140,7 +145,8 @@ class WGAN_GP(keras.Model):
             useless_argument: Placeholder argument for compatibility.
 
         Returns:
-            dict: Dictionary containing discriminator and generator losses and gradient penalty.
+            dict: Dictionary containing discriminator and generator
+            losses and gradient penalty.
         """
         for _ in range(self.disc_iter):
             with tf.GradientTape() as disc_tape:
@@ -160,7 +166,8 @@ class WGAN_GP(keras.Model):
             gradients_of_discriminator = disc_tape.gradient(
                 new_discr_loss, self.discriminator.trainable_variables)
             self.discriminator.optimizer.apply_gradients(
-                zip(gradients_of_discriminator, self.discriminator.trainable_variables))
+                zip(gradients_of_discriminator,
+                    self.discriminator.trainable_variables))
 
         """Compute the loss for the generator"""
         with tf.GradientTape() as gen_tape:
@@ -177,11 +184,14 @@ class WGAN_GP(keras.Model):
 
     def replace_weights(self, gen_h5, disc_h5):
         """
-        Replace the weights of the generator and discriminator with the ones stored in the .h5 files.
+        Replace the weights of the generator and discriminator with the ones
+        stored in the .h5 files.
 
         Args:
-            gen_h5 (str): Path to the .h5 file containing the generator weights.
-            disc_h5 (str): Path to the .h5 file containing the discriminator weights.
+            gen_h5 (str): Path to the .h5 file containing the generator
+            weights.
+            disc_h5 (str): Path to the .h5 file containing
+            the discriminator weights.
         """
         self.generator.load_weights(gen_h5)
         self.discriminator.load_weights(disc_h5)
