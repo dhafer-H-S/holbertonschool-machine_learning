@@ -88,7 +88,7 @@ class WGAN_GP(keras.Model):
         if not size:
             size = self.batch_size
         return self.generator(self.latent_generator(size),
-                training=training)
+                              training=training)
 
     def get_real_sample(self, size=None):
         """
