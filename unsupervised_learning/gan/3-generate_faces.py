@@ -6,6 +6,7 @@ generate faces functions
 import tensorflow as tf
 from tensorflow import keras
 
+
 def convolutional_GenDiscr():
     """
     Build a convolutional generator and discriminator.
