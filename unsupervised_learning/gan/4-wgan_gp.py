@@ -28,7 +28,8 @@ class WGAN_GP(keras.Model):
             latent_generator (function): Function to generate latent vectors.
             real_examples (np.array): Array of real examples.
             batch_size (int): Batch size for training.
-            disc_iter (int): Number of discriminator iterations per generator iteration.
+            disc_iter (int): Number of discriminator iterations per
+            generator iteration.
             learning_rate (float): Learning rate for the optimizers.
             lambda_gp (float): Gradient penalty coefficient.
         """
