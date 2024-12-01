@@ -41,8 +41,5 @@ def preprocessing(csv_paths, output_paths):
 
     return df_train, df_valid, df_test
 
-# Call the function with the paths to your CSV files and output files
-df_train, df_valid, df_test = preprocessing(
-    ['bitstampUSD_1-min_data_2012-01-01_to_2020-04-22.csv', 'coinbaseUSD_1-min_data_2014-12-01_to_2019-01-09.csv'],
-    ['x_train.csv', 'x_valid.csv', 'x_test.csv']
-)
+# Call the function with the paths to your CSV files
+x_train, x_valid, x_test = preprocessing(['bitstampUSD_1-min_data_2012-01-01_to_2020-04-22.csv', 'coinbaseUSD_1-min_data_2014-12-01_to_2019-01-09.csv'])
