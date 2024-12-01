@@ -1,50 +1,48 @@
 #!/usr/bin/env python3
 
-
-# preprocess_data.py
 import pandas as pd
 import numpy as np
-import tensorflow as tf
 
-def preprocessing(csv_paths):
+def preprocessing(csv_paths, output_paths):
     dfs = []
     for csv_path in csv_paths:
         df = pd.read_csv(csv_path)
-        # drop nan
+        # Forward fill to handle missing values
         df = df.ffill()
-        # encode the date based on timestamp
+        # Convert the timestamp to datetime format
         df['Date'] = pd.to_datetime(df['Timestamp'], unit='s')
-        # take the last 2 years data
+        # Filter data to include only entries from the last two years
         df = df[df['Date'] >= '2017-01-01']
-        # drop the timestamp
+        # Drop the timestamp column as it's no longer needed
         df.drop(['Timestamp'], axis=1, inplace=True)
-
-        sorted_df = df.sort_values(by='Date', ascending=False)
-    
-        print(sorted_df.head())
-        
-        # make date as index
+        # Set the date as the index
         df = df.set_index('Date')
-
         dfs.append(df)
 
-    # concatenate all dataframes
+    # Concatenate all dataframes
     df = pd.concat(dfs)
-    print(df.head())
 
-    # you should always split your data into training, validation, testing
-    # (usually 80%, 10%, 10%)
-    df_train = df[:int(len(df)*80/100)]
-    df_valid = df[int(len(df_train)):int(len(df)*90/100)]
-    df_test = df[int(-(len(df)*10/100)):]
+    # Split the data into training, validation, and testing sets (80%, 10%, 10%)
+    df_train = df[:int(len(df) * 80 / 100)]
+    df_valid = df[int(len(df_train)):int(len(df) * 90 / 100)]
+    df_test = df[int(-(len(df) * 10 / 100)):]
 
-    # normalize data
+    # Normalize the data
     train_mean = df_train.mean()
     train_std = df_train.std()
-    x_train = (df_train - train_mean) / train_std
-    x_valid = (df_valid - train_mean) / train_std
-    x_test = (df_test - train_mean) / train_std
-    return x_train, x_valid, x_test
+    df_train = (df_train - train_mean) / train_std
+    df_valid = (df_valid - train_mean) / train_std
+    df_test = (df_test - train_mean) / train_std
 
-# Call the function with the paths to your CSV files
-x_train, x_valid, x_test = preprocessing(['bitstampUSD_1-min_data_2012-01-01_to_2020-04-22.csv', 'coinbaseUSD_1-min_data_2014-12-01_to_2019-01-09.csv'])
+    # Save the preprocessed data to new CSV files
+    df_train.to_csv(output_paths[0])
+    df_valid.to_csv(output_paths[1])
+    df_test.to_csv(output_paths[2])
+
+    return df_train, df_valid, df_test
+
+# Call the function with the paths to your CSV files and output files
+df_train, df_valid, df_test = preprocessing(
+    ['bitstampUSD_1-min_data_2012-01-01_to_2020-04-22.csv', 'coinbaseUSD_1-min_data_2014-12-01_to_2019-01-09.csv'],
+    ['x_train.csv', 'x_valid.csv', 'x_test.csv']
+)
