@@ -26,4 +26,4 @@ def bag_of_words(sentences, vocab=None):
             if word in vocab:
                 embeddings[i, vocab.index(word)] += 1
 
-    return embeddings.astype(int), vocab
+    return embeddings.astype(int), np.array(vocab)
