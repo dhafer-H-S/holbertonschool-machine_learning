@@ -6,10 +6,8 @@ convert gensim word2vec model to keras embedding layer
 This module provides a function to convert a gensim word2vec model to a Keras embedding layer.
 """
 
-import numpy as np
-from keras.layers import Embedding
-import gensim
-model = __import__('2-word2vec').word2vec_model
+import tensorflow as tf
+word2vec_model = __import__('2-word2vec').word2vec_model
 
 
 def gensim_to_keras(model):
@@ -24,8 +22,10 @@ def gensim_to_keras(model):
     """
     weights = model.wv.vectors
     vocab_size, embedding_dim = weights.shape
-    embedding_layer = Embedding(
+    embedding_layer = tf.keras.layers.Embedding(
         input_dim=vocab_size,
         output_dim=embedding_dim,
-        weights=[weights])
+        weights=[weights],
+        trainable=False
+    )
     return embedding_layer
