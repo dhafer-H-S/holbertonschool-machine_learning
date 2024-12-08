@@ -48,12 +48,12 @@ def word2vec_model(
     model = gensim.models.Word2Vec(
         sentences=sentences,
         vector_size=vector_size,
-        min_count=min_count,
         window=window,
-        negative=negative,
+        min_count=min_count,
+        workers=workers,
         sg=sg,
-        seed=seed,
-        workers=workers
+        negative=negative,
+        seed=seed
     )
     model.train(sentences, total_examples=model.corpus_count, epochs=epochs)
     return model
