@@ -3,7 +3,8 @@
 extract word 2 vec
 convert gensim word2vec model to keras embedding layer
 
-This module provides a function to convert a gensim word2vec model to a Keras embedding layer.
+This module provides a function to convert a gensim word2vec model
+to a Keras embedding layer.
 """
 
 import tensorflow as tf
