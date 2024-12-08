@@ -15,23 +15,16 @@ workers is the number of worker threads to train the model
 Returns: the trained model
 """
 
-
-
-
-import gensim.models
-import numpy as np
-import pandas as pd
-import nltk
 import gensim
 
 def word2vec_model(
         sentences,
-        size=100,
+        vector_size=100,
         min_count=5,
         window=5,
         negative=5,
         cbow=True,
-        iterations=5,
+        epochs=5,
         seed=0,
         workers=1):
     """
@@ -39,36 +32,28 @@ def word2vec_model(
 
     Args:
         sentences (list): List of sentences to be trained on.
-        size (int): Dimensionality of the embedding layer.
+        vector_size (int): Dimensionality of the embedding layer.
         min_count (int): Minimum number of occurrences of a word for use in training.
         window (int): Maximum distance between the current and predicted word within a sentence.
         negative (int): Size of negative sampling.
         cbow (bool): Boolean to determine the training type; True is for CBOW, False is for Skip-gram.
-        iterations (int): Number of iterations to train over.
+        epochs (int): Number of iterations to train over.
         seed (int): Seed for the random number generator.
         workers (int): Number of worker threads to train the model.
 
     Returns:
         Trained gensim word2vec model.
     """
-    if cbow:
-        model = gensim.models.Word2Vec(
-            sentences,
-            vector_size=size,
-            min_count=min_count,
-            window=window,
-            negative=negative,
-            sg=0,
-            seed=seed,
-            workers=workers )
-    else:
-        model = gensim.models.Word2Vec(
-            sentences,
-            vector_size=size,
-            min_count=min_count,
-            window=window,
-            negative=negative,
-            sg=1,
-            seed=seed,
-            workers=workers )
+    sg = 0 if cbow else 1
+    model = gensim.models.Word2Vec(
+        sentences=sentences,
+        vector_size=vector_size,
+        min_count=min_count,
+        window=window,
+        negative=negative,
+        sg=sg,
+        seed=seed,
+        workers=workers
+    )
+    model.train(sentences, total_examples=model.corpus_count, epochs=epochs)
     return model
