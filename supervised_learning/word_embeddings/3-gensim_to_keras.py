@@ -1,4 +1,4 @@
-# /usr/bin/env python3
+#!/usr/bin/env python3
 """
 extract word 2 vec
 convert gensim word2vec model to keras embedding layer
