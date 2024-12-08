@@ -25,6 +25,6 @@ def gensim_to_keras(model):
         input_dim=vocab_size,
         output_dim=embedding_dim,
         weights=[weights],
-        trainable=False
+        trainable=True
     )
     return embedding_layer
