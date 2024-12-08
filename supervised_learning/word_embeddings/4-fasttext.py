@@ -40,9 +40,9 @@ def fasttext_model(
         seed=seed,
         negative=negative,
         workers=workers)
-    model.build_vocab(corpus_iterable=sentences)
+    model.build_vocab(sentences)
     model.train(
-        corpus_iterable=sentences,
-        total_examples=len(sentences),
-        epochs=iterations)
+        sentences,
+        total_examples=model.corpus_count,
+        epochs=model.epochs)
     return model
