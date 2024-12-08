@@ -21,9 +21,11 @@ def word2vec_model(
         sentences (list): List of tokenized sentences to train on.
         size (int): Dimensionality of the embedding layer.
         min_count (int): Minimum occurrences of a word for use in training.
-        window (int): Maximum distance between the current and predicted word in a sentence.
+        window (int): Maximum distance between the current and
+        predicted word in a sentence.
         negative (int): Size of negative sampling.
-        cbow (bool): If True, use CBOW; if False, use Skip-gram.
+        cbow Continuous Bag of Words Model(bool): If True, use CBOW
+        if False, use Skip-gram.
         iterations (int): Number of iterations (epochs) to train the model.
         seed (int): Seed for the random number generator.
         workers (int): Number of worker threads for training.
