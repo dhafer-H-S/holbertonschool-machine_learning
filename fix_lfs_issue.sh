@@ -23,6 +23,10 @@
 # git push --force origin main
 #!/bin/bash
 
+#!/bin/bash
+
+#!/bin/bash
+
 # Untrack all LFS files
 git lfs untrack "*"
 
@@ -34,6 +38,12 @@ git add .
 
 # Commit the changes
 git commit -m "Remove all LFS files"
+
+# Remove LFS files and their history
+git filter-repo --path-glob '*.lfs' --invert-paths --force
+
+# Re-add the remote
+git remote add origin https://github.com/dhafer-H-S/holbertonschool-machine_learning.git
 
 # Force push the changes
 git push --force origin main
