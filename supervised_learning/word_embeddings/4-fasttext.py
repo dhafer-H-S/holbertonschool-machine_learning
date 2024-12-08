@@ -33,6 +33,7 @@ def fasttext_model(
     """
     sg = 0 if cbow else 1
     model = gensim.models.FastText(
+        sentences,
         vector_size=size,
         window=window,
         min_count=min_count,
