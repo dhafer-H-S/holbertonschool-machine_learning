@@ -25,7 +25,7 @@ def word2vec_model(
         negative=5,
         cbow=True,
         epochs=5,
-        seed=0,
+        seed=1,
         workers=1):
     """
     Create and train a gensim word2vec model.
