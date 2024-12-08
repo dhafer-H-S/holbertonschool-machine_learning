@@ -20,10 +20,13 @@ def fasttext_model(
     Args:
         sentences (iterable): The sentences to train the model on.
         size (int): The dimensionality of the word vectors.
-        min_count (int): The minimum number of times a word must appear to be included in the vocabulary.
+        min_count (int): The minimum number of times a word must appear
+        to be included in the vocabulary.
         negative (int): The number of negative samples to use during training.
-        window (int): The maximum distance between the current and predicted word within a sentence.
-        cbow (bool): Whether to use the Continuous Bag of Words (CBOW) architecture. If False, use Skip-gram.
+        window (int): The maximum distance between the current and predicted
+        word within a sentence.
+        cbow (bool): Whether to use the Continuous Bag of Words (CBOW) architecture.
+        If False, use Skip-gram.
         iterations (int): The number of iterations (epochs) over the corpus.
         seed (int): The seed for the random number generator.
         workers (int): The number of worker threads to train the model.
