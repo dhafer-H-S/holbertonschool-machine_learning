@@ -50,7 +50,7 @@ def word2vec_model(
         vector_size=vector_size,
         window=window,
         min_count=min_count,
-        iter=epochs,
+        epochs=epochs,
         workers=workers,
         sg=sg,
         negative=negative,
