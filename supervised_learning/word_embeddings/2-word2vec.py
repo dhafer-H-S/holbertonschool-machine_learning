@@ -15,7 +15,7 @@ workers is the number of worker threads to train the model
 Returns: the trained model
 """
 
-from  gensim.models import Word2Vec
+import gensim
 
 def word2vec_model(
         sentences,
@@ -45,7 +45,7 @@ def word2vec_model(
         Trained gensim word2vec model.
     """
     sg = 0 if cbow else 1
-    model = Word2Vec(
+    model = gensim.models.Word2Vec(
         sentences=sentences,
         vector_size=vector_size,
         window=window,
