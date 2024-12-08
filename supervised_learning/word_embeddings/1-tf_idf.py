@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """tf-idf"""
+
 import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 
