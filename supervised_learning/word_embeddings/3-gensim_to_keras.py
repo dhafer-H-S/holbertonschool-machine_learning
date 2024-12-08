@@ -7,7 +7,6 @@ This module provides a function to convert a gensim word2vec model to a Keras em
 """
 
 import tensorflow as tf
-word2vec_model = __import__('2-word2vec').word2vec_model
 
 
 def gensim_to_keras(model):
