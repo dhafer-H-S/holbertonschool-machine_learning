@@ -1,9 +1,7 @@
 #!/usr/bin/env python3
 """fasttext model"""
 
-import numpy as np
-from gensim.models import FastText
-from gensim.test.utils import common_texts
+import gensim
 
 
 def fasttext_model(
@@ -14,7 +12,7 @@ def fasttext_model(
         window=5,
         cbow=True,
         iterations=5,
-        seed=0,
+        seed=1,  # Set seed to 1
         workers=1):
     """
     Train a FastText model on the given sentences.
@@ -34,7 +32,7 @@ def fasttext_model(
         FastText: The trained FastText model.
     """
     sg = 0 if cbow else 1
-    model = FastText(
+    model = gensim.models.FastText(
         vector_size=size,
         window=window,
         min_count=min_count,
