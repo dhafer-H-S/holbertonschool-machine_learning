@@ -11,7 +11,7 @@ def word2vec_model(
         window=5,
         negative=5,
         cbow=True,
-        iterations=5,
+        epochs=5,
         seed=0,
         workers=1):
     """
@@ -31,25 +31,20 @@ def word2vec_model(
     Returns:
         gensim.models.Word2Vec: Trained Word2Vec model.
     """
-    sg = 0 if cbow else 1  # CBOW (sg=0) or Skip-gram (sg=1)
-
-    # Initialize the Word2Vec model
+    sg = 1 if not cbow else 0
     model = gensim.models.Word2Vec(
-        sentences=sentences,
-        size=size,
-        window=window,
+        sentences,
+        vector_size=size,
         min_count=min_count,
-        workers=workers,
-        sg=sg,
+        window=window,
         negative=negative,
-        seed=seed
-    )
-
-    # Train the model
+        sg=sg,
+        epochs=epochs,
+        seed=seed,
+        workers=workers)
+    model.build_vocab(sentences)
     model.train(
-        sentences=sentences,
+        sentences,
         total_examples=model.corpus_count,
-        epochs=iterations
-    )
-
+        epochs=model.epochs)
     return model
