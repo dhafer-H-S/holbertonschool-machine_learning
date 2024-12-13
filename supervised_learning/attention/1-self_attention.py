@@ -13,6 +13,10 @@ class SelfAttention(tf.keras.layers.Layer):
         Parameters:
         - units: An integer representing the number of hidden units
         in the alignment model.
+        W: A Dense layer that processes the previous decoder hidden state.
+        U: A Dense layer that processes the encoder hidden states.
+        V: A Dense layer that processes the combined output of W and U
+        to produce the attention scores.
         """
         super(SelfAttention, self).__init__()
         self.W = tf.keras.layers.Dense(units)

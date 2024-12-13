@@ -5,8 +5,6 @@ RNN Decoder
 import tensorflow as tf
 SelfAttention = __import__('1-self_attention').SelfAttention
 
-
-
 class RNNDecoder(tf.keras.layers.Layer):
     """RNNDecoder class"""
 
@@ -15,9 +13,8 @@ class RNNDecoder(tf.keras.layers.Layer):
         Class constructor
         :param vocab: an integer representing the size of
         the output vocabulary
-        :param embedding: an integer representing the dimensionality of
-        the embedding
-        vector
+        :param embedding: an integer representing the dimensionality
+        of the embedding vector
         :param units: an integer representing the number of hidden
         units in the RNN cell
         :param batch: an integer representing the batch size
@@ -31,7 +28,6 @@ class RNNDecoder(tf.keras.layers.Layer):
             return_state=True, recurrent_initializer='glorot_uniform')
         self.F = tf.keras.layers.Dense(vocab)
         self.attention = SelfAttention(units)
-
 
     def call(self, x, s_prev, hidden_states):
         """
