@@ -3,7 +3,7 @@
 RNN Decoder
 """
 import tensorflow as tf
-self.attention = __import__('1-self_attention').SelfAttention(units)
+SelfAttention = __import__('1-self_attention').SelfAttention(units)
 
 
 
@@ -38,7 +38,7 @@ class RNNDecoder(tf.keras.layers.Layer):
         containing the outputs of the encoder
         :return: y, s
         """
-        context_vector, attention_weights = self.attention(s_prev, hidden_states)
+        context_vector, attention_weights = SelfAttention(s_prev, hidden_states)
         x = self.embedding(x)
         x = tf.concat([tf.expand_dims(context_vector, 1), x], axis=-1)
         y, s = self.gru(x)
