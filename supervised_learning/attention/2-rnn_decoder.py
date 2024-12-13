@@ -3,6 +3,8 @@
 RNN Decoder
 """
 import tensorflow as tf
+self.attention = __import__('1-self_attention').SelfAttention(units)
+
 
 
 class RNNDecoder(tf.keras.layers.Layer):
@@ -25,7 +27,6 @@ class RNNDecoder(tf.keras.layers.Layer):
             units, return_sequences=True,
             return_state=True, recurrent_initializer='glorot_uniform')
         self.F = tf.keras.layers.Dense(vocab)
-        self.attention = __import__('1-self_attention').SelfAttention(units)
 
     def call(self, x, s_prev, hidden_states):
         """
