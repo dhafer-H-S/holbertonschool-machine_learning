@@ -11,12 +11,9 @@ class RNNDecoder(tf.keras.layers.Layer):
     def __init__(self, vocab, embedding, units, batch):
         """
         Class constructor
-        :param vocab: an integer representing the size of
-        the output vocabulary
-        :param embedding: an integer representing the dimensionality
-        of the embedding vector
-        :param units: an integer representing the number of hidden
-        units in the RNN cell
+        :param vocab: an integer representing the size of the output vocabulary
+        :param embedding: an integer representing the dimensionality of the embedding vector
+        :param units: an integer representing the number of hidden units in the RNN cell
         :param batch: an integer representing the batch size
         """
         super(RNNDecoder, self).__init__()
@@ -33,7 +30,7 @@ class RNNDecoder(tf.keras.layers.Layer):
         """
         :param x: a tensor of shape (batch, 1) containing the previous word in
         the target sequence as an index of the target vocabulary
-        :param s_prev: a tensor of shape (batch, units)containing the previous
+        :param s_prev: a tensor of shape (batch, units) containing the previous
         decoder hidden state
         :param hidden_states: a tensor of shape (batch, input_seq_len, units)
         containing the outputs of the encoder
