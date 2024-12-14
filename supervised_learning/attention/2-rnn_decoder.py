@@ -17,14 +17,14 @@ class RNNDecoder(tf.keras.layers.Layer):
         :param batch: an integer representing the batch size
         """
         super(RNNDecoder, self).__init__()
-        self.batch = batch
-        self.units = units
+        super(RNNDecoder, self).__init__()
         self.embedding = tf.keras.layers.Embedding(vocab, embedding)
         self.gru = tf.keras.layers.GRU(
-            units, return_sequences=True,
-            return_state=True, recurrent_initializer='glorot_uniform')
+            units,
+            recurrent_initializer='glorot_uniform',
+            return_sequences=True,
+            return_state=True)
         self.F = tf.keras.layers.Dense(vocab)
-        self.attention = SelfAttention(units)
 
     def call(self, x, s_prev, hidden_states):
         """
@@ -36,10 +36,11 @@ class RNNDecoder(tf.keras.layers.Layer):
         containing the outputs of the encoder
         :return: y, s
         """
-        context, _ = self.attention(s_prev, hidden_states)
-        x = self.embedding(x)
-        x = tf.concat([tf.expand_dims(context, 1), x], axis=-1)
-        y, s = self.gru(x, initial_state=s_prev)
-        y = tf.reshape(y, (-1, y.shape[2]))
-        y = self.F(y)
-        return y, s
+        units = s_prev.shape[1]
+        attention = SelfAttention(units)
+        context, weights = attention(s_prev, hidden_states)
+        embed = self.embedding(x)
+        concat = tf.concat([tf.expand_dims(context, 1), embed], axis=-1)
+        outputs, hidden = self.gru(concat)
+        outputs = tf.reshape(outputs, (outputs.shape[0], outputs.shape[2]))
+        return self.F(outputs), hidden
