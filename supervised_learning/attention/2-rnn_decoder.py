@@ -12,8 +12,10 @@ class RNNDecoder(tf.keras.layers.Layer):
         """
         Class constructor
         :param vocab: an integer representing the size of the output vocabulary
-        :param embedding: an integer representing the dimensionality of the embedding vector
-        :param units: an integer representing the number of hidden units in the RNN cell
+        :param embedding: an integer representing the dimensionality
+        of the embedding vector
+        :param units: an integer representing the number of hidden
+        units in the RNN cell
         :param batch: an integer representing the batch size
         """
         super(RNNDecoder, self).__init__()
