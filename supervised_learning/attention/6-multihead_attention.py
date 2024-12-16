@@ -12,7 +12,6 @@ class MultiHeadAttention(tf.keras.layers.Layer):
     """
     Class to perform multi head attention
     """
-
     def __init__(self, dm, h):
         """
         dm - an integer representing the dimensionality of the model
