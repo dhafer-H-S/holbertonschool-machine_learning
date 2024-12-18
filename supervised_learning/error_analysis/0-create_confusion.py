@@ -30,4 +30,3 @@ def create_confusion_matrix(labels, logits):
         combination occurs
         """
     return confusion
-
