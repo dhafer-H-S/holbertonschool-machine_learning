@@ -31,7 +31,8 @@ class Dataset:
         """
         creates sub-word tokenizers for our dataset
         Args:
-            data: tf.data.Dataset whose examples are formatted as a tuple (pt, en)
+            data: tf.data.Dataset whose examples are formatted as a
+                tuple (pt, en)
                 pt: tf.Tensor containing the Portuguese sentence
                 en: tf.Tensor containing the corresponding English sentence
         Returns: tokenizer_pt, tokenizer_en
