@@ -5,7 +5,6 @@ this task is about creating a class that loads and preps
 a dataset for machine translation
 """
 
-import tensorflow as tf
 import tensorflow_datasets as tfds
 import transformers
 
