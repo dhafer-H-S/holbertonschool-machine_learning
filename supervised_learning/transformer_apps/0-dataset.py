@@ -8,10 +8,12 @@ import tensorflow as tf
 import tensorflow_datasets as tfds
 import transformers
 
+
 class Dataset:
     """
     This class loads and preps a dataset for machine translation
     """
+
     def __init__(self):
         """
         Class constructor
@@ -30,8 +32,15 @@ class Dataset:
         Returns:
             A tf.data.Dataset with stripped text
         """
-        data = tfds.load('ted_hrlr_translate/pt_to_en', split=split, as_supervised=True)
-        return data.map(lambda pt, en: (tf.strings.strip(pt), tf.strings.strip(en)))
+        data = tfds.load(
+            'ted_hrlr_translate/pt_to_en',
+            split=split,
+            as_supervised=True)
+        return data.map(
+            lambda pt,
+            en: (
+                tf.strings.strip(pt),
+                tf.strings.strip(en)))
 
     def tokenize_dataset(self, data):
         """
@@ -41,6 +50,8 @@ class Dataset:
         """
         # Tokenizer creation logic here
         # For example:
-        tokenizer_pt = transformers.BertTokenizer.from_pretrained('bert-base-multilingual-cased')
-        tokenizer_en = transformers.BertTokenizer.from_pretrained('bert-base-uncased')
+        tokenizer_pt = transformers.BertTokenizer.from_pretrained(
+            'bert-base-multilingual-cased')
+        tokenizer_en = transformers.BertTokenizer.from_pretrained(
+            'bert-base-uncased')
         return tokenizer_pt, tokenizer_en
