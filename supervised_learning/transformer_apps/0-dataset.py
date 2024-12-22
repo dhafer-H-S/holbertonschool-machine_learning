@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 """
-this task is about creating a class that loads and preps
+This task is about creating a class that loads and preps
 a dataset for machine translation
 """
 
@@ -13,6 +13,7 @@ class Dataset:
     """
     This class loads and preps a dataset for machine translation
     """
+
     def __init__(self):
         """
         Class constructor
@@ -29,7 +30,7 @@ class Dataset:
 
     def tokenize_dataset(self, data):
         """
-        creates sub-word tokenizers for our dataset
+        Creates sub-word tokenizers for our dataset
         Args:
             data: tf.data.Dataset whose examples are formatted as a
             tuple (pt, en)
@@ -39,18 +40,23 @@ class Dataset:
             tokenizer_pt is the Portuguese tokenizer
             tokenizer_en is the English tokenizer
         """
-        tokenizers = transformers.BertTokenizer.from_pretrained(
-            "bert-base-uncased",
-            do_lower_case=True
-        )
-        tokenizer_pt = tokenizers
-        tokenizer_en = tokenizers
-        self.tokenizer_pt = transformers.BertTokenizer.from_pretrained(
-            "neuralmind/bert-base-portuguese-cased",
-            do_lower_case=False
-        )
-        self.tokenizer_en = transformers.BertTokenizer.from_pretrained(
-            "bert-base-uncased",
-            do_lower_case=True
-        )
+        tokenizer_pt = transformers.AutoTokenizer.from_pretrained(
+            "neuralmind/bert-base-portuguese-cased")
+        tokenizer_en = transformers.AutoTokenizer.from_pretrained(
+            "bert-base-uncased")
+
+        def iterate_pt():
+            """Generate Portuguese sentences one at a time from the dataset"""
+            for pt, _ in data:
+                yield pt.numpy().decode('utf-8')
+
+        def iterate_en():
+            """Generate English sentences one at a time from the dataset"""
+            for _, en in data:
+                yield en.numpy().decode('utf-8')
+
+        tokenizer_pt = tokenizer_pt.train_new_from_iterator(
+            iterate_pt(), vocab_size=2**13)
+        tokenizer_en = tokenizer_en.train_new_from_iterator(
+            iterate_en(), vocab_size=2**13)
         return tokenizer_pt, tokenizer_en
