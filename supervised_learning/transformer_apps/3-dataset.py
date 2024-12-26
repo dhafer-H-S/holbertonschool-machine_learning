@@ -35,11 +35,14 @@ class Dataset:
         self.data_train = self.data_train.filter(self.filter_max_len)
         self.data_train = self.data_train.cache()
         self.data_train = self.data_train.shuffle(20000)
-        self.data_train = self.data_train.padded_batch(self.batch_size, padded_shapes=([None], [None]))
-        self.data_train = self.data_train.prefetch(tf.data.experimental.AUTOTUNE)
+        self.data_train = self.data_train.padded_batch(
+            self.batch_size, padded_shapes=([None], [None]))
+        self.data_train = self.data_train.prefetch(
+            tf.data.experimental.AUTOTUNE)
         """update the data valid pipeline"""
         self.data_valid = self.data_valid.filter(self.filter_max_len)
-        self.data_valid = self.data_valid.padded_batch(self.batch_size, padded_shapes=([None], [None]))
+        self.data_valid = self.data_valid.padded_batch(
+            self.batch_size, padded_shapes=([None], [None]))
 
     def tokenize_dataset(self, data):
         """
@@ -96,21 +99,26 @@ class Dataset:
 
     def filter_max_len(self, pt, en):
         """
-        Filters out examples that have either sentence with more than max_len tokens
+        Filters out examples that have either sentence with more than
+        max_len tokens
         Args:
             pt: tf.Tensor containing the Portuguese tokens
             en: tf.Tensor containing the English tokens
         Returns: bool
-            True if both sentences have less than or equal to max_len tokens, False otherwise
+            True if both sentences have less than or equal to max_len
+            tokens, False otherwise
         """
-        return tf.logical_and(tf.size(pt) <= self.max_len, tf.size(en) <= self.max_len)
+        return tf.logical_and(
+            tf.size(pt) <= self.max_len,
+            tf.size(en) <= self.max_len)
 
     def tf_encode(self, pt, en):
         """
         Acts as a TensorFlow wrapper for the encode instance method
         Args:
             pt: tf.Tensor containing the Portuguese sentence
-            en: tf.Tensor containing the corresponding English sentence
+            en: tf.Tensor containing the corresponding English
+                sentence
         Returns: pt, en
             pt is a tf.Tensor containing the Portuguese tokens
             en is a tf.Tensor containing the English tokens
@@ -121,4 +129,3 @@ class Dataset:
         pt.set_shape([None])
         en.set_shape([None])
         return pt, en
-
