@@ -35,7 +35,7 @@ class Dataset:
         self.data_train = self.data_train.filter(self.filter_max_len)
         self.data_train = self.data_train.cache()
         self.data_train = self.data_train.shuffle(20000)
-        self.data_train = self.data_train.padded_batch(self.batch_size, padded_shaes=([None], [None]))
+        self.data_train = self.data_train.padded_batch(self.batch_size, padded_shapes=([None], [None]))
         self.data_train = self.data_train.prefetch(tf.data.experimental.AUTOTUNE)
         """update the data valid pipeline"""
         self.data_valid = self.data_valid.filter(self.filter_max_len)
@@ -93,6 +93,17 @@ class Dataset:
                                      add_special_tokens=False) + \
             [self.tokenizer_en.vocab_size + 1]
         return pt_tokens, en_tokens
+
+    def filter_max_len(self, pt, en):
+        """
+        Filters out examples that have either sentence with more than max_len tokens
+        Args:
+            pt: tf.Tensor containing the Portuguese tokens
+            en: tf.Tensor containing the English tokens
+        Returns: bool
+            True if both sentences have less than or equal to max_len tokens, False otherwise
+        """
+        return tf.logical_and(tf.size(pt) <= self.max_len, tf.size(en) <= self.max_len)
 
     def tf_encode(self, pt, en):
         """
